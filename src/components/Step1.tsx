@@ -66,9 +66,12 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
       <Form.Item
         label="Title"
         name="title"
-        rules={[{ required: true, message: "Please select a title" }]}
+        
+        rules={[{ required: true, message: "Please select a title" }]
+      }
+      style={{width:"13%"}}
       >
-        <Select>
+        <Select placeholder='Ato'>
           <Option value="ato">Ato</Option>
           <Option value="doctor">Doctor</Option>
           {/* Add other 14 levels as needed */}
@@ -76,7 +79,7 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
       </Form.Item>
 
       <Row gutter={16}>
-        <Col span={12}>
+        <Col span={8}>
           <Form.Item
             label="First Name"
             name="firstName"
@@ -87,21 +90,24 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
             <Input />
           </Form.Item>
         </Col>
-        <Col span={12}>
+        <Col span={8}>
           <Form.Item label="Middle Name" name="middleName">
             <Input />
           </Form.Item>
+
         </Col>
+        <Col span={8}>
+        
+          <Form.Item
+            label="Last Name"
+            name="lastName"
+            rules={[{ required: true, message: "Please enter your last name" }]}
+          >
+            <Input />
+          </Form.Item>
+          </Col>
       </Row>
-
-      <Form.Item
-        label="Last Name"
-        name="lastName"
-        rules={[{ required: true, message: "Please enter your last name" }]}
-      >
-        <Input />
-      </Form.Item>
-
+       
       <Form.Item
         label="Gender"
         name="gender"
@@ -113,53 +119,41 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
           <Radio value="other">Other</Radio>
         </Radio.Group>
       </Form.Item>
-
+    <Row gutter={16}>
+      
+     <Col span={8}>
       <Form.Item
         label="Position"
         name="position"
         rules={[{ required: true, message: "Please enter your position" }]}
-      >
+        >
         <Input />
       </Form.Item>
+      </Col>
 
+     <Col span={8}>
       <Form.Item
         label="Photo"
         name="photo"
         rules={[{ required: true, message: "Please upload your photo" }]}
-      >
+        >
         <Input type="file" />
       </Form.Item>
+      </Col>
 
+     <Col span={8}>
       <Form.Item
         label="Department"
         name="department"
         rules={[{ required: true, message: "Please enter your department" }]}
-      >
+        >
         <Input />
       </Form.Item>
+      </Col>
+      </Row>
 
-      <Form.Item
-        label="Ethnicity"
-        name="ethnicity"
-        rules={[
-          {
-            required: true,
-            message: "Please enter your ethnicity",
-          },
-        ]}
-      >
-        <Select placeholder="Select Ethnicity">
-          <Option value="Amhara">Amhara</Option>
-          <Option value="Afar">Afar</Option>
-          <Option value="Oromo">Oromo</Option>
-          <Option value="Tigray">Tigray</Option>
-          <Option value="Somale">Somale</Option>
-          <Option value="Gurage">Gurage</Option>
-          <Option value="Wolyaita">Wolyaita</Option>
-          <Option value="Gambela">Gambela</Option>
-          <Option value="Gumuz">Gumuz</Option>
-        </Select>
-      </Form.Item>
+      <Row gutter={16}>
+        <Col span={12}>
 
       <Form.Item
         label="Phone Number"
@@ -188,14 +182,22 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
           </Form.Item>
         </Input.Group>
       </Form.Item>
+      </Col>
+      <Col span ={12}>
 
       <Form.Item
         label="Email"
         name="email"
         rules={[{ required: true, message: "Please enter your email" }]}
-      >
+        >
         <Input />
       </Form.Item>
+        </Col>
+</Row>
+
+<Row gutter={16}>
+  <Col span={12}>
+
 
       <Form.Item
         label="Birthday"
@@ -204,6 +206,34 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
       >
         <DatePicker style={{ width: "100%" }} />
       </Form.Item>
+      </Col>
+      <Col span={12}>
+
+      <Form.Item
+        label="Ethnicity"
+        name="ethnicity"
+        rules={[
+          {
+            required: true,
+            message: "Please enter your ethnicity",
+          },
+        ]}
+        >
+        <Select placeholder="Select Ethnicity">
+          <Option value="Amhara">Amhara</Option>
+          <Option value="Afar">Afar</Option>
+          <Option value="Oromo">Oromo</Option>
+          <Option value="Tigray">Tigray</Option>
+          <Option value="Somale">Somale</Option>
+          <Option value="Gurage">Gurage</Option>
+          <Option value="Wolyaita">Wolyaita</Option>
+          <Option value="Gambela">Gambela</Option>
+          <Option value="Gumuz">Gumuz</Option>
+        </Select>
+      </Form.Item>
+            </Col>
+</Row>
+
       <Form.Item label={<span style={{ fontWeight: 'bold', fontSize: '16px' }}>Current Address</span>} name="currentAddress">
         {/* Sub-form for Current Address */}
         <Row gutter={16}>
@@ -249,7 +279,7 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
 
       </Form.Item>
 
-      <Button type="primary" onClick={nextStep}>
+      <Button type="default" className="bg-blue-600 text-blue-100 " onClick={nextStep}>
         Next
       </Button>
     </>

@@ -14,10 +14,7 @@ import {
   PoweroffOutlined,
 } from "@ant-design/icons";
 // import type { MenuProps } from "antd";
-import {
-  Layout,
-  Menu,
-  Badge,
+import {  Layout,  Menu,Badge,
   Avatar,
   Space,
   Input,
@@ -33,6 +30,9 @@ import {
 import MyForm from "./components/Form";
 import Messages from "./components/Messages";
 import Profile from "./components/Profile";
+import Reward from "./components/user/Reward";
+import { Performance } from "./components/user/Performance";
+import { Wastna } from "./components/user/Wastna";
 
 const { Header, Content, Sider } = Layout;
 const { Search } = Input;
@@ -170,7 +170,13 @@ const App: React.FC = () => {
     // Sample message when the notification icon is clicked
     message.info("New message: You have 5 new messages.");
   };
-
+  const user = {
+    name: 'John Doe',
+    avatarUrl: '...',
+    age: '31',
+    phone: '+2323423423',
+    email: 'abc@gmail.com',
+  };
 
   return (
     <Layout className="container bg-slate-100">
@@ -268,6 +274,7 @@ const App: React.FC = () => {
                           onClick={() => handleSelect(child)}
                         >
                           {child.label}
+
                         </Link>
                       </Menu.Item>
                     ))}
@@ -313,7 +320,7 @@ const App: React.FC = () => {
                         ) : child.label === "Profile View" ? (
                           <>
                             {/* <h1>{child.label} </h1>  */}
-                            <Profile name={""} age={0} sex={""} position={""} department={""} pictureUrl={""} />
+                            <Profile user={user} />
                           </>
                          
                         ) : child.label === "Profile Edit" ? (
@@ -338,7 +345,9 @@ const App: React.FC = () => {
                   ))
                 )}
 
-              <Route path="/messages" element={<Messages />} />
+              <Route path="/user/reward/:id" element={<Reward />} />
+              <Route path="/user/wastna/:id" element={<Wastna />} />
+              <Route path="/user/performance/:id" element={<Performance />} />
             </Routes>
           </Content>
         </Layout>

@@ -345,24 +345,23 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
         }}
       </Form.Item>
 
-
+{/* 
       <Form.Item
         label="የስራ አፈፃፀም ውጤት"
         name="workPerformance"
         rules={[{ required: true, message: "Work Performance is required" }]}
       >
-        {/* Add your work performance fields here */}
         <Input />
-      </Form.Item>
+      </Form.Item> */}
 
     
 
 
       <Space>
-        <Button type="primary" onClick={prevStep}>
+        <Button type="default" className="bg-blue-600 text-blue-100 "  onClick={prevStep}>
           Previous
         </Button>
-        <Button type="primary" htmlType="submit">
+        <Button type="default" className="bg-blue-600 text-blue-100 "  htmlType="submit">
           Submit
         </Button>
       </Space>

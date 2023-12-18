@@ -45,15 +45,15 @@ const Step2: React.FC<Step2Props> = ({ form, nextStep, prevStep, handleFormData 
       >
         <DatePicker style={{ width: "100%" }} />
       </Form.Item>
-
+{/* 
       <Form.Item
         label="Reward Date"
         name="rewardDate"
         rules={[{ required: true, message: "Please select the reward date" }]}
       >
         <DatePicker style={{ width: "100%" }} />
-      </Form.Item>
-
+      </Form.Item> */}
+{/* 
       <Form.Item
         label="የዋስትና ሁኔታ"
         name="rewardStatus"
@@ -123,7 +123,7 @@ const Step2: React.FC<Step2Props> = ({ form, nextStep, prevStep, handleFormData 
             <Input />
           </Form.Item>
         </>
-      )}
+      )} */}
          <Title level={4}>Mother's Information</Title>
          <Row gutter={16}>
         <Col span={8}>
@@ -207,10 +207,10 @@ const Step2: React.FC<Step2Props> = ({ form, nextStep, prevStep, handleFormData 
 
 
 <Space>
-    <Button type="primary" onClick={prevStep}>
+    <Button type="default" className="bg-blue-600 text-blue-100 "  onClick={prevStep}>
       Previous
     </Button>
-    <Button type="primary" onClick={nextStep}>
+    <Button type="default" className="bg-blue-600 text-blue-100 "  onClick={nextStep}>
       Next
     </Button>
   </Space>
