@@ -170,13 +170,7 @@ const App: React.FC = () => {
     // Sample message when the notification icon is clicked
     message.info("New message: You have 5 new messages.");
   };
-  const user = {
-    name: 'John Doe',
-    avatarUrl: '...',
-    age: '31',
-    phone: '+2323423423',
-    email: 'abc@gmail.com',
-  };
+
 
   return (
     <Layout className="container bg-slate-100">
@@ -319,7 +313,7 @@ const App: React.FC = () => {
                         ) : child.label === "Profile View" ? (
                           <>
                             {/* <h1>{child.label} </h1>  */}
-                            <Profile user={user} />
+                            <Profile name={""} age={0} sex={""} position={""} department={""} pictureUrl={""} />
                           </>
                          
                         ) : child.label === "Profile Edit" ? (
