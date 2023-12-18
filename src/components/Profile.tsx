@@ -6,6 +6,8 @@ import { Performance } from './user/Performance';
 import Reward from './user/Reward';
 import { useState } from 'react';
 import { Wastna } from './user/Wastna';
+import EducationEvaluation from './Tables/EducationEvaluation';
+import RewardEvaluation from './Tables/RewardPerformance';
 const { Title } = Typography;
 
 interface ProfileProps {
@@ -138,11 +140,12 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
            </div>}
            {tab===1&&<div className={`flex flex-row justify-around `}>
 
-           <Reward />
+           <RewardEvaluation />
            </div>}
            {tab===2&&<div className={`flex flex-row justify-around `}>
+           <EducationEvaluation />
 
-           <Performance />
+           {/* <Performance /> */}
            </div>}
            {tab===3&&<div className={`flex flex-row justify-around `}>
 
@@ -155,9 +158,10 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
 
       </div>
           <Row className='flex justify-around'>
-          <span onClick={()=>adjestingTabs(1)} className='bg-slate-300 rounded-md text-slate-600 p-2 px-7'>Reward Info</span>
-          <span onClick={()=>adjestingTabs(2)} className='bg-slate-300 rounded-md text-slate-600 p-2 px-7'>Performance </span>
-          <span onClick={()=>adjestingTabs(3)} className='bg-slate-300 rounded-md text-slate-600 p-2 px-7'>Wastna</span>
+         <span onClick={()=>adjestingTabs(1)} className='bg-slate-300 rounded-md text-slate-600 p-2 px-7'>Reward Info</span>
+           {/* <span onClick={()=>adjestingTabs(3)} className='bg-slate-300 rounded-md text-slate-600 p-2 px-7'>Wastna</span> */}
+         
+         <span onClick={()=>adjestingTabs(2)} className='bg-slate-300 rounded-md text-slate-600 p-2 px-7'>Performance </span>
          
           {/* <Link onClick={()=>adjestingTabs(2)} to={`/user/performance/${1}`} className='bg-slate-300 rounded-md text-slate-600 p-2 px-7'>Performance evaluation</Link>
           <Link onClick={()=>adjestingTabs(3)} to={`/user/wastna/${1}`}  className='bg-slate-300 rounded-md text-slate-600 p-2 px-7'>Wastna</Link> */}
