@@ -1,7 +1,8 @@
 // Step1.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Select, Input, Radio, DatePicker, Button, Row, Col } from "antd";
 import { FormInstance } from "antd/lib/form";
+import { data } from "../data";
 
 const { Option } = Select;
 
@@ -11,75 +12,62 @@ interface Step1Props {
   handleFormData: (data: any) => void;
 }
 
-const subcityOptions = [
-  { label: "Addis Ketema", value: "Addis Ketema" },
-  { label: "Akaky Kaliti", value: "Akaky Kaliti" },
-  { label: "Arada", value: "Arada" },
-  { label: "Bole", value: "Bole" },
-  { label: "Gullele", value: "Gullele" },
-  { label: "Kirkos", value: "Kirkos" },
-  { label: "Kolfe Keranio", value: "Kolfe Keranio" },
-  { label: "Lideta", value: "Lideta" },
-  { label: "Nifas Silk-Lafto", value: "Nifas Silk-Lafto" },
-  { label: "Yeka", value: "Yeka" },
-];
-
-const regionOptions = [
-  { label: "Tigray", value: "Tigray" },
-  { label: "Afar", value: "Afar" },
-  { label: "Amhara", value: "Amhara" },
-  { label: "Oromia", value: "Oromia" },
-  { label: "Somali", value: "Somali" },
-  { label: "Benishangul-Gumuz", value: "Benishangul-Gumuz" },
-  {
-    label: "Southern Nations, Nationalities, and Peoples' Region (SNNPR)",
-    value: "SNNPR",
-  },
-  { label: "Harari", value: "Harari" },
-  { label: "Addis Ababa", value: "Addis Ababa" },
-];
-
-// Define a mapping of subcities to their corresponding wordeas
-// const subcityWoredaMapping: Record<string, string[]> = {
-//   "Addis Ketema": ["Woreda1", "Woreda2", "Woreda3"], // Add the corresponding wordeas
-//   "Akaky Kaliti": ["WoredaA", "WoredaB", "WoredaC"], // Add the corresponding wordeas
-//   // ... Add mappings for other subcities
-// };
-
 const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
-    const [selectedSubcity, setSelectedSubcity] = useState<string | undefined>(undefined);
+  const [region, setRegion] = useState<string | null>(null);
+  const [subcity, setSubcity] = useState<string | null>(null);
+  const [woreda, setWoreda] = useState<string | null>(null);
+  const [subcityOptions, setSubcityOptions] = useState<string[]>([]);
+  const [woredaOptions, setWoredaOptions] = useState<string[]>([]);
 
-    // Static list of woredas for each subcity
-    const woredasBySubcity: Record<string, string[]> = {
-      'Addis Ketema': ['Woreda 1', 'Woreda 2', 'Woreda 3'],
-      'Arada': ['Woreda 4', 'Woreda 5', 'Woreda 6'],
-      'Bole': ['Woreda 9', 'Woreda 10', 'Woreda 11'],
-      // Add other subcities and their corresponding woredas
-    };
-  
-    const handleSubcityChange = (value: string) => {
-      setSelectedSubcity(value);
-    };
+  // Reset subcity and woreda when region changes
+  useEffect(() => {
+    setSubcity(null);
+    setWoreda(null);
+  }, [region]);
+
+  // Reset woreda when subcity changes
+  useEffect(() => {
+    setWoreda(null);
+  }, [subcity]);
+
+  const handleRegionChange = (value: string) => {
+    const firstSubcity = Object.keys(data[value])[0];
+    setRegion(value);
+    setSubcity(firstSubcity);
+    setSubcityOptions(Object.keys(data[value]));
+    setWoredaOptions(data[value][firstSubcity]);
+    form.setFieldsValue({
+      subcity: firstSubcity,
+      wordea: data[value][firstSubcity][0],
+    });
+  };
+
+  const handleSubcityChange = (value: string) => {
+    const firstWoreda = data[region!][value][0];
+    setSubcity(value);
+    setWoreda(firstWoreda);
+    setWoredaOptions(data[region!][value]);
+    form.setFieldsValue({ wordea: firstWoreda });
+  };
 
   return (
     <>
-      <Form.Item
-        label="Title"
-        name="title"
-        
-        rules={[{ required: true, message: "Please select a title" }]
-      }
-      style={{width:"13%"}}
-      >
-        <Select placeholder='Ato'>
-          <Option value="ato">Ato</Option>
-          <Option value="doctor">Doctor</Option>
-          {/* Add other 14 levels as needed */}
-        </Select>
-      </Form.Item>
-
+      {/* first row */}
       <Row gutter={16}>
-        <Col span={8}>
+        <Col span={6}>
+          <Form.Item
+            label="Title"
+            name="title"
+            rules={[{ required: true, message: "Please select a title" }]}
+          >
+            <Select>
+              <Option value="ato">Ato</Option>
+              <Option value="doctor">Doctor</Option>
+              {/* Add other 14 levels as needed */}
+            </Select>
+          </Form.Item>
+        </Col>
+        <Col span={9}>
           <Form.Item
             label="First Name"
             name="firstName"
@@ -90,14 +78,15 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
             <Input />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={9}>
           <Form.Item label="Middle Name" name="middleName">
             <Input />
           </Form.Item>
-
         </Col>
-        <Col span={8}>
-        
+      </Row>
+      {/* second Row */}
+      <Row gutter={16}>
+        <Col span={12}>
           <Form.Item
             label="Last Name"
             name="lastName"
@@ -105,9 +94,18 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
           >
             <Input />
           </Form.Item>
-          </Col>
+        </Col>
+        <Col span={12}>
+          <Form.Item
+            label="Birthday"
+            name="birthday"
+            rules={[{ required: true, message: "Please select your birthday" }]}
+          >
+            <DatePicker style={{ width: "100%" }} />
+          </Form.Item>
+        </Col>
       </Row>
-       
+
       <Form.Item
         label="Gender"
         name="gender"
@@ -116,98 +114,39 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
         <Radio.Group>
           <Radio value="male">Male</Radio>
           <Radio value="female">Female</Radio>
-          <Radio value="other">Other</Radio>
         </Radio.Group>
       </Form.Item>
-    <Row gutter={16}>
-      
-     <Col span={8}>
-      <Form.Item
-        label="Position"
-        name="position"
-        rules={[{ required: true, message: "Please enter your position" }]}
-        >
-        <Input />
-      </Form.Item>
-      </Col>
 
-     <Col span={8}>
+      <Row gutter={16}>
+        <Col span={12}>
+          <Form.Item
+            label="Position"
+            name="position"
+            rules={[{ required: true, message: "Please enter your position" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item
+            label="Department"
+            name="department"
+            rules={[
+              { required: true, message: "Please enter your department" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+      </Row>
+
       <Form.Item
         label="Photo"
         name="photo"
         rules={[{ required: true, message: "Please upload your photo" }]}
-        >
+      >
         <Input type="file" />
       </Form.Item>
-      </Col>
-
-     <Col span={8}>
-      <Form.Item
-        label="Department"
-        name="department"
-        rules={[{ required: true, message: "Please enter your department" }]}
-        >
-        <Input />
-      </Form.Item>
-      </Col>
-      </Row>
-
-      <Row gutter={16}>
-        <Col span={12}>
-
-      <Form.Item
-        label="Phone Number"
-        name="phoneNumber"
-        rules={[
-          {
-            required: true,
-            message: "Please enter your phone number",
-          },
-        ]}
-      >
-        <Input.Group compact>
-          {/* Ethiopian country code */}
-          <Form.Item name={["phone", "prefix"]} noStyle initialValue="+251">
-            <Input style={{ width: "20%" }} readOnly />
-          </Form.Item>
-          {/* Phone number input */}
-          <Form.Item
-            name={["phone", "number"]}
-            noStyle
-            rules={[
-              { required: true, message: "Please enter your phone number" },
-            ]}
-          >
-            <Input style={{ width: "80%" }} />
-          </Form.Item>
-        </Input.Group>
-      </Form.Item>
-      </Col>
-      <Col span ={12}>
-
-      <Form.Item
-        label="Email"
-        name="email"
-        rules={[{ required: true, message: "Please enter your email" }]}
-        >
-        <Input />
-      </Form.Item>
-        </Col>
-</Row>
-
-<Row gutter={16}>
-  <Col span={12}>
-
-
-      <Form.Item
-        label="Birthday"
-        name="birthday"
-        rules={[{ required: true, message: "Please select your birthday" }]}
-      >
-        <DatePicker style={{ width: "100%" }} />
-      </Form.Item>
-      </Col>
-      <Col span={12}>
 
       <Form.Item
         label="Ethnicity"
@@ -218,7 +157,7 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
             message: "Please enter your ethnicity",
           },
         ]}
-        >
+      >
         <Select placeholder="Select Ethnicity">
           <Option value="Amhara">Amhara</Option>
           <Option value="Afar">Afar</Option>
@@ -231,35 +170,99 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
           <Option value="Gumuz">Gumuz</Option>
         </Select>
       </Form.Item>
-            </Col>
-</Row>
 
-      <Form.Item label={<span style={{ fontWeight: 'bold', fontSize: '16px' }}>Current Address</span>} name="currentAddress">
+      <Row gutter={16}>
+        <Col span={12}>
+          <Form.Item
+            label="Phone Number"
+            name="phoneNumber"
+            rules={[
+              {
+                required: true,
+                message: "Please enter your phone number",
+              },
+            ]}
+          >
+            <Input.Group compact>
+              {/* Ethiopian country code */}
+              <Form.Item name={["phone", "prefix"]} noStyle initialValue="+251">
+                <Input style={{ width: "20%" }} readOnly />
+              </Form.Item>
+              {/* Phone number input */}
+              <Form.Item
+                name={["phone", "number"]}
+                noStyle
+                rules={[
+                  { required: true, message: "Please enter your phone number" },
+                ]}
+              >
+                <Input style={{ width: "80%" }} />
+              </Form.Item>
+            </Input.Group>
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: "Please enter your email" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+      </Row>
+
+      <Form.Item
+        label={
+          <span style={{ fontWeight: "bold", fontSize: "16px" }}>
+            Current Address
+          </span>
+        }
+        name="currentAddress"
+      >
         {/* Sub-form for Current Address */}
         <Row gutter={16}>
-          <Col span={12}>
+          <Col span={8}>
             <Form.Item label="Region" name="region">
-              <Select options={regionOptions} />
+              <Select
+                options={Object.keys(data).map((region) => ({
+                  label: region,
+                  value: region,
+                }))}
+                onChange={handleRegionChange}
+              />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item label="Subcity" name="subcity">
-              <Select options={subcityOptions} onChange={handleSubcityChange} />
+          <Col span={8}>
+            <Form.Item label="Zone/Subcity" name="subcity">
+              <Select
+                options={subcityOptions.map((subcity) => ({
+                  label: subcity,
+                  value: subcity,
+                }))}
+                onChange={handleSubcityChange}
+                value={subcity}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="Woreda" name="wordea">
+              <Select
+                options={woredaOptions.map((woreda) => ({
+                  label: woreda,
+                  value: woreda,
+                }))}
+                value={woreda}
+              />
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item label="Woreda" name="wordea">
-        <Select>
-          {selectedSubcity &&
-            woredasBySubcity[selectedSubcity]?.map((woreda) => (
-              <Option key={woreda} value={woreda}>
-                {woreda}
-              </Option>
-            ))}
-        </Select>
-        </Form.Item>
-
         <Row gutter={16}>
+          <Col span={8}>
+            <Form.Item label="House Number" name="houseNumber">
+              <Input />
+            </Form.Item>
+          </Col>
           <Col span={8}>
             <Form.Item label="Leyu Bota" name="leyuBota">
               <Input />
@@ -270,16 +273,12 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
               <Input />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Form.Item label="House Number" name="houseNumber">
-              <Input />
-            </Form.Item>
-          </Col>
         </Row>
 
+        <Row gutter={16}></Row>
       </Form.Item>
 
-      <Button type="default" className="bg-blue-600 text-blue-100 " onClick={nextStep}>
+      <Button type="primary" className=" bg-blue-600" onClick={nextStep}>
         Next
       </Button>
     </>
