@@ -4,6 +4,8 @@ import  photo from '../assets/images/photo.jpg'
 import { Link } from 'react-router-dom';
 import { Performance } from './user/Performance';
 import Reward from './user/Reward';
+import RewardEvaluation from '../components/Tables/RewardPerformance';
+import EducationalEvaluation from '../components/Tables/EducationEvaluation';
 import { useState } from 'react';
 import { Wastna } from './user/Wastna';
 import {
@@ -19,7 +21,6 @@ import {
   
 } from "@ant-design/icons";
 import EducationLevel from './user/EducationLevel';
-import EducationEvaluation from './user/EducationEvaluation';
 const { Title } = Typography;
 
 interface ProfileProps {
@@ -75,7 +76,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
       <div className="flex  w-full  mt-10 bg-slate-100">
         <Card className="w-1/3 bg-none">
           <div className="card-header">
-            <Image src={photo} className="" width={150} height={150} />
+            <Image src={photo} className="rounded-xl" width={150} height={150} />
             <Typography.Title level={3}>{name}</Typography.Title>
             <p className="text-sm font-thin text-slate-500 -mt-2 text-center">
               {email}
@@ -297,32 +298,29 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               </div>
 
           
-           </div>}
+           </div>
+           )}
            {tab===1&&<div className={`flex flex-row justify-around `}>
 
-           <Reward />
+           <RewardEvaluation />
            </div>}
-           {tab===2&&<div className={`flex flex-row justify-around `}>
+           {tab===5&&<div className={`flex flex-row justify-around `}>
 
-           <Performance />
+           <EducationalEvaluation />
            </div>}
            {tab===3&&<div className={`flex flex-row justify-around `}>
 
            <Wastna />
            </div>}
+           {tab===4&&<div className={`flex flex-row justify-around `}>
+
+          <EducationLevel />
+          </div>}
            {/* <Performance/> */}
 
         </Card>
       </div>
-          <Row className='flex justify-around'>
-         <span onClick={()=>adjestingTabs(1)} className='bg-slate-300 rounded-md text-slate-600 p-2 px-7'>Reward Info</span>
-           {/* <span onClick={()=>adjestingTabs(3)} className='bg-slate-300 rounded-md text-slate-600 p-2 px-7'>Wastna</span> */}
          
-         <span onClick={()=>adjestingTabs(2)} className='bg-slate-300 rounded-md text-slate-600 p-2 px-7'>Performance </span>
-         
-          {/* <Link onClick={()=>adjestingTabs(2)} to={`/user/performance/${1}`} className='bg-slate-300 rounded-md text-slate-600 p-2 px-7'>Performance evaluation</Link>
-          <Link onClick={()=>adjestingTabs(3)} to={`/user/wastna/${1}`}  className='bg-slate-300 rounded-md text-slate-600 p-2 px-7'>Wastna</Link> */}
-      </Row>
     </>
   );
 };

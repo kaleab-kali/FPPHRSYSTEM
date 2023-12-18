@@ -3,7 +3,7 @@ import React from 'react';
 
 type Props = {};
 
-const EducationEvaluation = (props: Props) => {
+const EducationEvaluation:React.FC<any>  = (props: Props) => {
   const dataSource = [
     {
       key: '1',
@@ -26,9 +26,9 @@ const EducationEvaluation = (props: Props) => {
     <div>
       <span className='text-slate-500 m-4 text-lg mb-7'>Education Evaluation</span>
       <br /><br /><br />
-      <span  className='flex justify-center  m-4 bg-slate-600  text-blue-400  px-2 rounded-md  text-center cursor-pointer'
+      <span  className='flex justify-center  m-4 bg-slate-600  text-slate-300  px-2 rounded-md  text-center cursor-pointer'
                     >Update  Employee's Education Performance  </span>
-     <div className="search-table-outter wrapper shadow-md rounded-xl  border-l-4  border-blue-500     mt-9">
+     <div className="search-table-outter wrapper shadow-md rounded-md  border-l-4  border-blue-500     mt-9">
      <table id="example" className="display nowrap p-5" style={{width:"100%"}}> 
           <tbody className='justify-around py-10'>
             <tr className='text-slate-600 bg-slate-200 text-md font-bold pt-4' style={{ textAlign: 'start' }}>

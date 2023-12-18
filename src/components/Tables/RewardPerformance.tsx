@@ -4,7 +4,7 @@ import React from 'react'
 
 type Props = {};
 
-const RewardEvaluation = (props: Props) => {
+const RewardEvaluation:React.FC<any>  = (props: Props) => {
   const dataSource = [
     {
       key: '1',
@@ -31,7 +31,7 @@ const RewardEvaluation = (props: Props) => {
     <div>
       <span className='text-slate-500 m-4 text-lg mb-7'>Reward Evaluation</span>
       <br /><br /><br />
-      <span  className='flex justify-center  m-4 bg-slate-600  text-blue-400  px-2 rounded-md  text-center cursor-pointer'
+      <span  className='flex justify-center  m-4 bg-slate-600  text-slate-300  px-2 rounded-md  text-center cursor-pointer'
                     >Update  Employee's Reward Performance  </span>
      <div className="search-table-outter wrapper shadow-md rounded-xl  border-l-4  border-blue-500     mt-9">
      <table id="example" className="display nowrap p-5" style={{width:"100%"}}> 
