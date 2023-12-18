@@ -179,7 +179,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <Layout className="container bg-slate-100">
+    <Layout className="bg-slate-100">
       <Header
         style={{
           display: "flex",
