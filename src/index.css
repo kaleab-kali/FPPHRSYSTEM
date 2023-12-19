@@ -14,3 +14,46 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+/* educationEvaluation.css */
+.custom-table .ant-table-thead > tr > th {
+  background-color: #b3bac5;
+  color: rgb(49, 74, 67); 
+}
+.custom-table .ant-table-tbody > tr > td {
+  background-color: #9ea9b9;
+  color: rgb(33, 51, 69); 
+  
+}
+
+/* .custom-table .ant-table-tbody {
+  border-radius: 8rem; 
+} */
+
+
+.search-table-outter {
+  /* border:2px solid rgb(20, 108, 101);  */
+  width: 700px;
+  margin: 0 auto;
+}
+/* .hrr{
+  width: 800px;
+} */
+.search-table{
+  table-layout: fixed; margin:40px auto 0px auto; 
+}
+.search-table, td, th{
+  /* border-collapse:collapse; */
+   border:0.2px solid #04ff824a;  
+}
+
+td{
+  padding:25px 20px;
+   height:55px;
+}
+
+.search-table-outter { 
+  overflow-x: scroll;
+ }
+th, td {
+   min-width:180px;
+   }
