@@ -75,7 +75,12 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
       <div className="flex  w-full  mt-10 bg-slate-100">
         <Card className="w-1/3 bg-none">
           <div className="card-header">
-            <Image src={photo} className="" width={150} height={150} />
+            <Image
+              src={photo}
+              className="rounded-xl"
+              width={150}
+              height={150}
+            />
             <Typography.Title level={3}>{name}</Typography.Title>
             <p className="text-sm font-thin text-slate-500 -mt-2 text-center">
               {email}

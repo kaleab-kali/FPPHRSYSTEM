@@ -19,6 +19,14 @@ type Degree = { id: number };
 type Degrees = { bachelor: Degree[]; master: Degree[]; phd: Degree[] };
 type Level = "bachelor" | "master" | "phd";
 
+interface EducationItem {
+  id: number;
+  educationLevel: string;
+  graduationYear: string;
+  fieldOfStudy: string;
+  instituteName: string;
+  action: number;
+}
 const universitiesInEthiopia = [
   // Public Universities
   "Addis Ababa University (AAU)",
@@ -132,7 +140,6 @@ const DegreeFields: React.FC<{ degreeName: string; index: number }> = ({
 );
 
 const EducationLevel: React.FC<any> = () => {
-
   const [educationLevel, setEducationLevel] = useState<Level | "">("");
   const [degrees, setDegrees] = useState<Degrees>({
     bachelor: [{ id: 1 }],
@@ -156,63 +163,82 @@ const EducationLevel: React.FC<any> = () => {
     const newDegrees = degrees[level].slice(0, -1);
     setDegrees({ ...degrees, [level]: newDegrees });
   };
-   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-   const showModal = () => {
-     setIsModalVisible(true);
-   };
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
 
-   const handleOk = () => {
-     setIsModalVisible(false);
-   };
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
 
-   const handleCancel = () => {
-     setIsModalVisible(false);
-   };
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
-const columns = [
-  {
-    title: "Education Level",
-    dataIndex: "educationLevel",
-    key: "educationLevel",
-  },
-  {
-    title: "Graduation Year",
-    dataIndex: "graduationYear",
-    key: "graduationYear",
-  },
-  { title: "Field of Study", dataIndex: "fieldOfStudy", key: "fieldOfStudy" },
-  {
-    title: "Institute Name",
-    dataIndex: "instituteName",
-    key: "instituteName",
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-    key: "action",
-    render: (_: any, record: Degree) => (
-      <Button
-        type="link"
-        // onClick={() => removeDegree(educationLevel, record.id)}
-      >
-        Remove
-      </Button>
-    ),
-  },
-];
+  const columns = [
+    {
+      title: "Education Level",
+      dataIndex: "educationLevel",
+      key: "educationLevel",
+    },
+    {
+      title: "Graduation Year",
+      dataIndex: "graduationYear",
+      key: "graduationYear",
+    },
+    { title: "Field of Study", dataIndex: "fieldOfStudy", key: "fieldOfStudy" },
+    {
+      title: "Institute Name",
+      dataIndex: "instituteName",
+      key: "instituteName",
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      render: (_: any, record: Degree) => (
+        <div className="flex flex-row space-x-4">
+          <Button
+            type="link"
+            className="bg-red-700 text-white"
+            // onClick={() => removeDegree(educationLevel, record.id)}
+          >
+            Remove
+          </Button>
+          <Button
+            type="link"
+            className="bg-blue-700 text-white"
+            // onClick={() => removeDegree(educationLevel, record.id)}
+          >
+            Update
+          </Button>
+        </div>
+      ),
+    },
+  ];
+  const dataSource: EducationItem[] = [
+    {
+      id: 1,
+      educationLevel: "Bachelor",
+      graduationYear: "2022",
+      fieldOfStudy: "Computer Science",
+      instituteName: "ASTU",
+      action: 1,
+    },
+    // Add more sample rows as needed
+  ];
+  //  const dataSource = degrees[educationLevel].map((degree) => ({
+  //    ...degree,
+  //    key: degree.id,
+  //    action: "Remove",
+  //  }));
 
-//  const dataSource = degrees[educationLevel].map((degree) => ({
-//    ...degree,
-//    key: degree.id,
-//    action: "Remove",
-//  }));
-
-//   const onFinish = (values: any) => {
-//     handleFormData(values); // Collect and pass the form data
-//     nextStep();
-//   };
-
+  //   const onFinish = (values: any) => {
+  //     handleFormData(values); // Collect and pass the form data
+  //     nextStep();
+  //   };
 
   return (
     <div className="felx w-full">
@@ -281,16 +307,52 @@ const columns = [
         )}
       </Modal>
       {/* {educationLevel && ( */}
-        <Table
+      {/* <Table
           columns={columns}
-          //   dataSource={dataSource}
+          dataSource={dataSource}
           bordered
           pagination={false}
           style={{ marginTop: 16 }}
-        />
+        /> */}
       {/* )} */}
+      <br />
+      <br />
+      <br />
+      <div className="search-table-outter wrapper mb-11 shadow-md rounded-md  border-l-4  border-blue-500     mt-9">
+        <table
+          id="example"
+          className="display nowrap p-5"
+          style={{ width: "100%" }}
+        >
+          <tbody className="justify-around py-10">
+            <tr
+              className="text-slate-600 bg-slate-200 text-md font-bold pt-4"
+              style={{ textAlign: "start" }}
+            >
+              <td>Education Level</td>
+              <td>Graduation Year</td>
+              <td>FieldOfStudy</td>
+              <td>InstituteName</td>
+              <td>Action</td>
+            </tr>
+            {dataSource.map((data: any) => (
+              <tr
+                key={data.key}
+                className="py-10 mb-10 text-slate-500"
+                style={{ textAlign: "start", margin: 32 }}
+              >
+                <td>{data.educationLevel}</td>
+                <td>{data.graduationYear}</td>
+                <td>{data.fieldOfStudy}</td>
+                <td>{data.instituteName}</td>
+                <td>{data.action}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
 
-export default EducationLevel
+export default EducationLevel;
