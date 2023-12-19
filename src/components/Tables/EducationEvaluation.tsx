@@ -56,7 +56,7 @@ const EducationEvaluation:React.FC<any>  = (props: Props) => {
                 <td>{data.quality}</td>
                 <td>{data.total}</td>
                 <td>{data.level}</td>
-                <td>{/* Examination */}</td>
+                {/* <td>Examination</td> */}
               </tr>
             ))}
           </tbody>

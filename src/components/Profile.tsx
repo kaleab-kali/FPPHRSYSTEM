@@ -1,9 +1,6 @@
 
-import { Avatar, Layout, Card, Typography, Image, Row } from 'antd';
+import {  Card, Typography, Image } from 'antd';
 import  photo from '../assets/images/photo.jpg'
-import { Link } from 'react-router-dom';
-import { Performance } from './user/Performance';
-import Reward from './user/Reward';
 import RewardEvaluation from '../components/Tables/RewardPerformance';
 import EducationalEvaluation from '../components/Tables/EducationEvaluation';
 import { useState } from 'react';
@@ -11,11 +8,8 @@ import { Wastna } from './user/Wastna';
 import {
   UserOutlined,
   IdcardOutlined,
-  InfoCircleOutlined,
-  HeartOutlined,
   MedicineBoxOutlined,
   TrophyOutlined,
-  InfoOutlined,
   PaperClipOutlined,
   EditOutlined,
   

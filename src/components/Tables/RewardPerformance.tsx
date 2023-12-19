@@ -38,7 +38,6 @@ const RewardEvaluation:React.FC<any>  = (props: Props) => {
 	
           <tr className='text-slate-600 text-md bg-slate-200 font-bold ' style={{ textAlign: 'start' }}>
             <td>Title</td>
-
             <td>Full Name</td>
             <td>Competing Title</td>
             <td>Role</td>
