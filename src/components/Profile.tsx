@@ -169,7 +169,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
           </div>
         </Card>
         {/* <hr className='h-72 bg-slate-300 w-1 mt-11 rounded-lg mr-4'/> */}
-        <Card className="p-3 m-5 w-full">
+        <Card className="p-3 m-5 w-full  -z-1">
           {tab === 0 && (
             <div className={`flex flex-row justify-around `}>
               {/* <Descriptions bordered column={1}>
