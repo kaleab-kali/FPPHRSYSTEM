@@ -42,7 +42,7 @@ interface ProfileData {
   // Add more information as needed
 }
 const Profile: React.FC<ProfileProps> = ({ user }) => {
-  const { name, avatarUrl,phone, age, email } = user;
+  const { name, email } = user;
   const [tab,setTab]=useState(0)
  const adjestingTabs=(tab:any)=>{
   setTab(tab)
