@@ -20,6 +20,7 @@ import {
 } from "@ant-design/icons";
 import EducationLevel from './user/EducationLevel';
 import Meareg from './user/Meareg';
+import EducationEvaluation from './user/EducationEvaluation';
 const { Title } = Typography;
 
 interface ProfileProps {
@@ -141,6 +142,15 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               >
                 <EditOutlined className="pr-3" />
                 Meareg
+              </span>
+              <span
+                onClick={() => adjestingTabs(6)}
+                className={`rounded-md hover:bg-blue-300 text-slate-600 p-2 text-center flex justify-start cursor-pointer ${
+                  tab === 6 && "border border-t-transparent border-b-blue-500"
+                }`}
+              >
+                <EditOutlined className="pr-3" />
+                Education Evaluation
               </span>
             </div>
             {/* <Avatar size={64} src={avatarUrl} /> */}
@@ -325,6 +335,11 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
           {tab === 5 && (
             <div className={`flex flex-row justify-around `}>
               <Meareg />
+            </div>
+          )}
+          {tab === 6 && (
+            <div className={`flex flex-row justify-around `}>
+              <EducationEvaluation />
             </div>
           )}
           {/* <Performance/> */}
