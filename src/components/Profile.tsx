@@ -19,7 +19,7 @@ import {
   
 } from "@ant-design/icons";
 import EducationLevel from './user/EducationLevel';
-import EducationEvaluation from './user/EducationEvaluation';
+import Meareg from './user/Meareg';
 const { Title } = Typography;
 
 interface ProfileProps {
@@ -89,7 +89,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               <span
                 onClick={() => adjestingTabs(0)}
                 className={`rounded-md hover:bg-blue-300 text-slate-600 p-2 text-center flex justify-start cursor-pointer ${
-                  tab === 0 && "border border-t-transparent border-blue-500"
+                  tab === 0 && "border border-t-transparent border-b-blue-500"
                 }`}
               >
                 <UserOutlined className="pr-3" />
@@ -99,7 +99,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               <span
                 onClick={() => adjestingTabs(1)}
                 className={`rounded-md hover:bg-blue-300 text-slate-600 p-2 text-center flex justify-start cursor-pointer ${
-                  tab === 1 && "border border-t-transparent border-blue-500"
+                  tab === 1 && "border border-t-transparent border-b-blue-500"
                 }`}
               >
                 <TrophyOutlined className="pr-3" />
@@ -109,7 +109,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               <span
                 onClick={() => adjestingTabs(2)}
                 className={`rounded-md hover:bg-blue-300 text-slate-600 p-2 text-center flex justify-start cursor-pointer ${
-                  tab === 2 && "border border-t-transparent border-blue-500"
+                  tab === 2 && "border border-t-transparent border-b-blue-500"
                 }`}
               >
                 <MedicineBoxOutlined className="pr-3" />
@@ -118,7 +118,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               <span
                 onClick={() => adjestingTabs(3)}
                 className={`rounded-md hover:bg-blue-300 text-slate-600 p-2 text-center flex justify-start cursor-pointer ${
-                  tab === 3 && "border border-t-transparent border-blue-500"
+                  tab === 3 && "border border-t-transparent border-b-blue-500"
                 }`}
               >
                 <IdcardOutlined className="pr-3" />
@@ -127,7 +127,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               <span
                 onClick={() => adjestingTabs(4)}
                 className={`rounded-md hover:bg-blue-300 text-slate-600 p-2 text-center flex justify-start cursor-pointer ${
-                  tab === 4 && "border border-t-transparent border-blue-500"
+                  tab === 4 && "border border-t-transparent border-b-blue-500"
                 }`}
               >
                 <PaperClipOutlined className="pr-3" />
@@ -136,11 +136,11 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               <span
                 onClick={() => adjestingTabs(5)}
                 className={`rounded-md hover:bg-blue-300 text-slate-600 p-2 text-center flex justify-start cursor-pointer ${
-                  tab === 5 && "border border-t-transparent border-blue-500"
+                  tab === 5 && "border border-t-transparent border-b-blue-500"
                 }`}
               >
                 <EditOutlined className="pr-3" />
-                Educational Evaluation
+                Meareg
               </span>
             </div>
             {/* <Avatar size={64} src={avatarUrl} /> */}
@@ -324,7 +324,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
           )}
           {tab === 5 && (
             <div className={`flex flex-row justify-around `}>
-              <EducationEvaluation />
+              <Meareg />
             </div>
           )}
           {/* <Performance/> */}
