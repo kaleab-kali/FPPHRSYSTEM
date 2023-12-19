@@ -84,7 +84,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               <span
                 onClick={() => adjestingTabs(0)}
                 className={`rounded-md hover:bg-blue-300 text-slate-600 p-2 text-center flex justify-start cursor-pointer ${
-                  tab === 0 && "border border-t-transparent border-blue-500"
+                  tab === 0 && "border border-b-blue-500"
                 }`}
               >
                 <UserOutlined className="pr-3" />
@@ -94,7 +94,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               <span
                 onClick={() => adjestingTabs(1)}
                 className={`rounded-md hover:bg-blue-300 text-slate-600 p-2 text-center flex justify-start cursor-pointer ${
-                  tab === 1 && "border border-t-transparent border-blue-500"
+                  tab === 1 && "border border-b-blue-500"
                 }`}
               >
                 <TrophyOutlined className="pr-3" />
@@ -104,7 +104,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               <span
                 onClick={() => adjestingTabs(2)}
                 className={`rounded-md hover:bg-blue-300 text-slate-600 p-2 text-center flex justify-start cursor-pointer ${
-                  tab === 2 && "border border-t-transparent border-blue-500"
+                  tab === 2 && "border border-b-blue-500"
                 }`}
               >
                 <MedicineBoxOutlined className="pr-3" />
@@ -113,7 +113,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               <span
                 onClick={() => adjestingTabs(3)}
                 className={`rounded-md hover:bg-blue-300 text-slate-600 p-2 text-center flex justify-start cursor-pointer ${
-                  tab === 3 && "border border-t-transparent border-blue-500"
+                  tab === 3 && "border border-b-blue-500"
                 }`}
               >
                 <IdcardOutlined className="pr-3" />
@@ -122,7 +122,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               <span
                 onClick={() => adjestingTabs(4)}
                 className={`rounded-md hover:bg-blue-300 text-slate-600 p-2 text-center flex justify-start cursor-pointer ${
-                  tab === 4 && "border border-t-transparent border-blue-500"
+                  tab === 4 && "border border-b-blue-500"
                 }`}
               >
                 <PaperClipOutlined className="pr-3" />
@@ -131,7 +131,7 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
               <span
                 onClick={() => adjestingTabs(5)}
                 className={`rounded-md hover:bg-blue-300 text-slate-600 p-2 text-center flex justify-start cursor-pointer ${
-                  tab === 5 && "border border-t-transparent border-blue-500"
+                  tab === 5 && "border border-b-blue-500"
                 }`}
               >
                 <EditOutlined className="pr-3" />
@@ -185,116 +185,109 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
       </Descriptions> */}
               <div>
                 <div className="pb-3">
-                  <span className="text-slate-600 font-bold text-md mt-10">
-                    Current Address
+                  <span className="text-slate-600 font-bold text-lg mt-10">
+                    Full Name
                   </span>
-                  <p className="text-sm font-thin text-slate-500">
-                    Addis ababa , kolfe
+                  <p className="text-md font-thin text-slate-500">
+                    Amelayew Abera Werku
                   </p>
                 </div>
                 <div className="pb-3">
-                  <span className="text-slate-600 font-bold text-md mt-10">
-                    Birth Place
+                  <span className="text-slate-600 font-bold text-lg mt-10">
+                    Employee ID
+                  </span>
+                  <p className="text-sm font-thin text-slate-500">FPC-0008</p>
+                </div>
+                <div className="pb-3">
+                  <span className="text-slate-600 font-bold text-lg mt-10">
+                    Sex
+                  </span>
+                  <p className="text-sm font-thin text-slate-500">Male</p>
+                </div>
+                <div className="pb-3">
+                  <span className="text-slate-600 font-bold text-lg mt-10">
+                    Birth Date
+                  </span>
+                  <p className="text-sm font-thin text-slate-500">11-22-2015</p>
+                </div>
+                <div className="pb-3">
+                  <span className="text-slate-600 font-bold text-lg mt-10">
+                    Nationality
+                  </span>
+                  <p className="text-sm font-thin text-slate-500">Oromo</p>
+                </div>
+                <div className="pb-3">
+                  <span className="text-slate-600 font-bold text-lg mt-10">
+                    Address
                   </span>
                   <p className="text-sm font-thin text-slate-500">
-                    Addis Ababa, Kolfe
+                    Addis Ababa, Kilinto
                   </p>
                 </div>
                 <div className="pb-3">
-                  <span className="text-slate-600 font-bold text-md mt-10">
-                    Education Level
+                  <span className="text-slate-600 font-bold text-lg mt-10">
+                    Phone Number
                   </span>
-                  <p className="text-sm font-thin text-slate-500">Degree</p>
+                  <p className="text-sm font-thin text-slate-500">
+                    +251 904 547 690
+                  </p>
                 </div>
                 <div className="pb-3">
-                  <span className="text-slate-600 font-bold text-md mt-10">
-                    Region
+                  <span className="text-slate-600 font-bold text-lg mt-10">
+                    Email
                   </span>
-                  <p className="text-sm font-thin text-slate-500">Oromia</p>
+                  <p className="text-sm font-thin text-slate-500">
+                    alemabewerku@gmail.com
+                  </p>
                 </div>
               </div>
               <div className="ml-20">
                 <div>
                   <div className="pb-3">
-                    <span className="text-slate-600 font-bold text-md mt-10">
-                      Birth Place
+                    <span className="text-slate-600 font-bold text-lg mt-10">
+                      Title
                     </span>
-                    <p className="text-sm font-thin text-slate-500">
-                      Addis Ababa, Kolfe
-                    </p>
+                    <p className="text-sm font-thin text-slate-500">Sajin</p>
                   </div>
                   <div className="pb-3">
-                    <span className="text-slate-600 font-bold text-md mt-10">
+                    <span className="text-slate-600 font-bold text-lg mt-10">
+                      Maritial Status
+                    </span>
+                    <p className="text-sm font-thin text-slate-500">Single</p>
+                  </div>
+                  <div className="pb-3">
+                    <span className="text-slate-600 font-bold text-lg mt-10">
                       Education Level
                     </span>
-                    <p className="text-sm font-thin text-slate-500">Degree</p>
+                    <p className="text-sm font-thin text-slate-500">
+                      Bsc. Information Technology
+                    </p>
                   </div>
                   <div className="pb-3">
-                    <span className="text-slate-600 font-bold text-md mt-10">
+                    <span className="text-slate-600 font-bold text-lg mt-10">
                       Department
                     </span>
-                    <p className="text-sm font-thin text-slate-500">SC</p>
+                    <p className="text-sm font-thin text-slate-500">IT</p>
                   </div>
                   <div className="pb-3">
-                    <span className="text-slate-600 font-bold text-md mt-10">
+                    <span className="text-slate-600 font-bold text-lg mt-10">
                       Role
                     </span>
-                    <p className="text-sm font-thin text-slate-500">General</p>
-                  </div>
-                  {/* <div className='pb-3'>
-                  <span className='text-slate-600 font-bold text-md mt-10'>wastna</span>
-                  <p className='text-sm font-thin text-slate-500'>yes</p>
-                </div> */}
-                </div>
-              </div>
-              <div className="ml-20">
-                <div>
-                  <div className="pb-3">
-                    <span className="text-slate-600 font-bold text-md mt-10">
-                      Salary
-                    </span>
-                    <p className="text-sm font-thin text-slate-500">9000</p>
+                    <p className="text-sm font-thin text-slate-500">Admin</p>
                   </div>
                   <div className="pb-3">
-                    <span className="text-slate-600 font-bold text-md mt-10">
-                      ማዕረግ ያገኘበት ቀን
-                    </span>
-                    <p className="text-sm font-thin text-slate-500">
-                      11-22-2015
-                    </p>
-                  </div>
-                  <div className="pb-3">
-                    <span className="text-slate-600 font-bold text-md mt-10">
-                      እርከን የሚያገኝበት ቀን
-                    </span>
-                    <p className="text-sm font-thin text-slate-500">
-                      11-22-2015
-                    </p>
-                  </div>
-                  <div className="pb-3">
-                    <span className="text-slate-600 font-bold text-md mt-10">
+                    <span className="text-slate-600 font-bold text-lg mt-10">
                       Wastna
                     </span>
                     <p className="text-sm font-thin text-slate-500">no</p>
                   </div>
-                  <div className="pb-3">
-                    <span className="text-slate-600 font-bold text-md mt-10">
-                      Retierment Date
-                    </span>
-                    <p className="text-sm font-thin text-slate-500">
-                      23-3-2017
-                    </p>
-                  </div>
-                  <div className="pb-3">
-                    <span className="text-slate-600 font-bold text-md mt-10">
-                      Maereg yemiagegnbet ken
-                    </span>
-                    <p className="text-sm font-thin text-slate-500">
-                      23-3-2017
-                    </p>
-                  </div>
+                  {/* <div className='pb-3'>
+                  <span className='text-slate-600 font-bold text-lg mt-10'>wastna</span>
+                  <p className='text-sm font-thin text-slate-500'>yes</p>
+                </div> */}
                 </div>
               </div>
+              
             </div>
           )}
           {tab === 1 && (

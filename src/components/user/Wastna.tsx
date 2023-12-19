@@ -2,7 +2,15 @@ import { Button, Form, Input, Modal, Radio, Select, Table } from 'antd'
 import { Option } from 'antd/es/mentions'
 import React, { useState } from 'react'
 import { PlusOutlined } from "@ant-design/icons";
-
+interface WastnaItem {
+  id: number;
+  wastenaType: string;
+  companyName: string;
+  toWhom: string;
+  salaryLevel: string;
+  wastenaAmount: string;
+  action: number;
+}
 export const Wastna = () => {
   const {Option}=Select;
   const [showAdditionalFields, setShowAdditionalFields] = useState(false);
@@ -49,7 +57,35 @@ const columns = [
     title: "Action",
     dataIndex: "action",
     key: "action",
-    render: () => <Button type="link">Remove</Button>,
+    render: () => (
+      <div className="flex flex-row space-x-4">
+        <Button
+          type="link"
+          className="bg-red-700 text-white"
+          // onClick={() => removeDegree(educationLevel, record.id)}
+        >
+          Remove
+        </Button>
+        <Button
+          type="link"
+          className="bg-blue-700 text-white"
+          // onClick={() => removeDegree(educationLevel, record.id)}
+        >
+          Update
+        </Button>
+      </div>
+    ),
+  },
+];
+const dataSource: WastnaItem[] = [
+  {
+    id: 1,
+    wastenaType: "Loan",
+    companyName: "Dereja",
+    toWhom: "Abebe Mola",
+    salaryLevel: "30,000",
+    wastenaAmount: "40,000",
+    action: 1,
   },
 ];
   return (
@@ -145,7 +181,7 @@ const columns = [
       </Modal>
       <Table
         columns={columns}
-        //   dataSource={dataSource}
+        dataSource={dataSource}
         bordered
         pagination={false}
         style={{ marginTop: 16 }}

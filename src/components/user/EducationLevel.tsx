@@ -19,6 +19,14 @@ type Degree = { id: number };
 type Degrees = { bachelor: Degree[]; master: Degree[]; phd: Degree[] };
 type Level = "bachelor" | "master" | "phd";
 
+interface EducationItem {
+  id: number;
+  educationLevel: string;
+  graduationYear: string;
+  fieldOfStudy: string;
+  instituteName: string;
+  action: number;
+}
 const universitiesInEthiopia = [
   // Public Universities
   "Addis Ababa University (AAU)",
@@ -192,16 +200,36 @@ const columns = [
     dataIndex: "action",
     key: "action",
     render: (_: any, record: Degree) => (
+        <div className="flex flex-row space-x-4">
       <Button
         type="link"
+        className="bg-red-700 text-white"
         // onClick={() => removeDegree(educationLevel, record.id)}
-      >
+        >
         Remove
       </Button>
+      <Button
+        type="link"
+        className="bg-blue-700 text-white"
+        // onClick={() => removeDegree(educationLevel, record.id)}
+        >
+        Update
+      </Button>
+          </div>
     ),
   },
 ];
-
+const dataSource: EducationItem[] = [
+  {
+    id: 1,
+    educationLevel: "Bachelor",
+    graduationYear: "2022",
+    fieldOfStudy: "Computer Science",
+    instituteName: "ASTU",
+    action: 1,
+  },
+  // Add more sample rows as needed
+];
 //  const dataSource = degrees[educationLevel].map((degree) => ({
 //    ...degree,
 //    key: degree.id,
@@ -283,7 +311,7 @@ const columns = [
       {/* {educationLevel && ( */}
         <Table
           columns={columns}
-          //   dataSource={dataSource}
+          dataSource={dataSource}
           bordered
           pagination={false}
           style={{ marginTop: 16 }}
