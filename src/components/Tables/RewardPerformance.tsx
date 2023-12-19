@@ -36,7 +36,7 @@ const RewardEvaluation:React.FC<any>  = (props: Props) => {
      <div className="search-table-outter wrapper shadow-md rounded-xl  border-l-4  border-blue-500     mt-9">
      <table id="example" className="display nowrap p-5" style={{width:"100%"}}> 
 	
-          <tr className='text-slate-600 text-lg bg-slate-200 font-bold ' style={{ textAlign: 'start' }}>
+          <tr className='text-slate-600 text-md bg-slate-200 font-bold ' style={{ textAlign: 'start' }}>
             <td>Title</td>
 
             <td>Full Name</td>
