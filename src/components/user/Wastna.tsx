@@ -57,24 +57,24 @@ const columns = [
     title: "Action",
     dataIndex: "action",
     key: "action",
-    render: () => (
-      <div className="flex flex-row space-x-4">
-        <Button
-          type="link"
-          className="bg-red-700 text-white"
-          // onClick={() => removeDegree(educationLevel, record.id)}
-        >
-          Remove
-        </Button>
-        <Button
-          type="link"
-          className="bg-blue-700 text-white"
-          // onClick={() => removeDegree(educationLevel, record.id)}
-        >
-          Update
-        </Button>
-      </div>
-    ),
+    // render: () => (
+    //   <div className="flex flex-row space-x-4">
+    //     <Button
+    //       type="link"
+    //       className="bg-red-700 text-white"
+    //       // onClick={() => removeDegree(educationLevel, record.id)}
+    //     >
+    //       Remove
+    //     </Button>
+    //     <Button
+    //       type="link"
+    //       className="bg-blue-700 text-white"
+    //       // onClick={() => removeDegree(educationLevel, record.id)}
+    //     >
+    //       Update
+    //     </Button>
+    //   </div>
+    // ),
   },
 ];
 const dataSource: WastnaItem[] = [
@@ -179,13 +179,51 @@ const dataSource: WastnaItem[] = [
           </>
         )}
       </Modal>
-      <Table
+      {/* <Table
         columns={columns}
         dataSource={dataSource}
         bordered
         pagination={false}
         style={{ marginTop: 16 }}
-      />
+      /> */}
+      <br /><br /><br />
+      <div className="search-table-outter wrapper mb-11 shadow-md rounded-md  border-l-4  border-blue-500     mt-9">
+        <table
+          id="example"
+          className="display nowrap p-5"
+          style={{ width: "100%" }}
+        >
+          <tbody className="justify-around py-10">
+            <tr
+              className="text-slate-600 bg-slate-200 text-md font-bold pt-4"
+              style={{ textAlign: "start" }}
+            >
+              <td>Wstna Type</td>
+              <td>Company Name</td>
+              <td>To whom</td>
+              <td>Salary level</td>
+              <td>Wastna Amout</td>
+              <td>Action</td>
+             
+            </tr>
+            {dataSource.map((data: any) => (
+              <tr
+                key={data.key}
+                className="py-10 mb-10 text-slate-500"
+                style={{ textAlign: "start", margin: 32 }}
+              >
+                <td>{data.wastenaType}</td>
+                <td>{data.companyName}</td>
+                <td>{data.toWhom}</td>
+                <td>{data.salaryLevel}</td>
+                <td>{data.wastenaAmount}</td>
+                <td>{data.action}</td>
+                
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
