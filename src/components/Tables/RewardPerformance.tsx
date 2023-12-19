@@ -24,7 +24,7 @@ const RewardEvaluation:React.FC<any>  = (props: Props) => {
       netPoint: 93,
       level: 2,
     },
-    // Add more data as needed
+    //TODO add more data as needed
   ];
 
   return (
