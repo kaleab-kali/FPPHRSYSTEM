@@ -12,8 +12,6 @@ interface Step1Props {
   handleFormData: (data: any) => void;
 }
 
-
-
 const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
   const [region, setRegion] = useState<string | null>(null);
   const [subcity, setSubcity] = useState<string | null>(null);
@@ -249,21 +247,20 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
             </Form.Item>
           </Col>
           <Col span={8}>
-          <Form.Item label="Woreda" name="wordea">
-          <Select
-            options={woredaOptions.map((woreda) => ({
-              label: woreda,
-              value: woreda,
-            }))}
-            value={woreda}
-          />
-        </Form.Item>
+            <Form.Item label="Woreda" name="wordea">
+              <Select
+                options={woredaOptions.map((woreda) => ({
+                  label: woreda,
+                  value: woreda,
+                }))}
+                value={woreda}
+              />
+            </Form.Item>
           </Col>
         </Row>
         <Row gutter={16}>
-         
           <Col span={8}>
-          <Form.Item label="House Number" name="houseNumber">
+            <Form.Item label="House Number" name="houseNumber">
               <Input />
             </Form.Item>
           </Col>
@@ -277,17 +274,16 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
               <Input />
             </Form.Item>
           </Col>
-
         </Row>
-       
 
-        <Row gutter={16}>
-          
-         
-        </Row>
+        <Row gutter={16}></Row>
       </Form.Item>
 
-      <Button type="primary" onClick={nextStep}>
+      <Button
+        type="primary"
+        onClick={nextStep}
+        style={{ background: "#1890ff", borderColor: "#1890ff" }}
+      >
         Next
       </Button>
     </>

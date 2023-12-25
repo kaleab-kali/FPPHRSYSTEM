@@ -1,6 +1,16 @@
 // Step3.tsx
 import React, { useEffect, useState } from "react";
-import { Form, Input, Select, Button, DatePicker, Space, Row, Col, Radio } from "antd";
+import {
+  Form,
+  Input,
+  Select,
+  Button,
+  DatePicker,
+  Space,
+  Row,
+  Col,
+  Radio,
+} from "antd";
 import { FormInstance } from "antd/lib/form";
 import { data } from "../data";
 
@@ -52,16 +62,22 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
     setWoredaOptions(data[region!][value]);
     form.setFieldsValue({ wordea: firstWoreda });
   };
-  const [maritalStatus, setMaritalStatus] = useState<string>('single');
+  const [maritalStatus, setMaritalStatus] = useState<string>("single");
 
   const handleMaritalStatusChange = (value: string) => {
     setMaritalStatus(value);
   };
 
-
   return (
     <>
-      <Form.Item label={<span style={{ fontWeight: 'bold', fontSize: '16px' }}>Emergency Contact Information</span>} name="emergencyContact">
+      <Form.Item
+        label={
+          <span style={{ fontWeight: "bold", fontSize: "16px" }}>
+            Emergency Contact Information
+          </span>
+        }
+        name="emergencyContact"
+      >
         {/* Sub-form for Emergency Contact Information */}
         <Row gutter={16}>
           <Col span={8}>
@@ -131,42 +147,45 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
           </Col>
         </Row>
 
-        <Form.Item label="Emergency Contact Address" name={["emergencyContact", "address"]}>
+        <Form.Item
+          label="Emergency Contact Address"
+          name={["emergencyContact", "address"]}
+        >
           {/* Sub-form for Address */}
           <Row gutter={16}>
             <Col span={8}>
-            <Form.Item label="Region" name="region">
-              <Select
-                options={Object.keys(data).map((region) => ({
-                  label: region,
-                  value: region,
-                }))}
-                onChange={handleRegionChange}
-              />
-            </Form.Item>
+              <Form.Item label="Region" name="region">
+                <Select
+                  options={Object.keys(data).map((region) => ({
+                    label: region,
+                    value: region,
+                  }))}
+                  onChange={handleRegionChange}
+                />
+              </Form.Item>
             </Col>
             <Col span={8}>
-            <Form.Item label="Zone/Subcity" name="subcity">
-              <Select
-                options={subcityOptions.map((subcity) => ({
-                  label: subcity,
-                  value: subcity,
-                }))}
-                onChange={handleSubcityChange}
-                value={subcity}
-              />
-            </Form.Item>
+              <Form.Item label="Zone/Subcity" name="subcity">
+                <Select
+                  options={subcityOptions.map((subcity) => ({
+                    label: subcity,
+                    value: subcity,
+                  }))}
+                  onChange={handleSubcityChange}
+                  value={subcity}
+                />
+              </Form.Item>
             </Col>
             <Col span={8}>
-            <Form.Item label="Woreda" name="wordea">
-          <Select
-            options={woredaOptions.map((woreda) => ({
-              label: woreda,
-              value: woreda,
-            }))}
-            value={woreda}
-          />
-        </Form.Item>
+              <Form.Item label="Woreda" name="wordea">
+                <Select
+                  options={woredaOptions.map((woreda) => ({
+                    label: woreda,
+                    value: woreda,
+                  }))}
+                  value={woreda}
+                />
+              </Form.Item>
             </Col>
           </Row>
 
@@ -191,7 +210,11 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
         </Form.Item>
       </Form.Item>
 
-      <Form.Item label="Marital Status" name="maritalStatus" initialValue="single">
+      <Form.Item
+        label="Marital Status"
+        name="maritalStatus"
+        initialValue="single"
+      >
         <Select onChange={handleMaritalStatusChange}>
           <Option value="married">Married</Option>
           <Option value="single">Single</Option>
@@ -201,78 +224,98 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
 
       <Form.Item
         noStyle
-        shouldUpdate={(prevValues, currentValues) => prevValues.maritalStatus !== currentValues.maritalStatus}
+        shouldUpdate={(prevValues, currentValues) =>
+          prevValues.maritalStatus !== currentValues.maritalStatus
+        }
       >
         {({ getFieldValue }) => {
-          const currentStatus = getFieldValue('maritalStatus');
+          const currentStatus = getFieldValue("maritalStatus");
 
           return (
             <>
-              {currentStatus === 'married' && (
+              {currentStatus === "married" && (
                 <Form.Item label="Spouse Information" name="spouseInfo">
                   <Row gutter={16}>
                     <Col span={8}>
-                      <Form.Item label="First Name" name={['spouseInfo', 'firstName']}>
+                      <Form.Item
+                        label="First Name"
+                        name={["spouseInfo", "firstName"]}
+                      >
                         <Input />
                       </Form.Item>
                     </Col>
                     <Col span={8}>
-                      <Form.Item label="Middle Name" name={['spouseInfo', 'middleName']}>
+                      <Form.Item
+                        label="Middle Name"
+                        name={["spouseInfo", "middleName"]}
+                      >
                         <Input />
                       </Form.Item>
                     </Col>
                     <Col span={8}>
-                      <Form.Item label="Last Name" name={['spouseInfo', 'lastName']}>
+                      <Form.Item
+                        label="Last Name"
+                        name={["spouseInfo", "lastName"]}
+                      >
                         <Input />
                       </Form.Item>
                     </Col>
-                    
                   </Row>
                   <Row gutter={16}>
                     <Col span={8}>
-                      <Form.Item label="Date of Birth" name={['spouseInfo', 'dob']}>
-                        <DatePicker style={{ width: '100%' }} />
+                      <Form.Item
+                        label="Date of Birth"
+                        name={["spouseInfo", "dob"]}
+                      >
+                        <DatePicker style={{ width: "100%" }} />
                       </Form.Item>
                     </Col>
                     <Col span={8}>
-                      <Form.Item label="Phone Number" name={['spouseInfo', 'phoneNumber']}>
+                      <Form.Item
+                        label="Phone Number"
+                        name={["spouseInfo", "phoneNumber"]}
+                      >
                         <Input />
                       </Form.Item>
                     </Col>
-                    
                   </Row>
-                  
-                  
-                      <Form.Item label="Address" name={['spouseInfo', 'address', 'currentAddress']}>
-                        {/* Sub-form for Spouse Address */}
-                        <Row gutter={16}>
-                          <Col span={8}>
-                            <Form.Item label="Region" name={['spouseInfo', 'address', 'region']}>
-                              <Select>
-                                {/* Options for Region */}
-                              </Select>
-                            </Form.Item>
-                          </Col>
-                          <Col span={8}>
-                            <Form.Item label="Subcity" name={['spouseInfo', 'address', 'subcity']}>
-                              <Select>
-                                {/* Options for Subcity */}
-                              </Select>
-                            </Form.Item>
-                          </Col>
-                        </Row>
-                       
-                      </Form.Item>
-                 
+
+                  <Form.Item
+                    label="Address"
+                    name={["spouseInfo", "address", "currentAddress"]}
+                  >
+                    {/* Sub-form for Spouse Address */}
+                    <Row gutter={16}>
+                      <Col span={8}>
+                        <Form.Item
+                          label="Region"
+                          name={["spouseInfo", "address", "region"]}
+                        >
+                          <Select>{/* Options for Region */}</Select>
+                        </Form.Item>
+                      </Col>
+                      <Col span={8}>
+                        <Form.Item
+                          label="Subcity"
+                          name={["spouseInfo", "address", "subcity"]}
+                        >
+                          <Select>{/* Options for Subcity */}</Select>
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                  </Form.Item>
                 </Form.Item>
               )}
 
-              {currentStatus === 'divorced' && (
+              {currentStatus === "divorced" && (
                 <Form.Item label="Divorced Information" name="divorcedInfo">
                   <Row gutter={16}>
                     <Col span={8}>
-                      <Form.Item label="Divorce Date" name={['divorcedInfo', 'divorceDate']}>
-                        <DatePicker style={{ width: '100%' }} />
+                      <Form.Item
+                        label="Divorce Date"
+                        name={["divorcedInfo", "divorceDate"]}
+                      >
+                        <DatePicker style={{ width: "100%" }} />
                       </Form.Item>
                     </Col>
                     {/* ... (add other divorced fields) */}
@@ -284,7 +327,6 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
         }}
       </Form.Item>
 
-
       {/* <Form.Item
         label="የስራ አፈፃፀም ውጤት"
         name="workPerformance"
@@ -294,22 +336,23 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
         <Input />
       </Form.Item> */}
 
-    
-
-
       <Space>
-        <Button type="primary" onClick={prevStep}>
+        <Button
+          type="primary"
+          onClick={prevStep}
+          style={{ background: "#1890ff", borderColor: "#1890ff" }}
+        >
           Previous
         </Button>
-        <Button type="primary" htmlType="submit">
+        <Button
+          type="primary"
+          htmlType="submit"
+          style={{ background: "#1890ff", borderColor: "#1890ff" }}
+        >
           Submit
         </Button>
       </Space>
-    
-    
     </>
-     
-    
   );
 };
 

@@ -33,6 +33,10 @@ import {
 import MyForm from "./components/Form";
 import Messages from "./components/Messages";
 import Profile from "./components/Profile";
+import EmployeeInfo from "./components/EmployeeProfile/EmployeeProfile";
+import EmployeeProfile from "./components/EmployeeProfile/EmployeeProfile";
+import Reward from "./components/Reward";
+import "./App.css";
 
 const { Header, Content, Sider } = Layout;
 const { Search } = Input;
@@ -288,7 +292,7 @@ const App: React.FC = () => {
           <Content
             className="mainContent"
             style={{
-              padding: 24,
+              padding: 0,
               margin: 0,
               // height: '100vh',
               background: "#fff",
@@ -305,17 +309,20 @@ const App: React.FC = () => {
                       element={
                         child.label === "Employee Registration" ? (
                           <>
-                            <h1>{child.label} Form</h1>
+                            <h1 className="content-h1">{child.label} Form</h1>
                             <MyForm />
                           </>
                         ) : child.label === "Profile View" ? (
                           <>
-                            <h1>{child.label} </h1> 
-                            <Profile name={""} age={0} sex={""} position={""} department={""} pictureUrl={""} />
+                            {/* <h1>{child.label} </h1>  */}
+                            <EmployeeProfile />
+                            {/* <Profile name={""} age={0} sex={""} position={""} department={""} pictureUrl={""} /> */}
                           </>
                          
                         ) : child.label === "Profile Edit" ? (
-                          <h1>{child.label} Component</h1> // Placeholder for the "Edit" component
+                          <>
+                          <h1>{child.label} Component</h1> 
+                          <Reward /></>
                         ) : (
                           <h1>{child.label} Page Content</h1>
                         )

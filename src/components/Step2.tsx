@@ -175,8 +175,6 @@ const Step2: React.FC<Step2Props> = ({
     setDegrees({ ...degrees, [level]: newDegrees });
   };
 
-  
-
   // Reset subcity and woreda when region changes
   useEffect(() => {
     setSubcity(null);
@@ -273,7 +271,14 @@ const Step2: React.FC<Step2Props> = ({
           )
       )}
 
-<Form.Item label={<span style={{ fontWeight: 'bold', fontSize: '16px' }}>Birthplace Information</span>} name="birthplaceInfo">
+      <Form.Item
+        label={
+          <span style={{ fontWeight: "bold", fontSize: "16px" }}>
+            Birthplace Information
+          </span>
+        }
+        name="birthplaceInfo"
+      >
         {/* Sub-form for Birthplace Information */}
         <Row gutter={16}>
           <Col span={12}>
@@ -300,19 +305,18 @@ const Step2: React.FC<Step2Props> = ({
             </Form.Item>
           </Col>
         </Row>
-        
 
         <Row gutter={16}>
           <Col span={8}>
-          <Form.Item label="Woreda" name="wordea">
-          <Select
-            options={woredaOptions.map((woreda) => ({
-              label: woreda,
-              value: woreda,
-            }))}
-            value={woreda}
-          />
-        </Form.Item>
+            <Form.Item label="Woreda" name="wordea">
+              <Select
+                options={woredaOptions.map((woreda) => ({
+                  label: woreda,
+                  value: woreda,
+                }))}
+                value={woreda}
+              />
+            </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item label="House Number" name="houseNumber">
@@ -324,7 +328,6 @@ const Step2: React.FC<Step2Props> = ({
               <Input />
             </Form.Item>
           </Col>
-       
         </Row>
       </Form.Item>
 
@@ -481,10 +484,18 @@ const Step2: React.FC<Step2Props> = ({
       </Row>
 
       <Space>
-        <Button type="primary" onClick={prevStep}>
+        <Button
+          type="primary"
+          onClick={prevStep}
+          style={{ background: "#1890ff", borderColor: "#1890ff" }}
+        >
           Previous
         </Button>
-        <Button type="primary" onClick={onFinish}>
+        <Button
+          type="primary"
+          onClick={onFinish}
+          style={{ background: "#1890ff", borderColor: "#1890ff" }}
+        >
           Next
         </Button>
       </Space>
