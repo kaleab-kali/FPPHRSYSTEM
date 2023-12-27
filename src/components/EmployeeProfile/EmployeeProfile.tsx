@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout, Avatar, Row, Col, Typography, Space, Card ,Tabs } from "antd";
+import { Layout, Avatar, Row, Col, Typography, Space ,Tabs } from "antd";
 import "tailwindcss/tailwind.css";
 import "./EmployeeProfile.css";
 import GeneralInformation from "./Tabs/GeneralInformation";
