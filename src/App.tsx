@@ -30,11 +30,9 @@ import {
 import MyForm from "./components/Form";
 import Messages from "./components/Messages";
 import Profile from "./components/Profile";
-import EmployeeInfo from "./components/EmployeeProfile/EmployeeProfile";
-import EmployeeProfile from "./components/EmployeeProfile/EmployeeProfile";
-import Reward from "./components/Reward";
-import "./App.css";
-import Appreasal from "./components/Appreasal";
+import Reward from "./components/user/Reward";
+import { Performance } from "./components/user/Performance";
+import { Wastna } from "./components/user/Wastna";
 
 const { Header, Content, Sider } = Layout;
 const { Search } = Input;
@@ -112,9 +110,7 @@ const sidebarItems: SidebarItem[] = [
     children: [
       { key: 1, label: "Employee Registration" },
       { key: 2, label: "Profile View" },
-      { key: 3, label: "Reward" },
-      { key: 4, label: "Appreasal Application" },
-      // { key: 5, label: "Profile Edit" },
+      { key: 3, label: "Profile Edit" },
     ],
   },
   {
@@ -174,13 +170,13 @@ const App: React.FC = () => {
     // Sample message when the notification icon is clicked
     message.info("New message: You have 5 new messages.");
   };
-  // const user = {
-  //   name: 'John Doe',
-  //   avatarUrl: '...',
-  //   age: '31',
-  //   phone: '+2323423423',
-  //   email: 'abc@gmail.com',
-  // };
+  const user = {
+    name: 'John Doe',
+    avatarUrl: '...',
+    age: '31',
+    phone: '+2323423423',
+    email: 'abc@gmail.com',
+  };
 
   return (
     <Layout className="bg-slate-100">
@@ -301,7 +297,7 @@ const App: React.FC = () => {
           <Content
             className="mainContent"
             style={{
-              padding: 0,
+              padding: 24,
               margin: 0,
               // height: '100vh',
               background: "#fff",
@@ -318,26 +314,17 @@ const App: React.FC = () => {
                       element={
                         child.label === "Employee Registration" ? (
                           <>
-                            <h1 className="content-h1">{child.label} Form</h1>
+                            <h1>{child.label} Form</h1>
                             <MyForm />
                           </>
                         ) : child.label === "Profile View" ? (
                           <>
                             {/* <h1>{child.label} </h1>  */}
-                            <EmployeeProfile />
-                            {/* <Profile name={""} age={0} sex={""} position={""} department={""} pictureUrl={""} /> */}
+                            <Profile user={user} />
                           </>
                          
-                        ) : child.label === "Reward" ? (
-                          <>
-                          <h1>{child.label} Component</h1> 
-                          <Reward /></>
-                        ) : child.label === "Appreasal Application" ?(
-                          <>
-                          {/* <h1>{child.label} Page Content</h1> */}
-                          <Appreasal />
-                          </>
-                          
+                        ) : child.label === "Profile Edit" ? (
+                          <h1>{child.label} Component</h1> // Placeholder for the "Edit" component
                         ) : (
                           <h1>{child.label} Page Content</h1>
                         )
@@ -358,9 +345,9 @@ const App: React.FC = () => {
                   ))
                 )}
 
-              {/* <Route path="/user/reward/:id" element={<Reward />} />
+              <Route path="/user/reward/:id" element={<Reward />} />
               <Route path="/user/wastna/:id" element={<Wastna />} />
-              <Route path="/user/performance/:id" element={<Performance />} /> */}
+              <Route path="/user/performance/:id" element={<Performance />} />
             </Routes>
           </Content>
         </Layout>

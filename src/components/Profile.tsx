@@ -1,8 +1,8 @@
 
 import {  Card, Typography, Image } from 'antd';
 import  photo from '../assets/images/photo.jpg'
-import RewardEvaluation from '../components/Tables/RewardPerformance';
-import EducationalEvaluation from '../components/Tables/EducationEvaluation';
+// import RewardEvaluation from '../components/Tables/RewardPerformance';
+import EducationalEvaluation from '../components/Tables/EducationEvaluations';
 import { useState } from 'react';
 import { Wastna } from './user/Wastna';
 import {
@@ -15,6 +15,7 @@ import {
   
 } from "@ant-design/icons";
 import EducationLevel from './user/EducationLevel';
+import RewardEvaluation from './Tables/RewardPerformances';
 const { Title } = Typography;
 
 interface ProfileProps {
