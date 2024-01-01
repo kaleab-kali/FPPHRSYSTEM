@@ -37,6 +37,7 @@ import EmployeeInfo from "./components/EmployeeProfile/EmployeeProfile";
 import EmployeeProfile from "./components/EmployeeProfile/EmployeeProfile";
 import Reward from "./components/Reward";
 import "./App.css";
+import Appreasal from "./components/Appreasal";
 
 const { Header, Content, Sider } = Layout;
 const { Search } = Input;
@@ -114,7 +115,9 @@ const sidebarItems: SidebarItem[] = [
     children: [
       { key: 1, label: "Employee Registration" },
       { key: 2, label: "Profile View" },
-      { key: 3, label: "Profile Edit" },
+      { key: 3, label: "Reward" },
+      { key: 4, label: "Appreasal Application" },
+      // { key: 5, label: "Profile Edit" },
     ],
   },
   {
@@ -319,10 +322,16 @@ const App: React.FC = () => {
                             {/* <Profile name={""} age={0} sex={""} position={""} department={""} pictureUrl={""} /> */}
                           </>
                          
-                        ) : child.label === "Profile Edit" ? (
+                        ) : child.label === "Reward" ? (
                           <>
                           <h1>{child.label} Component</h1> 
                           <Reward /></>
+                        ) : child.label === "Appreasal Application" ?(
+                          <>
+                          {/* <h1>{child.label} Page Content</h1> */}
+                          <Appreasal />
+                          </>
+                          
                         ) : (
                           <h1>{child.label} Page Content</h1>
                         )

@@ -25,10 +25,10 @@ const EmployeeProfile: React.FC = () => {
   const tabItems : TabItem[] = [
     {label: "General", key: "1", component: <GeneralInformation />},
     {label: "Educational", key: "2", component: <Education />},
-    {label: "Work experience", key: "3", component: <WorkExperience />},
+    // {label: "Work experience", key: "3", component: <WorkExperience />},
     {label: "Leave", key: "4", component: <LeaveInformation />},
-    {label: "Attendance", key: "5", component: <AttendanceInformation />},
-    {label: "Reward", key: "6", component: <RewardInfomation />},
+    // {label: "Attendance", key: "5", component: <AttendanceInformation />},
+    {label: "Reward", key: "3", component: <RewardInfomation />},
     {label: "Performance", key: "7", component: <PerformanceInformation />},
 
   ]
