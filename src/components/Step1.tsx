@@ -1,8 +1,7 @@
 // Step1.tsx
-import React, { useEffect, useEffect, useState } from "react";
+import React, { useEffect,  useState } from "react";
 import { Form, Select, Input, Radio, DatePicker, Button, Row, Col } from "antd";
 import { FormInstance } from "antd/lib/form";
-import { data } from "../data";
 import { data } from "../data";
 
 const { Option } = Select;
