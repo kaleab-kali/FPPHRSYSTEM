@@ -337,10 +337,18 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
       </Form.Item> */}
 
       <Space>
-        <Button type="primary" className=" bg-blue-600" onClick={prevStep}>
+        <Button
+          type="primary"
+          onClick={prevStep}
+          style={{ background: "#1890ff", borderColor: "#1890ff" }}
+        >
           Previous
         </Button>
-        <Button type="primary" className=" bg-blue-600" htmlType="submit">
+        <Button
+          type="primary"
+          htmlType="submit"
+          style={{ background: "#1890ff", borderColor: "#1890ff" }}
+        >
           Submit
         </Button>
       </Space>

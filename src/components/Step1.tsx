@@ -1,7 +1,8 @@
 // Step1.tsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useEffect, useState } from "react";
 import { Form, Select, Input, Radio, DatePicker, Button, Row, Col } from "antd";
 import { FormInstance } from "antd/lib/form";
+import { data } from "../data";
 import { data } from "../data";
 
 const { Option } = Select;
@@ -278,7 +279,11 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
         <Row gutter={16}></Row>
       </Form.Item>
 
-      <Button type="primary" className=" bg-blue-600" onClick={nextStep}>
+      <Button
+        type="primary"
+        onClick={nextStep}
+        style={{ background: "#1890ff", borderColor: "#1890ff" }}
+      >
         Next
       </Button>
     </>

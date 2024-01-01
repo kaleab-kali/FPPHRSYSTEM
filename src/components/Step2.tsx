@@ -484,10 +484,18 @@ const Step2: React.FC<Step2Props> = ({
       </Row>
 
       <Space>
-        <Button type="primary" className=" bg-blue-600" onClick={prevStep}>
+        <Button
+          type="primary"
+          onClick={prevStep}
+          style={{ background: "#1890ff", borderColor: "#1890ff" }}
+        >
           Previous
         </Button>
-        <Button type="primary" className=" bg-blue-600" onClick={onFinish}>
+        <Button
+          type="primary"
+          onClick={onFinish}
+          style={{ background: "#1890ff", borderColor: "#1890ff" }}
+        >
           Next
         </Button>
       </Space>
