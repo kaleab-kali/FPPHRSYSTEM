@@ -68,6 +68,16 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
     setMaritalStatus(value);
   };
 
+  const onFinish = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        handleFormData(values); // Pass the form data to the parent component
+      })
+      .catch((error) => {
+        console.error('Validation failed:', error);
+      });
+  };
   return (
     <>
       <Form.Item
@@ -348,6 +358,7 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
           type="primary"
           htmlType="submit"
           style={{ background: "#1890ff", borderColor: "#1890ff" }}
+          onClick={onFinish}
         >
           Submit
         </Button>

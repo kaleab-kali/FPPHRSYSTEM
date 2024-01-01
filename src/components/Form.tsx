@@ -19,10 +19,10 @@ const MyForm: React.FC = () => {
   };
 
   const steps = [
-    {
-      title: 'Step 1',
-      content: <Step1 form={form} nextStep={() => nextStep()} handleFormData={handleFormData} />,
-    },
+    // {
+    //   title: 'Step 1',
+    //   content: <Step1 form={form} nextStep={() => nextStep()} handleFormData={handleFormData} />,
+    // },
     {
       title: 'Step 2',
       content: <Step2 form={form} nextStep={() => nextStep()} prevStep={() => prevStep()} handleFormData={handleFormData} />,
@@ -35,14 +35,14 @@ const MyForm: React.FC = () => {
 
   const nextStep = () => {
     setCurrentStep(currentStep + 1);
-    // form
-    //   .validateFields()
-    //   .then(() => {
-    //     setCurrentStep(currentStep + 1);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Validation failed:', error);
-    //   });
+    form
+      .validateFields()
+      .then(() => {
+        setCurrentStep(currentStep + 1);
+      })
+      .catch((error) => {
+        console.error('Validation failed:', error);
+      });
   };
 
   const prevStep = () => {

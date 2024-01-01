@@ -206,11 +206,18 @@ const Step2: React.FC<Step2Props> = ({
     form.setFieldsValue({ wordea: firstWoreda });
   };
 
-  const onFinish = (values: any) => {
-    handleFormData(values); // Collect and pass the form data
+  const onFinish = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        handleFormData(values); // Pass the form data to the parent component
+      })
+      .catch((error) => {
+        console.error('Validation failed:', error);
+      });
     nextStep();
   };
-
+  
   // const handleRewardStatusChange = (value: string) => {
   //   setShowAdditionalFields(value === "yes");
   // };
