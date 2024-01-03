@@ -6,3 +6,10 @@
 /* .mainContent {
   height: 100vh;
 } */
+
+.content-h1 {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  align-self: start;
+}

@@ -139,7 +139,7 @@ const DegreeFields: React.FC<{ degreeName: string; index: number }> = ({
   </div>
 );
 
-const EducationLevel: React.FC<any> = () => {
+const EducationalInformation: React.FC<any> = () => {
   const [educationLevel, setEducationLevel] = useState<Level | "">("");
   const [degrees, setDegrees] = useState<Degrees>({
     bachelor: [{ id: 1 }],
@@ -242,10 +242,13 @@ const EducationLevel: React.FC<any> = () => {
 
   return (
     <div className="felx w-full">
-      <Button onClick={() => showModal()}>
-        <PlusOutlined />
-        Add
-      </Button>
+      <div className="flex flex-row  ml-60">
+        <Button onClick={() => showModal()}>
+          <PlusOutlined />
+          Add
+        </Button>
+      </div>
+
       <Modal
         title="Add Education Level"
         visible={isModalVisible}
@@ -355,4 +358,4 @@ const EducationLevel: React.FC<any> = () => {
   );
 };
 
-export default EducationLevel;
+export default EducationalInformation;

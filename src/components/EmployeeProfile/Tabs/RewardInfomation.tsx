@@ -1,22 +1,32 @@
 import React, { useState } from "react";
-import { Form, Input, InputNumber, Select, Row, Col, Radio, Modal, Button } from "antd";
+import {
+  Form,
+  Input,
+  InputNumber,
+  Select,
+  Row,
+  Col,
+  Radio,
+  Modal,
+  Button,
+} from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
-const Reward: React.FC = () => {
+const RewardInformation: React.FC = () => {
   const [form] = Form.useForm();
-    const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-    const showModal = () => {
-      setIsModalVisible(true);
-    };
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
 
-    const handleOk = () => {
-      setIsModalVisible(false);
-    };
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
 
-    const handleCancel = () => {
-      setIsModalVisible(false);
-    };
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
   const genderOptions = [
     { label: "Male", value: "male" },
     { label: "Female", value: "female" },
@@ -30,10 +40,13 @@ const Reward: React.FC = () => {
 
   return (
     <div className="flex w-full">
-      <Button onClick={() => showModal()}>
-        <PlusOutlined />
-        Add
-      </Button>
+      <div className="flex flex-row justify-end items-end ml-60">
+        <Button onClick={() => showModal()}>
+          <PlusOutlined />
+          Add
+        </Button>
+      </div>
+
       <Modal
         title="Reward"
         visible={isModalVisible}
@@ -169,4 +182,4 @@ const Reward: React.FC = () => {
   );
 };
 
-export default Reward;
+export default RewardInformation;
