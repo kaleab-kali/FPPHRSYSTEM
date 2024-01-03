@@ -13,7 +13,7 @@ import {
 } from "antd";
 import { FormInstance } from "antd/lib/form";
 import { data } from "../data";
-import axios from "axios";
+//import axios from "axios";
 const { Option } = Select;
 
 const tailLayout = {

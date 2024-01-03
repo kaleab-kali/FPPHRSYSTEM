@@ -15,7 +15,7 @@ import {
 import { FormInstance } from "antd/lib/form";
 import Title from "antd/es/typography/Title";
 import { data } from "../data";
-import axios from "axios";
+//import axios from "axios";
 
 const { Option } = Select;
 type Degree = { id: number };
