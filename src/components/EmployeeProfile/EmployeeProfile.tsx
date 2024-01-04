@@ -1,5 +1,6 @@
 import React from "react";
 import { Layout, Avatar, Row, Col, Typography, Space ,Tabs } from "antd";
+import { useQuery } from 'react-query';
 import "tailwindcss/tailwind.css";
 import "./EmployeeProfile.css";
 import GeneralInformation from "./Tabs/GeneralInformation";
@@ -43,31 +44,21 @@ type TabItem = {
   key: string;
   component: React.ReactNode;
 }
+interface Employee {
+  id: number;
+  firstName: string;
+  lastName: string;
+  position: string;
+}
 
-// const GeneralProfile: React.FC = () => <div>General component</div>
-const Education: React.FC = () => <div>Education component</div>
-
-const EmployeeProfile: React.FC = (key:any) => {
-  const { id } = useParams();
-  const tabItems: TabItem[] = [
-    { label: "General", key: "1", component: <GeneralInformation id={id}/> },
-    { label: "Educational", key: "2", component: <EducationalInformation id={id}/> },
-    { label: "Work experience", key: "3", component: <WorkExperience id={id}/> },
-    { label: "Leave", key: "4", component: <LeaveInformation id={id}/> },
-    { label: "Attendance", key: "5", component: <AttendanceInformation id={id}/> },
-    // { label: "Reward", key: "6", component: <RewardInfomation id={id}/> },
-    { label: "Performance", key: "7", component: <PerformanceInformation id={id}/> },
-  ];
-  const { data, error, isLoading } = useQuery<Employee[], Error>(
-    "employees",
-    async () => {
-      const response = await fetch("http://localhost:3001/employees");
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-      return response.json();
+const EmployeeProfile: React.FC = () => {
+  const { data, error, isLoading } = useQuery<Employee[], Error>('employees', async () => {
+    const response = await fetch('http://localhost:3001/employees');
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
     }
-  );
+    return response.json();
+  });
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -77,26 +68,24 @@ const EmployeeProfile: React.FC = (key:any) => {
     return <p>Error: {error.message}</p>;
   }
 
-  const filteredData = data?.filter((employee) => employee.id === Number(id))[0];
+  const employeeData = data?.find((employee) => employee.id === 3);
 
-  if (!filteredData) {
-    return <p>No data found for ID {id}</p>;
+  if (!employeeData) {
+    return <p>No employee data found for ID 3</p>;
   }
-  // if (data) {
-  //   return <p> data found for ID {id}</p>;
-  // }
 
-  const {
-    firstName,
-    // middleName,
-    lastName,
-    birthday,
-    gender,
-    position,
-    phone,
-    email,
-    emergencyContact,
-  } = filteredData;
+  const { firstName, lastName, position, id } = employeeData;
+
+  const tabItems: TabItem[] = [
+    { label: "General", key: "1", component: <GeneralInformation id={id}/> },
+    { label: "Educational", key: "2", component: <EducationalInformation id={id}/> },
+    { label: "Work experience", key: "3", component: <WorkExperience id={id}/> },
+    { label: "Leave", key: "4", component: <LeaveInformation id={id}/> },
+    { label: "Attendance", key: "5", component: <AttendanceInformation id={id}/> },
+    // { label: "Reward", key: "6", component: <RewardInfomation id={id}/> },
+    { label: "Performance", key: "7", component: <PerformanceInformation id={id}/> },
+  ];
+
   return (
     <Layout style={{ backgroundColor: "white" }}>
       <Header
@@ -128,11 +117,10 @@ const EmployeeProfile: React.FC = (key:any) => {
                   {firstName + " " + lastName}
                 </Title>
                 <div className="text-sm leading-4">
-                  {/* <Text className="block m-0">Business Analyst</Text> */}
                   <Text style={{ marginBottom: 0, display: "block" }}>
                     {position}
                   </Text>
-                  <Text style={{ display: "block" }}>4010018</Text>
+                  <Text style={{ display: "block" }}>{id}</Text>
                 </div>
               </div>
             </Col>
@@ -141,52 +129,20 @@ const EmployeeProfile: React.FC = (key:any) => {
       </Header>
 
       <Content>
-      {/* <>
-        <Row gutter={[0, 0]}>
-          <Col span={12}>
-            <Card className="border-light card-item custom-ant-card" hoverable>
-              +8777 555-0733
-            </Card>
-          </Col>
-          <Col span={12}>
-            <Card
-              style={{ padding: "0" }}
-              className="border-light card-item custom-ant-card"
-              hoverable
-            >
-              d.w@xplugix.com
-            </Card>
-          </Col>
-          <Col span={12}>
-            <Card className="border-light card-item custom-ant-card" hoverable>
-              Cambridge, United Kingdom
-            </Card>
-          </Col>
-          <Col span={12}>
-            <Card className="border-light card-item custom-ant-card" hoverable>
-              &lt;2 years
-            </Card>
-          </Col>
-        </Row>
-        
-        </> */}
-         {/* Tabs of profile section */}
+        {/* Tabs of profile section */}
         <>
           <Tabs defaultActiveKey="1" centered>
-            {
-              tabItems.map((tab) => (
-                <Tabs.TabPane key={tab.key} tab={tab.label}>
-                  {tab.component}
-                </Tabs.TabPane>
-              ))
-            }
+            {tabItems.map((tab) => (
+              <Tabs.TabPane key={tab.key} tab={tab.label}>
+                {tab.component}
+              </Tabs.TabPane>
+            ))}
           </Tabs>
         </>
-
-
       </Content>
     </Layout>
   );
 };
 
 export default EmployeeProfile;
+
