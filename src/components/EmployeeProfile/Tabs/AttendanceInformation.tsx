@@ -1,6 +1,6 @@
 import React from 'react'
 
-function AttendanceInformation() {
+function AttendanceInformation(id:any) {
   return (
     <div>Attendance Information</div>
   )

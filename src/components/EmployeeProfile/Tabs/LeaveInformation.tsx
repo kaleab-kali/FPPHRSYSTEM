@@ -1,6 +1,6 @@
 import React from 'react'
 
-function LeaveInformation() {
+function LeaveInformation(id:any) {
   return (
     <div>LeaveInformation</div>
   )
