@@ -58,7 +58,7 @@ const { birthday, gender, phone, email, emergencyContact } = data;
 
   return (
     <div className="gIwrapper">
-      <h1>General Information</h1>
+      <Divider orientation="left">General Information</Divider>
       <Row gutter={[16, 16]}>
         <Col span={24}>
           <p>Title: {data.title}</p>
