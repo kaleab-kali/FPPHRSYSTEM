@@ -49,6 +49,7 @@ const MyForm: React.FC = () => {
       onSuccess: () => {
         queryClient.invalidateQueries("employees");
         message.success("Form submitted successfully!");
+        window.location.reload();
       },
     }
   );

@@ -115,6 +115,45 @@
       },
       "maritalStatus": "single",
       "id": 3
+    },
+    {
+      "title": "doctor",
+      "firstName": "Mulualem",
+      "middleName": "Asfaw",
+      "lastName": "Mekonnen",
+      "birthday": "1993-04-05T17:31:26.681Z",
+      "gender": "male",
+      "position": "Lutenet",
+      "department": "Solider",
+      "photo": "C:\\fakepath\\photo_1_2023-12-22_21-27-56.jpg",
+      "ethnicity": "Afar",
+      "phone": {
+        "prefix": "+251",
+        "number": "968611305"
+      },
+      "email": "mulualemasfaw@gmail.com",
+      "region": "Afar",
+      "subcity": "Semera",
+      "wordea": "dokira",
+      "houseNumber": "Yeka Sub City, District ,11, House No:750",
+      "leyuBota": "Afar",
+      "salary": "563765487",
+      "motherFirstName": "Mulualem",
+      "motherMiddleName": "Asfaw",
+      "motherLastName": "Mekonnen",
+      "graduationYear": "2010",
+      "fieldOfStudy": "Engineering",
+      "emergencyContact": {
+        "firstName": "Mulualem",
+        "middleName": "Asfaw",
+        "lastName": "Mekonnen",
+        "phoneNumber": "+251968611305",
+        "email": "mulualemasfaw2321@gmail.com",
+        "houseNumber": "Yeka Sub City, District ,11, House No:750",
+        "relationship": "sibling"
+      },
+      "maritalStatus": "single",
+      "id": 4
     }
   ]
 }

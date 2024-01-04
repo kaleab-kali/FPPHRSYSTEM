@@ -6,7 +6,7 @@ import { Button, Input, Space, Table } from "antd";
 import type { ColumnType, ColumnsType } from "antd/es/table";
 import type { FilterConfirmProps } from "antd/es/table/interface";
 import { useQuery } from "react-query";
-import EmployeeProfile from "./EmployeeProfile/EmployeeProfile";
+//import EmployeeProfile from "./EmployeeProfile/EmployeeProfile";
 import { useNavigate } from "react-router-dom";
 
 interface DataType {
