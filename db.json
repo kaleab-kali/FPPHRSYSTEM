@@ -154,6 +154,44 @@
       },
       "maritalStatus": "single",
       "id": 4
+    },
+    {
+      "title": "doctor",
+      "firstName": "Kaleab",
+      "middleName": "Girma",
+      "lastName": "Mekonnen",
+      "birthday": "2024-01-01T18:03:02.820Z",
+      "gender": "male",
+      "position": "Officer",
+      "department": "police",
+      "photo": "C:\\fakepath\\photo_2_2023-12-22_21-27-56.jpg",
+      "ethnicity": "Somale",
+      "phone": {
+        "prefix": "+251",
+        "number": "923242324"
+      },
+      "email": "kaleab@gmail.com",
+      "region": "Somali",
+      "subcity": "Jijiga",
+      "wordea": "Jijiga",
+      "houseNumber": "111111",
+      "salary": "153452345",
+      "motherFirstName": "Mulualem",
+      "motherMiddleName": "Asfaw",
+      "motherLastName": "Mekonnen",
+      "graduationYear": "2001",
+      "fieldOfStudy": "Software",
+      "emergencyContact": {
+        "firstName": "Mulualem",
+        "middleName": "Asfaw",
+        "lastName": "Mekonnen",
+        "phoneNumber": "+251968611305",
+        "email": "mulualemasfaw@gmail.com",
+        "houseNumber": "Yeka Sub City, District ,11, House No:750",
+        "relationship": "parent"
+      },
+      "maritalStatus": "single",
+      "id": 5
     }
   ]
 }
