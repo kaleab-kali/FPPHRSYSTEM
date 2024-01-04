@@ -1,6 +1,6 @@
 import React from 'react'
 
-function PerformanceInformation() {
+function PerformanceInformation(id:any) {
   return (
     <div>PerformanceInformation</div>
   )

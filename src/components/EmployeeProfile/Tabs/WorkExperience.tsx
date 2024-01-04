@@ -1,6 +1,6 @@
 import React from 'react'
 
-function WorkExperience() {
+function WorkExperience(id:any) {
   return (
     <div>WorkExperience</div>
   )

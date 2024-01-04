@@ -32,11 +32,13 @@ import {
 } from "react-router-dom";
 import MyForm from "./components/Form";
 import Messages from "./components/Messages";
-import Profile from "./components/Profile";
+import Profile from "./components/ProfileHeader";
 import EmployeeInfo from "./components/EmployeeProfile/EmployeeProfile";
 import EmployeeProfile from "./components/EmployeeProfile/EmployeeProfile";
 import Reward from "./components/Reward";
 import "./App.css";
+// import EmployeeProfile from "./components/EmployeeProfile/EmployeeProfile";
+
 
 const { Header, Content, Sider } = Layout;
 const { Search } = Input;
@@ -315,7 +317,7 @@ const App: React.FC = () => {
                         ) : child.label === "Profile View" ? (
                           <>
                             {/* <h1>{child.label} </h1>  */}
-                            <EmployeeProfile />
+                            <Profile />
                             {/* <Profile name={""} age={0} sex={""} position={""} department={""} pictureUrl={""} /> */}
                           </>
                         ) : child.label === "Profile Edit" ? (
@@ -344,6 +346,8 @@ const App: React.FC = () => {
                 )}
 
               <Route path="/messages" element={<Messages />} />
+              {/* <Route path="/" element={<PositionsListContainer />} /> */}
+              <Route path="/employee/:id" element={<EmployeeProfile />} />
             </Routes>
           </Content>
         </Layout>
