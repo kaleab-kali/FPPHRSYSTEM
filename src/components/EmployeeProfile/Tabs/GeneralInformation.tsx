@@ -33,7 +33,7 @@ function GeneralInformation({ id }: { id: any }) {
 const { data, error, isLoading } = useQuery<Employee, Error>(
   ["employee", id], // Added a key to uniquely identify the query
   async () => {
-    const response = await fetch(`http://localhost:3001/employees/${id}`);
+    const response = await fetch(`http://localhost:3000/employees/${id}`);
     if (!response.ok) {
       throw new Error("Failed to fetch data");
     }

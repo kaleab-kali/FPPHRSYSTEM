@@ -61,7 +61,7 @@ const EmployeeProfile: React.FC = (key:any) => {
   const { data, error, isLoading } = useQuery<Employee[], Error>(
     "employees",
     async () => {
-      const response = await fetch("http://localhost:3001/employees");
+      const response = await fetch("http://localhost:3000/employees");
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }

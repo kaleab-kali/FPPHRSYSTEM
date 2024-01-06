@@ -87,11 +87,8 @@ const Profile: React.FC = () => {
     // push(`/employee/${key}`);
   };
 
-
-  const { data, error, isLoading } = useQuery<DataType[], Error>(
-    "employees",
-    async () => {
-      const response = await fetch("http://localhost:3001/employees");
+  const { data, error, isLoading } = useQuery<DataType[], Error>("employees", async () => {
+      const response = await fetch("http://localhost:3000/employees");
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
@@ -106,6 +103,7 @@ const Profile: React.FC = () => {
   if (error) {
     return <p>Error: {error.message}</p>;
   }
+  console.warn('data')
 
 
   const handleSearch = (
@@ -275,8 +273,8 @@ const Profile: React.FC = () => {
       ),
     },
   ];
-
-  return <Table columns={columns} dataSource={data} />;
+console.warn("the data is ",data)
+  return <> <Table columns={columns} dataSource={data} /></>;
 };
 
 export default Profile;
