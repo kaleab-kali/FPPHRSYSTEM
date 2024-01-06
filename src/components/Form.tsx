@@ -33,7 +33,7 @@ const MyForm: React.FC = () => {
 
   const addEmployeeMutation = useMutation(
     async (data: any) => {
-      const response = await fetch("http://localhost:3000/employees", {
+      const response = await fetch("http://localhost:8000/employees", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

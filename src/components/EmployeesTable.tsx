@@ -88,7 +88,7 @@ const Profile: React.FC = () => {
   };
 
   const { data, error, isLoading } = useQuery<DataType[], Error>("employees", async () => {
-      const response = await fetch("http://localhost:3000/employees");
+      const response = await fetch("http://localhost:8000/employees");
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
