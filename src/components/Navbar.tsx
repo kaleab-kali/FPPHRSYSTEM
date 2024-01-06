@@ -54,9 +54,11 @@ const Navbar = (props: Props) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          
         }}
+        className='bg-slate-700'
       >
-        <h1 style={{ color: "white" }}>Federal Prison Police</h1>
+        <h1 className='text-blue-200 font-bold text-xl '>Federal Prison Police</h1>
         {/* Company logo */}
         {/* <div
           className="logo"

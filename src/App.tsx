@@ -84,7 +84,7 @@ const App: React.FC = () => {
 
 
   return (
-    <Layout className=" w-screen">
+    <Layout className="">
      <Navbar/>
       <Layout>
         <SideBar/>

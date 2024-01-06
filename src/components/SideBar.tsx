@@ -85,19 +85,19 @@ const sidebarItems: SidebarItem[] = [
 
 const SideBar = (props: Props) => {
     const [selectedKeys, setSelectedKeys] = useState<string[]>(["1"]);
-    const [openKeys, setOpenKeys] = useState<string[]>(["sub1", "sub2"]); // Initial open submenus
-  
+    const [openKeys, setOpenKeys] = useState<string[]>(["sub1", "sub2"]);
     const handleSelect = (item: any) => {
       setSelectedKeys([item.key]);
     };
   return (
     <>
-     <Sider width={230} style={{ background: "#fff", padding: "10px 5px" }}>
+     <Sider width={230} style={{ background: "#fff", padding: "10px 5px" }} className="bg-black">
           <Menu
             mode="inline"
             selectedKeys={selectedKeys}
             openKeys={openKeys}
             onOpenChange={(keys) => setOpenKeys(keys)}
+            // className="bg-red-500"
           >
             {sidebarItems.map((item) => (
               <React.Fragment key={item.key}>
@@ -113,6 +113,7 @@ const SideBar = (props: Props) => {
                           : [...keys, item.key]
                       )
                     }
+                    className="text-slate-600 text-base font-bold"
                   >
                     {item.children.map((child) => (
                       <Menu.Item key={`${item.key}-${child.key}`}>
