@@ -3,6 +3,7 @@ import React, { useEffect,  useState } from "react";
 import { Form, Select, Input, Radio, DatePicker, Button, Row, Col } from "antd";
 import { FormInstance } from "antd/lib/form";
 import { data } from "../data";
+import axios from "axios";
 
 const { Option } = Select;
 
@@ -49,7 +50,24 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
     setWoredaOptions(data[region!][value]);
     form.setFieldsValue({ wordea: firstWoreda });
   };
+const handleFormSubmit = async () => {
+  try {
+    const formData = await form.validateFields(); // Validate the form fields
+    // Use axios to send a POST request to your JSON Server
+    // await axios.post("http://localhost:3001/employees", formData);
 
+    // Optionally, you can handle the response or perform other actions
+
+    // Call the parent component's handleFormData function to pass the form data
+    handleFormData(formData);
+
+    // Move to the next step
+    nextStep();
+  } catch (error) {
+    console.error("Form submission error:", error);
+    // Handle errors as needed (e.g., display an error message)
+  }
+};
   return (
     <>
       {/* first row */}
@@ -114,6 +132,7 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
         <Radio.Group>
           <Radio value="male">Male</Radio>
           <Radio value="female">Female</Radio>
+          <Radio value="other">Other</Radio>
         </Radio.Group>
       </Form.Item>
 
@@ -176,25 +195,25 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
           <Form.Item
             label="Phone Number"
             name="phoneNumber"
-            rules={[
-              {
-                required: true,
-                message: "Please enter your phone number",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "Please enter your phone number",
+            //   },
+            // ]}
           >
             <Input.Group compact>
               {/* Ethiopian country code */}
-              <Form.Item name={["phone", "prefix"]} noStyle initialValue="+251">
+              {/* <Form.Item name={["phone", "prefix"]} noStyle initialValue="+251">
                 <Input style={{ width: "20%" }} readOnly />
-              </Form.Item>
+              </Form.Item> */}
               {/* Phone number input */}
               <Form.Item
                 name={["phone", "number"]}
                 noStyle
-                rules={[
-                  { required: true, message: "Please enter your phone number" },
-                ]}
+                // rules={[
+                //   { required: false, message: "Please enter your phone number" },
+                // ]}
               >
                 <Input style={{ width: "80%" }} />
               </Form.Item>
@@ -280,7 +299,7 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
 
       <Button
         type="primary"
-        onClick={nextStep}
+        onClick={handleFormSubmit}
         style={{ background: "#1890ff", borderColor: "#1890ff" }}
       >
         Next

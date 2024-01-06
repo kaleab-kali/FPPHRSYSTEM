@@ -14,7 +14,10 @@ import {
   PoweroffOutlined,
 } from "@ant-design/icons";
 // import type { MenuProps } from "antd";
-import {  Layout,  Menu,Badge,
+import {
+  Layout,
+  Menu,
+  Badge,
   Avatar,
   Space,
   Input,
@@ -29,10 +32,13 @@ import {
 } from "react-router-dom";
 import MyForm from "./components/Form";
 import Messages from "./components/Messages";
-import Profile from "./components/Profile";
-import Reward from "./components/user/Reward";
-import { Performance } from "./components/user/Performance";
-import { Wastna } from "./components/user/Wastna";
+import Profile from "./components/ProfileHeader";
+import EmployeeInfo from "./components/EmployeeProfile/EmployeeProfile";
+import EmployeeProfile from "./components/EmployeeProfile/EmployeeProfile";
+import Reward from "./components/Reward";
+import "./App.css";
+// import EmployeeProfile from "./components/EmployeeProfile/EmployeeProfile";
+
 
 const { Header, Content, Sider } = Layout;
 const { Search } = Input;
@@ -170,16 +176,8 @@ const App: React.FC = () => {
     // Sample message when the notification icon is clicked
     message.info("New message: You have 5 new messages.");
   };
-  const user = {
-    name: 'John Doe',
-    avatarUrl: '...',
-    age: '31',
-    phone: '+2323423423',
-    email: 'abc@gmail.com',
-  };
-
   return (
-    <Layout className="bg-slate-100">
+    <Layout className=" w-screen">
       <Header
         style={{
           display: "flex",
@@ -274,7 +272,6 @@ const App: React.FC = () => {
                           onClick={() => handleSelect(child)}
                         >
                           {child.label}
-
                         </Link>
                       </Menu.Item>
                     ))}
@@ -297,7 +294,7 @@ const App: React.FC = () => {
           <Content
             className="mainContent"
             style={{
-              padding: 24,
+              padding: 0,
               margin: 0,
               // height: '100vh',
               background: "#fff",
@@ -314,17 +311,20 @@ const App: React.FC = () => {
                       element={
                         child.label === "Employee Registration" ? (
                           <>
-                            <h1>{child.label} Form</h1>
+                            <h1 className="content-h1">{child.label} Form</h1>
                             <MyForm />
                           </>
                         ) : child.label === "Profile View" ? (
                           <>
                             {/* <h1>{child.label} </h1>  */}
-                            <Profile user={user} />
+                            <Profile />
+                            {/* <Profile name={""} age={0} sex={""} position={""} department={""} pictureUrl={""} /> */}
                           </>
-                         
                         ) : child.label === "Profile Edit" ? (
-                          <h1>{child.label} Component</h1> // Placeholder for the "Edit" component
+                          <>
+                            <h1>{child.label} Component</h1>
+                            <Reward />
+                          </>
                         ) : (
                           <h1>{child.label} Page Content</h1>
                         )
@@ -345,9 +345,9 @@ const App: React.FC = () => {
                   ))
                 )}
 
-              <Route path="/user/reward/:id" element={<Reward />} />
-              <Route path="/user/wastna/:id" element={<Wastna />} />
-              <Route path="/user/performance/:id" element={<Performance />} />
+              <Route path="/messages" element={<Messages />} />
+              {/* <Route path="/" element={<PositionsListContainer />} /> */}
+              <Route path="/employee/:id" element={<EmployeeProfile />} />
             </Routes>
           </Content>
         </Layout>
@@ -355,5 +355,5 @@ const App: React.FC = () => {
     </Layout>
   );
 };
-// name={""} age={0} sex={""} position={""} department={""} pictureUrl={""}
+
 export default App;

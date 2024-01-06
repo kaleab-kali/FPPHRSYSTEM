@@ -1,0 +1,120 @@
+{
+  "employees": [
+    {
+      "title": "ato",
+      "firstName": "Yeabsra",
+      "middleName": "Masresha",
+      "lastName": "Melaku",
+      "birthday": "2023-11-30T20:14:49.784Z",
+      "gender": "male",
+      "position": "IT",
+      "department": "IT",
+      "photo": "C:\\fakepath\\Capture.PNG",
+      "ethnicity": "Oromo",
+      "phone": {
+        "prefix": "+251",
+        "number": "0910295684"
+      },
+      "email": "mesekirsalgech@gmail.com",
+      "region": "Amhara",
+      "subcity": "Bahirdar",
+      "wordea": "Bahirdar",
+      "houseNumber": "Addis Ababa, Kebena",
+      "leyuBota": "uj",
+      "salary": "123456",
+      "motherFirstName": "dfg",
+      "motherMiddleName": "ghg",
+      "motherLastName": "hgj",
+      "emergencyContact": {
+        "firstName": "Mesekir",
+        "middleName": "Masresha",
+        "lastName": "Getachew",
+        "phoneNumber": "0910295684",
+        "email": "mesekirsalgech@gmail.com",
+        "houseNumber": "Addis Ababa, Kebena",
+        "relationship": "parent",
+        "leyuBota": "ghj"
+      },
+      "maritalStatus": "single",
+      "id": 1
+    },
+    {
+      "title": "doctor",
+      "firstName": "Mesekir",
+      "middleName": "Masresha",
+      "lastName": "Getachew",
+      "birthday": "2024-01-10T05:40:35.415Z",
+      "gender": "male",
+      "position": "IT",
+      "department": "IT",
+      "photo": "C:\\fakepath\\Example-of-Card-Games-flowchart.png",
+      "ethnicity": "Tigray",
+      "phone": {
+        "prefix": "+251",
+        "number": "0910295684"
+      },
+      "email": "mesekirsalgech@gmail.com",
+      "region": "Benishangul-Gumuz",
+      "subcity": "Assosa",
+      "wordea": "Assosa",
+      "houseNumber": "Addis Ababa, Kebena",
+      "leyuBota": "ghj",
+      "salary": "123456",
+      "motherFirstName": "Yeabsra",
+      "motherMiddleName": "Masresha",
+      "motherLastName": "Melaku",
+      "emergencyContact": {
+        "firstName": "Mesekir",
+        "middleName": "Masresha",
+        "lastName": "Getachew",
+        "phoneNumber": "0910295684",
+        "email": "mesekirsalgech@gmail.com",
+        "houseNumber": "Addis Ababa, Kebena",
+        "relationship": "parent",
+        "leyuBota": "ghj"
+      },
+      "maritalStatus": "single",
+      "id": 2
+    },
+    {
+      "title": "ato",
+      "firstName": "Emebet",
+      "middleName": "Gsilase",
+      "lastName": "Mitike",
+      "birthday": "2000-01-09T15:10:03.832Z",
+      "gender": "female",
+      "position": "General",
+      "department": "Field Marshal",
+      "photo": "C:\\fakepath\\Capture2.PNG",
+      "ethnicity": "Tigray",
+      "phone": {
+        "prefix": "+251",
+        "number": "+251940547268"
+      },
+      "email": "emebet@gmail.com",
+      "region": "Addis Ababa",
+      "subcity": "Arada",
+      "wordea": "woreda 33",
+      "houseNumber": "Addis Ababa, Kebena",
+      "leyuBota": "",
+      "salary": "40000",
+      "motherFirstName": "etaferw",
+      "motherMiddleName": "weldemedn",
+      "motherLastName": "gebremikael",
+      "graduationYear": "2018",
+      "fieldOfStudy": "Software Engineering",
+      "emergencyContact": {
+        "firstName": "Mesekir",
+        "middleName": "Sahilu",
+        "lastName": "Getachew",
+        "phoneNumber": "0910295684",
+        "email": "mesekirsalgech@gmail.com",
+        "leyuBota": "ghj",
+        "houseNumber": "Addis Ababa, Kebena",
+        "relationship": "other"
+      },
+      "maritalStatus": "single",
+      "id": 3
+    }
+  ]
+}

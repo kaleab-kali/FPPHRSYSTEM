@@ -15,6 +15,7 @@ import {
 import { FormInstance } from "antd/lib/form";
 import Title from "antd/es/typography/Title";
 import { data } from "../data";
+import axios from "axios";
 
 const { Option } = Select;
 type Degree = { id: number };
@@ -206,22 +207,32 @@ const Step2: React.FC<Step2Props> = ({
     form.setFieldsValue({ wordea: firstWoreda });
   };
 
-  const onFinish = () => {
-    form
-      .validateFields()
-      .then((values) => {
-        handleFormData(values); // Pass the form data to the parent component
-      })
-      .catch((error) => {
-        console.error('Validation failed:', error);
-      });
-    nextStep();
-  };
-  
+  // const handleFormSubmit = (values: any) => {
+  //   handleFormData(values); // Collect and pass the form data
+  //   nextStep();
+  // };
+
   // const handleRewardStatusChange = (value: string) => {
   //   setShowAdditionalFields(value === "yes");
   // };
+const handleFormSubmit = async () => {
+  try {
+    const formData = await form.validateFields(); // Validate the form fields
+    // Use axios to send a POST request to your JSON Server
+    // await axios.post("http://localhost:3001/employees", formData);
 
+    // Optionally, you can handle the response or perform other actions
+
+    // Call the parent component's handleFormData function to pass the form data
+    handleFormData(formData);
+
+    // Move to the next step
+    nextStep();
+  } catch (error) {
+    console.error("Form submission error:", error);
+    // Handle errors as needed (e.g., display an error message)
+  }
+};
   return (
     <>
       <Form.Item
@@ -460,12 +471,12 @@ const Step2: React.FC<Step2Props> = ({
           <Form.Item
             label="Mother's Phone Number"
             name="motherPhoneNumber"
-            rules={[
-              {
-                required: true,
-                message: "Please enter your mother's phone number",
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "Please enter your mother's phone number",
+            //   },
+            // ]}
           >
             <Input.Group compact>
               {/* Ethiopian country code */}
@@ -500,7 +511,7 @@ const Step2: React.FC<Step2Props> = ({
         </Button>
         <Button
           type="primary"
-          onClick={onFinish}
+          onClick={handleFormSubmit}
           style={{ background: "#1890ff", borderColor: "#1890ff" }}
         >
           Next

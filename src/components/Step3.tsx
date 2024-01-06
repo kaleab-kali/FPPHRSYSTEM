@@ -13,7 +13,7 @@ import {
 } from "antd";
 import { FormInstance } from "antd/lib/form";
 import { data } from "../data";
-
+import axios from "axios";
 const { Option } = Select;
 
 const tailLayout = {
@@ -66,6 +66,24 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
 
   const handleMaritalStatusChange = (value: string) => {
     setMaritalStatus(value);
+  };
+  const handleFormSubmit = async () => {
+    try {
+      const formData = await form.validateFields(); // Validate the form fields
+      // Use axios to send a POST request to your JSON Server
+      // await axios.post("http://localhost:3001/employees", formData);
+      handleFormData(formData);
+
+      // Optionally, you can handle the response or perform other actions
+
+      // Call the parent component's handleFormData function to pass the form data
+
+      // Move to the next step
+      // nextStep();
+    } catch (error) {
+      console.error("Form submission error:", error);
+      // Handle errors as needed (e.g., display an error message)
+    }
   };
 
   const onFinish = () => {
@@ -357,8 +375,8 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
         <Button
           type="primary"
           htmlType="submit"
+          onClick={handleFormSubmit}
           style={{ background: "#1890ff", borderColor: "#1890ff" }}
-          onClick={onFinish}
         >
           Submit
         </Button>

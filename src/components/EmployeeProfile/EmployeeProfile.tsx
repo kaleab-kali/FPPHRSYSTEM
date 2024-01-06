@@ -8,10 +8,36 @@ import LeaveInformation from "./Tabs/LeaveInformation";
 import AttendanceInformation from "./Tabs/AttendanceInformation";
 import PerformanceInformation from "./Tabs/PerformanceInformation";
 import RewardInfomation from "./Tabs/RewardInfomation";
-
+import EducationalInformation from "./Tabs/EducationalInformation";
+import { useQuery } from "react-query";
+import { useParams } from "react-router-dom";
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
-
+interface Employee {
+  id: number;
+  title: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  birthday: string;
+  gender: string;
+  position: string;
+  phone: {
+    prefix: string;
+    number: string;
+  };
+  email: string;
+  emergencyContact: {
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    phoneNumber: string;
+    email: string;
+    houseNumber: string;
+    relationship: string;
+    leyuBota: string;
+  };
+}
 type TabItem = {
   label: string;
   key: string;
@@ -21,17 +47,56 @@ type TabItem = {
 // const GeneralProfile: React.FC = () => <div>General component</div>
 const Education: React.FC = () => <div>Education component</div>
 
-const EmployeeProfile: React.FC = () => {
-  const tabItems : TabItem[] = [
-    {label: "General", key: "1", component: <GeneralInformation />},
-    {label: "Educational", key: "2", component: <Education />},
-    // {label: "Work experience", key: "3", component: <WorkExperience />},
-    {label: "Leave", key: "4", component: <LeaveInformation />},
-    // {label: "Attendance", key: "5", component: <AttendanceInformation />},
-    {label: "Reward", key: "3", component: <RewardInfomation />},
-    {label: "Performance", key: "7", component: <PerformanceInformation />},
+const EmployeeProfile: React.FC = (key:any) => {
+  const { id } = useParams();
+  const tabItems: TabItem[] = [
+    { label: "General", key: "1", component: <GeneralInformation id={id}/> },
+    { label: "Educational", key: "2", component: <EducationalInformation id={id}/> },
+    { label: "Work experience", key: "3", component: <WorkExperience id={id}/> },
+    { label: "Leave", key: "4", component: <LeaveInformation id={id}/> },
+    { label: "Attendance", key: "5", component: <AttendanceInformation id={id}/> },
+    // { label: "Reward", key: "6", component: <RewardInfomation id={id}/> },
+    { label: "Performance", key: "7", component: <PerformanceInformation id={id}/> },
+  ];
+  const { data, error, isLoading } = useQuery<Employee[], Error>(
+    "employees",
+    async () => {
+      const response = await fetch("http://localhost:3001/employees");
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      return response.json();
+    }
+  );
 
-  ]
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+
+  const filteredData = data?.filter((employee) => employee.id === Number(id))[0];
+
+  if (!filteredData) {
+    return <p>No data found for ID {id}</p>;
+  }
+  // if (data) {
+  //   return <p> data found for ID {id}</p>;
+  // }
+
+  const {
+    firstName,
+    // middleName,
+    lastName,
+    birthday,
+    gender,
+    position,
+    phone,
+    email,
+    emergencyContact,
+  } = filteredData;
   return (
     <Layout style={{ backgroundColor: "white" }}>
       <Header
@@ -60,12 +125,12 @@ const EmployeeProfile: React.FC = () => {
                   className="text-l leading-6 mb-1"
                   style={{ marginBottom: 0, fontWeight: "bold" }}
                 >
-                  David Williams
+                  {firstName + " " + lastName}
                 </Title>
                 <div className="text-sm leading-4">
                   {/* <Text className="block m-0">Business Analyst</Text> */}
                   <Text style={{ marginBottom: 0, display: "block" }}>
-                    Business Analyst
+                    {position}
                   </Text>
                   <Text style={{ display: "block" }}>4010018</Text>
                 </div>

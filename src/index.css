@@ -30,8 +30,6 @@ code {
 } */
 
 
-/* Todo this is for tables  */
-
 .search-table-outter {
   /* border:2px solid rgb(20, 108, 101);  */
   width: 700px;
@@ -47,14 +45,15 @@ code {
   /* border-collapse:collapse; */
    border:0.2px solid #04ff824a;  
 }
+
 td{
   padding:25px 20px;
    height:55px;
 }
+
 .search-table-outter { 
   overflow-x: scroll;
  }
 th, td {
    min-width:180px;
    }
-/* Todo  */
