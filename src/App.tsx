@@ -116,7 +116,7 @@ const sidebarItems: SidebarItem[] = [
     children: [
       { key: 1, label: "Employee Registration" },
       { key: 2, label: "Profile View" },
-      { key: 3, label: "Profile Edit" },
+      { key: 3, label: "Reward Information" },
     ],
   },
   {
@@ -320,7 +320,7 @@ const App: React.FC = () => {
                             <Profile />
                             {/* <Profile name={""} age={0} sex={""} position={""} department={""} pictureUrl={""} /> */}
                           </>
-                        ) : child.label === "Profile Edit" ? (
+                        ) : child.label === "Reward Information" ? (
                           <>
                             <h1>{child.label} Component</h1>
                             <Reward />
