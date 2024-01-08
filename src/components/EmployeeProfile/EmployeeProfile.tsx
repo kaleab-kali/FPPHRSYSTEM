@@ -178,7 +178,7 @@ const EmployeeProfile: React.FC = (key:any) => {
             {
               tabItems.map((tab) => (
                 <Tabs.TabPane key={tab.key}
-                 tab={<div className="text-slate-500 bg-slate-200 p-2 px-4 rounded-md hover:bg-blue-500 hover:text-blue-100 ">{tab.label}</div>}
+                 tab={<div className="text-blue-900 bg-blue-100 p-2 px-4 rounded-md hover:bg-blue-500 hover:text-blue-100 ">{tab.label}</div>}
                   className="">
                    {tab.component}
                 </Tabs.TabPane>
