@@ -177,7 +177,7 @@ const App: React.FC = () => {
     message.info("New message: You have 5 new messages.");
   };
   return (
-    <Layout className=" w-screen">
+    <Layout className="">
       <Header
         style={{
           display: "flex",

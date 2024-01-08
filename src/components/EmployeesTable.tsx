@@ -8,7 +8,7 @@ import type { FilterConfirmProps } from "antd/es/table/interface";
 import { useQuery } from "react-query";
 import EmployeeProfile from "./EmployeeProfile/EmployeeProfile";
 import { useNavigate } from "react-router-dom";
-
+import getAge from "../util/ageCal";
 interface DataType {
   id: string;
   firstName: string;
@@ -60,24 +60,7 @@ const Profile: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-  function getAge(dateString: string): number {
-    const today: Date = new Date();
-    const birthDate: Date = new Date(dateString);
-
-    console.log("Today:", today);
-    console.log("Birthdate:", birthDate);
-
-    let age: number = today.getFullYear() - birthDate.getFullYear();
-    const m: number = today.getMonth() - birthDate.getMonth();
-
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
-    }
-
-    console.log("Calculated Age:", age);
-
-    return age;
-  }
+ 
   const handleView = (key: string) => {
     // push(`/employee/${key}`);
     navigate(`/employee/${key}`);

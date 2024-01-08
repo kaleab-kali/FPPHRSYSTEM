@@ -98,13 +98,13 @@ const EmployeeProfile: React.FC = (key:any) => {
     emergencyContact,
   } = filteredData;
   return (
-    <Layout style={{ backgroundColor: "white" }}>
+    <Layout className="bg-gray-100">
       <Header
         style={{
-          backgroundColor: "#fff",
           padding: "20px 40px",
           marginBottom: "50px",
         }}
+        className=" bg-gray-100"
       >
         <Row
           align="middle"
