@@ -41,7 +41,7 @@ const AppraisalInformation = ({ id }: { id: any }) => {
 
   return (
     <div>
-        <span>AppraisalInformation{id}</span>
+        {/* <span>AppraisalInformation{id}</span> */}
         <Card>
         <div className="flex flex-row  mt-4">
                 <div className='w-2/3 '>
