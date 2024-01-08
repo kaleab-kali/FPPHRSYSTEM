@@ -7,10 +7,10 @@ import WorkExperience from "./Tabs/WorkExperience";
 import LeaveInformation from "./Tabs/LeaveInformation";
 import AttendanceInformation from "./Tabs/AttendanceInformation";
 import PerformanceInformation from "./Tabs/PerformanceInformation";
-import RewardInfomation from "./Tabs/RewardInfomation";
 import EducationalInformation from "./Tabs/EducationalInformation";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import AppraisalInformation from "./Tabs/AppraisalInformation";
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 interface Employee {
@@ -57,6 +57,8 @@ const EmployeeProfile: React.FC = (key:any) => {
     { label: "Attendance", key: "5", component: <AttendanceInformation id={id}/> },
     // { label: "Reward", key: "6", component: <RewardInfomation id={id}/> },
     { label: "Performance", key: "7", component: <PerformanceInformation id={id}/> },
+    { label: "Apresal", key: "8", component: <AppraisalInformation id={id}/> },
+
   ];
   const { data, error, isLoading } = useQuery<Employee[], Error>(
     "employees",
@@ -175,8 +177,10 @@ const EmployeeProfile: React.FC = (key:any) => {
           <Tabs defaultActiveKey="1" centered>
             {
               tabItems.map((tab) => (
-                <Tabs.TabPane key={tab.key} tab={tab.label}>
-                  {tab.component}
+                <Tabs.TabPane key={tab.key}
+                 tab={<div className="text-slate-500 bg-slate-200 p-2 px-4 rounded-md hover:bg-blue-500 hover:text-blue-100 ">{tab.label}</div>}
+                  className="">
+                   {tab.component}
                 </Tabs.TabPane>
               ))
             }

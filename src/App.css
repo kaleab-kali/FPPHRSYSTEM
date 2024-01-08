@@ -2,7 +2,6 @@
   height: 100vh;
 } */
 
-
 /* .mainContent {
   height: 100vh;
 } */
@@ -13,3 +12,18 @@
   font-family: Georgia, 'Times New Roman', Times, serif;
   align-self: start;
 }
+/* App.css or your custom stylesheet */
+/* .custom-search-input .ant-input {
+  background-color: #364a5e; /* slate-400 color 
+  border-color: transparent;
+}
+
+.custom-search-input .ant-input::placeholder {
+  color: #fff; /* Placeholder text color 
+}
+
+.custom-search-input .ant-input:hover,
+.custom-search-input .ant-input:focus {
+  background-color: #364a5e; /* Slate-400 color on hover and focus 
+  border-color: transparent; /* Optional: Set border color to transparent */
+

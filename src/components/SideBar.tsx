@@ -125,6 +125,7 @@ const SideBar = (props: Props) => {
                         </Link>
                       </Menu.Item>
                     ))}
+                   
                   </Menu.SubMenu>
                 ) : (
                   <Menu.Item key={item.key} icon={item.icon}>
@@ -135,9 +136,16 @@ const SideBar = (props: Props) => {
                       {item.label}
                     </Link>
                   </Menu.Item>
+                  
                 )}
               </React.Fragment>
             ))}
+            <Menu.Item icon={<LineChartOutlined/>}>
+              <Link to='/aprisal'>
+              
+              Apraisal
+              </Link>
+              </Menu.Item>
           </Menu>
         </Sider>
     </>

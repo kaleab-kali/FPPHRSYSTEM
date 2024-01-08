@@ -11,6 +11,8 @@ import Reward from "./components/Reward";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import SideBar from "./components/SideBar";
+import AppraisalInformation from "./components/EmployeeProfile/Tabs/AppraisalInformation";
+import ApraisalForm from "./components/ApraisalForm";
 
 
 const {  Content } = Layout;
@@ -76,6 +78,7 @@ const sidebarItems: SidebarItem[] = [
       { key: 14, label: "Performance Reviews" },
       { key: 15, label: "Training and Development" },
       { key: 16, label: "Recognition and Rewards" },
+      { key: 17, label: "Appraisals" },
     ],
   },
 ];
@@ -144,6 +147,8 @@ const App: React.FC = () => {
 
               <Route path="/messages" element={<Messages />} />
               <Route path="/employee/:id" element={<EmployeeProfile />} />
+              <Route path="/aprisal" element={<ApraisalForm />} />
+
             </Routes>
           </Content>
         </Layout>
