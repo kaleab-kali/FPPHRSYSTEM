@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { DatabaseOutlined, WarningOutlined, SnippetsOutlined, TeamOutlined } from '@ant-design/icons'
-import { Card, Progress, Table } from 'antd'
+import { Avatar, Card, List, Popover, Progress, Table } from 'antd'
 
 type Props = {}
 
 const AppraisalInformation = ({ id }: { id: any }) => {
+
+    const [open, setOpen] = useState(false);
+    const [open1, setOpen1] = useState(false);
+
+    const hide = () => {
+      setOpen(false);
+      setOpen1(false);
+    };
+  
+    const handleOpenChange = (newOpen: boolean) => {
+      setOpen(newOpen);
+    };
+    const handleOpenChange1 = (newOpen: boolean) => {
+        setOpen1(newOpen);
+      };
     const evaluationMark=[
         {
             content:"for  ",
@@ -38,7 +53,24 @@ const AppraisalInformation = ({ id }: { id: any }) => {
     const totalOutOf = evaluationMark.reduce((acc, emp) => acc + emp.outOf, 0);
     const overallProgressPercent = (totalResults / totalOutOf) * 100;
 
-
+    const data = [
+        {
+          title: 'Sagin',
+          duration:"23-1-2000",
+        },
+        {
+          title: 'general',
+          duration:"23-1-2003",
+        },
+        {
+          title: 'vice general',
+          duration:"23-1-2002",
+        },
+        {
+          title: 'colonel',
+          duration:"23-1-2020",
+        },
+      ];
   return (
     <div>
         {/* <span>AppraisalInformation{id}</span> */}
@@ -141,7 +173,7 @@ const AppraisalInformation = ({ id }: { id: any }) => {
                 <div className='flex flex-col w-1/3 overflow-y-scroll h-full'>
 
                     
-                    <Link to={'/'} className='p-5 flex flex-row justify-between  m-3 shadow-lg rounded-md bg-slate-100 font-sans'>
+                    <div className='p-5 flex flex-row justify-between  m-3 shadow-lg rounded-md bg-slate-100 font-sans'>
                         <div>
                             <span>{4}</span>
                             <br />
@@ -150,7 +182,33 @@ const AppraisalInformation = ({ id }: { id: any }) => {
                         <div>
                             <span className='flex justify-end text-slate-400 text-2xl disabled '><DatabaseOutlined /></span>
                         </div>
-                    </Link>
+                    </div>
+                    <Popover
+                     content={<>
+                   <List
+                        itemLayout="horizontal"
+                        dataSource={data}
+                        renderItem={(item, index) => (
+                        <List.Item>
+                            <List.Item.Meta
+                            avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />}
+                            title={<a href="/">{item.title}</a>}
+                            description={`approved this apraisal on date ${item.duration}`}
+                            />
+                        </List.Item>
+                        )}
+                    />
+                     
+                     <b className='bg-red-200 text-red-500 p-1 cursor-pointer px-2 rounded-sm' onClick={hide}>Close</b>
+                     </>
+                    
+                    }
+                     title={<span className='text-green-500 text-md shadow-lg p-3'>list of complated aprasal hostory</span>}
+                     trigger="click"
+                     open={open1}
+                     onOpenChange={handleOpenChange1}
+
+                    >
 
                     <span className='p-5 flex flex-row justify-between  m-3 shadow-lg rounded-md bg-red-100 font-sans'>
                         <div>
@@ -162,20 +220,49 @@ const AppraisalInformation = ({ id }: { id: any }) => {
                             <span className='flex justify-end text-red-600 text-2xl disabled '><WarningOutlined /></span>
                         </div>
                     </span>
+                    </Popover>
+                    <Popover
+                     content={<>
+                   <List className='h-72   overflow-y-scroll'
+                        itemLayout="horizontal"
+                        dataSource={data}
+                        renderItem={(item, index) => (
+                        <List.Item >
+                            <List.Item.Meta
+                            avatar={<Avatar src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`} />}
+                            title={<a href="/">{item.title}</a>}
+                            description={`approved this apraisal on date ${item.duration}`}
+                            />
+                        </List.Item>
+                        )}
+                    />
+                     
+                     <b className='bg-red-200 text-red-500 p-1 cursor-pointer px-2 rounded-sm' onClick={hide}>Close</b>
+                     </>
                     
-                    <Link to={'/alltasks'} className='p-5 flex flex-row justify-between  m-3 shadow-lg rounded-md bg-green-200 font-sans'>
+                    }
+                     title={<span className='text-green-500 text-md shadow-lg p-3'>list of complated aprasal hostory</span>}
+                     trigger="click"
+                     open={open}
+                     onOpenChange={handleOpenChange}
+
+                    >
+
+                    <div className='p-5 flex flex-row justify-between  m-3 shadow-lg rounded-md bg-green-200 font-sans'>
                         <div>
                             <span>{0}</span>
                             <br />
                             <span className='text-sm font-bold text-green-700'>Completed Apraisals</span>
                         </div>
+                        
                         <Progress type="circle" size="small" status='success' percent={100} />
 
                         <div>
 
                             <span className='flex justify-end text-slate-400 text-2xl disabled '><SnippetsOutlined /></span>
                         </div>
-                    </Link>
+                    </div>
+                    </Popover>
                 </div>
             </div>
 
