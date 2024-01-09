@@ -85,7 +85,7 @@ const AppraisalInformation = ({ id }: { id: any }) => {
 
                         <span className='p-2   flex flex-row justify-between  text-slate-500 m-3  rounded-md font-sans'>
                             <div>
-                                <span className='text-lg text-slate-600 font-bold'>Current Apriasl </span>
+                                <span className='text-lg text-slate-600 font-bold'>Current Title </span>
                                 <br />
                                 <span >General</span>
                             </div>
@@ -115,9 +115,9 @@ const AppraisalInformation = ({ id }: { id: any }) => {
                      <div className="p-3">
                      <span className=' flex flex-row justify-between text-slate-500 mx-3 shadow-md p-8  rounded-md font-sans'>
                             <div>
-                                <span className='text-lg text-slate-600 font-bold'>Current status </span>
+                                <span className='text-lg text-slate-600 font-bold mb-3'>Current status </span>
                                 
-                                <span className='bg-yellow-500 text-yellow-100 p-2 px-3 mx-3' >on pending</span>
+                                <span className='bg-lightblue-500 text-blue-500 px-3 mx-3 mt' >Pending</span>
                             </div>
                             <div>
                             </div>

@@ -1,24 +1,11 @@
 // Step3.tsx
 import React, { useEffect, useState } from "react";
-import {
-  Form,
-  Input,
-  Select,
-  Button,
-  DatePicker,
-  Space,
-  Row,
-  Col,
-  Radio,
-} from "antd";
+import { Form, Input, Select, Button, DatePicker, Space, Row, Col } from "antd";
 import { FormInstance } from "antd/lib/form";
 import { data } from "../data";
-import axios from "axios";
+
 const { Option } = Select;
 
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
 interface Step3Props {
   form: FormInstance<any>;
   prevStep: () => void;
@@ -26,76 +13,97 @@ interface Step3Props {
 }
 
 const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
-  const [region, setRegion] = useState<string | null>(null);
-  const [subcity, setSubcity] = useState<string | null>(null);
-  const [woreda, setWoreda] = useState<string | null>(null);
-  const [subcityOptions, setSubcityOptions] = useState<string[]>([]);
-  const [woredaOptions, setWoredaOptions] = useState<string[]>([]);
-
-  // Reset subcity and woreda when region changes
-  useEffect(() => {
-    setSubcity(null);
-    setWoreda(null);
-  }, [region]);
-
-  // Reset woreda when subcity changes
-  useEffect(() => {
-    setWoreda(null);
-  }, [subcity]);
-
-  const handleRegionChange = (value: string) => {
-    const firstSubcity = Object.keys(data[value])[0];
-    setRegion(value);
-    setSubcity(firstSubcity);
-    setSubcityOptions(Object.keys(data[value]));
-    setWoredaOptions(data[value][firstSubcity]);
-    form.setFieldsValue({
-      subcity: firstSubcity,
-      wordea: data[value][firstSubcity][0],
-    });
-  };
-
-  const handleSubcityChange = (value: string) => {
-    const firstWoreda = data[region!][value][0];
-    setSubcity(value);
-    setWoreda(firstWoreda);
-    setWoredaOptions(data[region!][value]);
-    form.setFieldsValue({ wordea: firstWoreda });
-  };
+  // const [region, setRegion] = useState<string | null>(null);
+  // const [subcity, setSubcity] = useState<string | null>(null);
+  // const [woreda, setWoreda] = useState<string | null>(null);
+  const [address, setAddress] = useState<{
+    [key: string]: {
+      region: string | null;
+      subcity: string | null;
+      woreda: string | null;
+    };
+  }>({
+    spouseInfo: { region: null, subcity: null, woreda: null },
+    emergencyContact: { region: null, subcity: null, woreda: null },
+  });
   const [maritalStatus, setMaritalStatus] = useState<string>("single");
 
+  // Reset subcity and woreda when region changes
+  // useEffect(() => {
+  //   if (region) {
+  //     const subcities = Object.keys(data[region]);
+  //     const firstSubcity = subcities[0];
+  //     setSubcity(firstSubcity);
+  //     form.setFieldsValue({
+  //       emergencyContact: { address: { subcity: firstSubcity } },
+  //     });
+  //     form.setFieldsValue({ spouseInfo: { address: { subcity: firstSubcity } } });
+
+  //     const woredas = data[region][firstSubcity];
+  //     const firstWoreda = woredas[0];
+  //     setWoreda(firstWoreda);
+  //     form.setFieldsValue({
+  //       emergencyContact: { address: { woreda: firstWoreda } },
+  //     });
+  //     form.setFieldsValue({ spouseInfo: { address: { woreda: firstWoreda } } });
+  //   }
+  // }, [region]);
+
+  // // Reset woreda when subcity changes
+  // useEffect(() => {
+  //   if (region && subcity) {
+  //     const woredas = data[region][subcity];
+  //     const firstWoreda = woredas[0];
+  //     setWoreda(firstWoreda);
+  //     form.setFieldsValue({
+  //       emergencyContact: { address: { woreda: firstWoreda } },
+  //     });
+  //     form.setFieldsValue({ spouseInfo: { address: { woreda: firstWoreda } } });
+  //   }
+  // }, [subcity]);
+
+  // const handleRegionChange = (value: string) => {
+  //   setRegion(value);
+  // };
+
+  // const handleSubcityChange = (value: string) => {
+  //   setSubcity(value);
+  // };
+
+  // Handlers for spouseInfo and emergencyContact
+  const handleAddressChange = (type: string, field: string, value: string) => {
+    setAddress((prevState) => ({
+      ...prevState,
+      [type]: {
+        ...prevState[type],
+        [field]: value,
+      },
+    }));
+  };
+  
+  useEffect(() => {
+    Object.keys(address).forEach((type) => {
+      const { region, subcity } = address[type];
+
+      if (region) {
+        const subcities = Object.keys(data[region]);
+        const firstSubcity = subcities[0];
+        handleAddressChange(type, "subcity", firstSubcity);
+        form.setFieldsValue({ [type]: { address: { subcity: firstSubcity } } });
+      }
+
+      if (region && subcity) {
+        const woredas = data[region][subcity];
+        const firstWoreda = woredas[0];
+        handleAddressChange(type, "woreda", firstWoreda);
+        form.setFieldsValue({ [type]: { address: { woreda: firstWoreda } } });
+      }
+    });
+  }, [address]);
   const handleMaritalStatusChange = (value: string) => {
     setMaritalStatus(value);
   };
-  const handleFormSubmit = async () => {
-    try {
-      const formData = await form.validateFields(); // Validate the form fields
-      // Use axios to send a POST request to your JSON Server
-      // await axios.post("http://localhost:3001/employees", formData);
-      handleFormData(formData);
 
-      // Optionally, you can handle the response or perform other actions
-
-      // Call the parent component's handleFormData function to pass the form data
-
-      // Move to the next step
-      // nextStep();
-    } catch (error) {
-      console.error("Form submission error:", error);
-      // Handle errors as needed (e.g., display an error message)
-    }
-  };
-
-  // const onFinish = () => {
-  //   form
-  //     .validateFields()
-  //     .then((values) => {
-  //       handleFormData(values); // Pass the form data to the parent component
-  //     })
-  //     .catch((error) => {
-  //       console.error('Validation failed:', error);
-  //     });
-  // };
   return (
     <>
       <Form.Item
@@ -104,115 +112,38 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
             Emergency Contact Information
           </span>
         }
-        name="emergencyContact"
       >
         {/* Sub-form for Emergency Contact Information */}
-        <Row gutter={16}>
-          <Col span={8}>
-            <Form.Item
-              label="First Name"
-              name={["emergencyContact", "firstName"]}
-              rules={[
-                { required: true, message: "Please enter the first name" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item
-              label="Middle Name"
-              name={["emergencyContact", "middleName"]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item
-              label="Last Name"
-              name={["emergencyContact", "lastName"]}
-              rules={[
-                { required: true, message: "Please enter the last name" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}>
-          <Col span={8}>
-            <Form.Item
-              label="Relationship"
-              name={["emergencyContact", "relationship"]}
-              rules={[
-                { required: true, message: "Please select the relationship" },
-              ]}
-            >
-              <Select>
-                <Option value="spouse">Spouse</Option>
-                <Option value="sibling">Sibling</Option>
-                <Option value="parent">Parent</Option>
-                <Option value="other">Other</Option>
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item
-              label="Phone Number"
-              name={["emergencyContact", "phoneNumber"]}
-              rules={[
-                { required: true, message: "Please enter the phone number" },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="Email" name={["emergencyContact", "email"]}>
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Form.Item
-          label="Emergency Contact Address"
-          name={["emergencyContact", "address"]}
-        >
-          {/* Sub-form for Address */}
+        <>
           <Row gutter={16}>
             <Col span={8}>
-              <Form.Item label="Region" name="region">
-                <Select
-                  options={Object.keys(data).map((region) => ({
-                    label: region,
-                    value: region,
-                  }))}
-                  onChange={handleRegionChange}
-                />
+              <Form.Item
+                label="First Name"
+                name={["emergencyContact", "info", "firstName"]}
+                rules={[
+                  { required: true, message: "Please enter the first name" },
+                ]}
+              >
+                <Input />
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item label="Zone/Subcity" name="subcity">
-                <Select
-                  options={subcityOptions.map((subcity) => ({
-                    label: subcity,
-                    value: subcity,
-                  }))}
-                  onChange={handleSubcityChange}
-                  value={subcity}
-                />
+              <Form.Item
+                label="Middle Name"
+                name={["emergencyContact", "info", "middleName"]}
+              >
+                <Input />
               </Form.Item>
             </Col>
             <Col span={8}>
-              <Form.Item label="Woreda" name="wordea">
-                <Select
-                  options={woredaOptions.map((woreda) => ({
-                    label: woreda,
-                    value: woreda,
-                  }))}
-                  value={woreda}
-                />
+              <Form.Item
+                label="Last Name"
+                name={["emergencyContact", "info", "lastName"]}
+                rules={[
+                  { required: true, message: "Please enter the last name" },
+                ]}
+              >
+                <Input />
               </Form.Item>
             </Col>
           </Row>
@@ -220,22 +151,126 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
           <Row gutter={16}>
             <Col span={8}>
               <Form.Item
-                label="Leyu Bota"
-                name={["emergencyContact", "leyuBota"]}
+                label="Relationship"
+                name={["emergencyContact", "info", "relationship"]}
+                rules={[
+                  { required: true, message: "Please select the relationship" },
+                ]}
+              >
+                <Select>
+                  <Option value="spouse">Spouse</Option>
+                  <Option value="sibling">Sibling</Option>
+                  <Option value="parent">Parent</Option>
+                  <Option value="other">Other</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
+                label="Phone Number"
+                name={["emergencyContact", "info", "phoneNumber"]}
+                rules={[
+                  { required: true, message: "Please enter the phone number" },
+                ]}
               >
                 <Input />
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item
-                label="House Number"
-                name={["emergencyContact", "houseNumber"]}
+                label="Email"
+                name={["emergencyContact", "info", "email"]}
               >
                 <Input />
               </Form.Item>
             </Col>
           </Row>
-        </Form.Item>
+
+          <Form.Item
+            label={
+              <span style={{ fontWeight: "bold", fontSize: "16px" }}>
+                Emergency Contact Addres
+              </span>
+            }
+          >
+            {/* Sub-form for Address */}
+            <>
+              <Row gutter={16}>
+                <Col span={8}>
+                  <Form.Item
+                    label="Region"
+                    name={["emergencyContact", "address", "region"]}
+                  >
+                    <Select
+                      options={Object.keys(data).map((region) => ({
+                        label: region,
+                        value: region,
+                      }))}
+                      onChange={(value) => handleAddressChange('emergencyContact', 'region', value)}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item
+                    label="Zone/Subcity"
+                    name={["emergencyContact", "address", "subcity"]}
+                  >
+                    <Select
+                      options={
+                        
+                        data && address['emergencyContact'].region && data[address['emergencyContact'].region]
+                          ? Object.keys(data[address['emergencyContact'].region]).map((subcity) => ({
+                              label: subcity,
+                              value: subcity,
+                            }))
+                          : []
+                      }
+                      onChange={(value) => handleAddressChange('emergencyContact', 'subcity', value)}
+                      value={address['emergencyContact'].subcity}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item
+                    label="Woreda"
+                    name={["emergencyContact", "address", "woreda"]}
+                  >
+                    <Select
+                      options={
+                        data && address['emergencyContact'].region && address['emergencyContact'].subcity && data[address['emergencyContact'].region][address['emergencyContact'].subcity]
+                          ? data[address['emergencyContact'].region][address['emergencyContact'].subcity].map((woreda) => ({
+                              label: woreda,
+                              value: woreda,
+                            }))
+                          : []
+                      }
+                      value={address['emergencyContact'].woreda}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+
+              <Row gutter={16}>
+                <Col span={8}>
+                  <Form.Item
+                    label="Leyu Bota"
+                    name={["emergencyContact", "address", "leyuBota"]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item
+                    label="House Number"
+                    name={["emergencyContact", "address", "houseNumber"]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </>
+          </Form.Item>
+        </>
       </Form.Item>
 
       <Form.Item
@@ -310,7 +345,7 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
 
                   <Form.Item
                     label="Address"
-                    name={["spouseInfo", "address", "currentAddress"]}
+                    // name={["spouseInfo", "address", "currentAddress"]}
                   >
                     {/* Sub-form for Spouse Address */}
                     <Row gutter={16}>
@@ -319,7 +354,15 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
                           label="Region"
                           name={["spouseInfo", "address", "region"]}
                         >
-                          <Select>{/* Options for Region */}</Select>
+                          
+                            <Select
+                              options={Object.keys(data).map((region) => ({
+                                label: region,
+                                value: region,
+                              }))}
+                              onChange={(value) => handleAddressChange('spouseInfo', 'region', value)}
+                            />
+                          
                         </Form.Item>
                       </Col>
                       <Col span={8}>
@@ -327,7 +370,44 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
                           label="Subcity"
                           name={["spouseInfo", "address", "subcity"]}
                         >
-                          <Select>{/* Options for Subcity */}</Select>
+                          
+                            <Select
+                              options={
+                                address['spouseInfo'].region
+                                  ? Object.keys(data[address['spouseInfo'].region]).map(
+                                      (subcity) => ({
+                                        label: subcity,
+                                        value: subcity,
+                                      })
+                                    )
+                                  : []
+                              }
+                              onChange={(value) => handleAddressChange('spouseInfo', 'subcity', value)}
+
+                              // onChange={handleSubcityChange}
+                              value={address['spouseInfo'].subcity}
+                            />
+                          
+                        </Form.Item>
+                      </Col>
+                      <Col span={8}>
+                        <Form.Item
+                          label="Woreda"
+                          name={["spouseInfo", "address", "woreda"]}
+                        >
+                          
+                            <Select
+                              options={
+                                address['spouseInfo'].region && address['spouseInfo'].subcity
+                                  ? data[address['spouseInfo'].region][address['spouseInfo'].subcity].map((woreda) => ({
+                                      label: woreda,
+                                      value: woreda,
+                                    }))
+                                  : []
+                              }
+                              value={address['spouseInfo'].woreda}
+                            />
+                          
                         </Form.Item>
                       </Col>
                     </Row>
@@ -355,15 +435,6 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
         }}
       </Form.Item>
 
-      {/* <Form.Item
-        label="የስራ አፈፃፀም ውጤት"
-        name="workPerformance"
-        rules={[{ required: true, message: "Work Performance is required" }]}
-      >
-        
-        <Input />
-      </Form.Item> */}
-
       <Space>
         <Button
           type="primary"
@@ -375,7 +446,6 @@ const Step3: React.FC<Step3Props> = ({ form, prevStep, handleFormData }) => {
         <Button
           type="primary"
           htmlType="submit"
-          onClick={handleFormSubmit}
           style={{ background: "#1890ff", borderColor: "#1890ff" }}
         >
           Submit
