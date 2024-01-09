@@ -1,118 +1,97 @@
-import React from 'react';
-import { Form, Input, InputNumber, Select, Row, Col, Radio } from 'antd';
+import React, { useState } from 'react';
+import { Table } from 'antd';
+import { ColumnsType } from 'antd/es/table';
+import { useQuery } from 'react-query';
 
-const Reward: React.FC = () => {
-  const [form] = Form.useForm();
+interface Employee {
+  id: number;
+  title: string;
+  firstName: string;
+  lastName: string;
+  department: string;
+  evaluation: number;
+  rank: number;
+}
 
-  const genderOptions = [
-    { label: 'Male', value: 'male' },
-    { label: 'Female', value: 'female' },
-    { label: 'Other', value: 'other' },
+interface PerformanceData {
+  employees: Employee[];
+}
+
+interface RewardProps {
+  id?: string;
+}
+
+const Reward: React.FC<RewardProps> = ({ id, ...otherProps }) => {
+  const { data: performanceData, isLoading } = useQuery<PerformanceData>(`performance-${id}`, async () => {
+    const response = await fetch('http://localhost:3001/employees');
+    if (!response.ok) {
+      throw new Error('Failed to fetch data');
+    }
+    return response.json();
+  });
+
+  const [sortedInfo, setSortedInfo] = useState<Record<string, any>>({});
+
+  const handleChange = (pagination: any, filters: any, sorter: any) => {
+    setSortedInfo(sorter);
+  };
+
+  const columns: ColumnsType<Employee> = [
+    {
+      title: 'Rank',
+      dataIndex: 'rank',
+      key: 'rank',
+      sorter: (a, b) => a.rank - b.rank,
+      sortOrder: sortedInfo.columnKey === 'rank' && sortedInfo.order,
+    },
+    {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+      sorter: (a, b) => a.title.localeCompare(b.title),
+      sortOrder: sortedInfo.columnKey === 'title' && sortedInfo.order,
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (_, record) => `${record.firstName} ${record.lastName}`,
+    },
+    {
+      title: 'Department',
+      dataIndex: 'department',
+      key: 'department',
+      sorter: (a, b) => a.department.localeCompare(b.department),
+      sortOrder: sortedInfo.columnKey === 'department' && sortedInfo.order,
+    },
+    {
+      title: 'Evaluation',
+      dataIndex: 'evaluation',
+      key: 'evaluation',
+      sorter: (a, b) => a.evaluation - b.evaluation,
+      sortOrder: sortedInfo.columnKey === 'evaluation' && sortedInfo.order,
+    },
   ];
 
-  const investigationResultsOptions = [
-    { label: 'Pass', value: 'pass' },
-    { label: 'Failed', value: 'failed' },
-  ];
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <Form
-    layout='vertical'
-      form={form}
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
-      initialValues={{
-        title: '',
-        firstName: '',
-        lastName: '',
-        gender: '',
-        educationReadiness: 0,
-        averagePoint: 0,
-        workExperience: 0,
-        workEfficiency: 0,
-        documentClarity: 0,
-        investigationResult: 'pass', 
-      }}
-    >
-      <Row gutter={16}>
-        <Col span={8}>
-          <Form.Item label="Title" name="title">
-            <Input />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item label="First Name" name="firstName" rules={[{ required: true, message: 'Please enter first name!' }]}>
-            <Input />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item label="Last Name" name="lastName" rules={[{ required: true, message: 'Please enter last name!' }]}>
-            <Input />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item label="Gender" name="gender">
-            <Select options={genderOptions} />
-          </Form.Item>
-        </Col>
-      </Row>
-
-      <Row gutter={16}>
-        <Col span={8}>
-          <Form.Item
-            label="Education Readiness"
-            name="educationReadiness"
-            rules={[{ required: true, message: 'Please enter education readiness!' }]}
-          >
-            <InputNumber min={0} max={100} />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item
-            label="Average Point"
-            name="averagePoint"
-            rules={[{ required: true, message: 'Please enter average point!' }]}
-          >
-            <InputNumber min={0} max={100} />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item
-            label="Work Experience"
-            name="workExperience"
-            rules={[{ required: true, message: 'Please enter work experience!' }]}
-          >
-            <InputNumber min={0} max={100} />
-          </Form.Item>
-        </Col>
-      </Row>
-
-      <Row gutter={16}>
-        <Col span={8}>
-          <Form.Item
-            label="Work Efficiency"
-            name="workEfficiency"
-            rules={[{ required: true, message: 'Please enter work efficiency!' }]}
-          >
-            <InputNumber min={0} max={100} />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item
-            label="Document Clarity"
-            name="documentClarity"
-            rules={[{ required: true, message: 'Please enter document clarity!' }]}
-          >
-            <InputNumber min={0} max={100} />
-          </Form.Item>
-        </Col>
-        <Col span={8}>
-          <Form.Item label="Investigation Result" name="investigationResult">
-            <Radio.Group options={investigationResultsOptions} />
-          </Form.Item>
-        </Col>
-      </Row>
-    </Form>
+    <div className="p-4">
+      <Table
+        dataSource={performanceData?.employees || []}
+        columns={columns}
+        onChange={handleChange}
+        rowKey="id"
+        onRow={(record) => ({
+          onClick: () => {
+            // Handle row click, e.g., navigate to a detailed view
+            console.log('Clicked row:', record);
+          },
+        })}
+      />
+    </div>
   );
 };
 

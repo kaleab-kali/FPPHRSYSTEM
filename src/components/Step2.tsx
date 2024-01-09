@@ -15,7 +15,6 @@ import {
 import { FormInstance } from "antd/lib/form";
 import Title from "antd/es/typography/Title";
 import { data } from "../data";
-import axios from "axios";
 
 const { Option } = Select;
 type Degree = { id: number };
@@ -114,17 +113,26 @@ const DegreeFields: React.FC<{ degreeName: string; index: number }> = ({
     </h2>
     <Row gutter={16}>
       <Col span={8}>
-        <Form.Item label="Graduation Year" name="graduationYear">
+        <Form.Item
+          label="Graduation Year"
+          name={["education", degreeName, index, "graduationYear"]}
+        >
           <Input placeholder="Enter Graduation Year" />
         </Form.Item>
       </Col>
       <Col span={8}>
-        <Form.Item label="Field of Study" name="fieldOfStudy">
+        <Form.Item
+          label="Field of Study"
+          name={["education", degreeName, index, "fieldOfStudy"]}
+        >
           <Input placeholder="Enter Field of Study" />
         </Form.Item>
       </Col>
       <Col span={8}>
-        <Form.Item label="University Name">
+        <Form.Item
+          label="University Name"
+          name={["education", degreeName, index, "universityName"]}
+        >
           <AutoComplete
             options={universitiesInEthiopia.map((university) => ({
               value: university,
@@ -150,8 +158,40 @@ const Step2: React.FC<Step2Props> = ({
   const [region, setRegion] = useState<string | null>(null);
   const [subcity, setSubcity] = useState<string | null>(null);
   const [woreda, setWoreda] = useState<string | null>(null);
-  const [subcityOptions, setSubcityOptions] = useState<string[]>([]);
-  const [woredaOptions, setWoredaOptions] = useState<string[]>([]);
+
+  // Reset subcity and woreda when region changes
+  useEffect(() => {
+    if (region) {
+      const subcities = Object.keys(data[region]);
+      const firstSubcity = subcities[0];
+      setSubcity(firstSubcity);
+      form.setFieldsValue({ birthplaceInfo: { subcity: firstSubcity } });
+
+      const woredas = data[region][firstSubcity];
+      const firstWoreda = woredas[0];
+      setWoreda(firstWoreda);
+      form.setFieldsValue({
+        birthplaceInfo: { woreda: firstWoreda  },
+      });
+    }
+  }, [region]);
+
+  useEffect(() => {
+    if (region && subcity) {
+      const woredas = data[region][subcity];
+      const firstWoreda = woredas[0];
+      setWoreda(firstWoreda);
+      form.setFieldsValue({ birthplaceInfo: { woreda: firstWoreda } });
+    }
+  }, [subcity]);
+
+  const handleRegionChange = (value: string) => {
+    setRegion(value);
+  };
+
+  const handleSubcityChange = (value: string) => {
+    setSubcity(value);
+  };
   const [educationLevel, setEducationLevel] = useState<Level | "">("");
   const [degrees, setDegrees] = useState<Degrees>({
     bachelor: [{ id: 1 }],
@@ -176,63 +216,13 @@ const Step2: React.FC<Step2Props> = ({
     setDegrees({ ...degrees, [level]: newDegrees });
   };
 
-  // Reset subcity and woreda when region changes
-  useEffect(() => {
-    setSubcity(null);
-    setWoreda(null);
-  }, [region]);
 
-  // Reset woreda when subcity changes
-  useEffect(() => {
-    setWoreda(null);
-  }, [subcity]);
-
-  const handleRegionChange = (value: string) => {
-    const firstSubcity = Object.keys(data[value])[0];
-    setRegion(value);
-    setSubcity(firstSubcity);
-    setSubcityOptions(Object.keys(data[value]));
-    setWoredaOptions(data[value][firstSubcity]);
-    form.setFieldsValue({
-      subcity: firstSubcity,
-      wordea: data[value][firstSubcity][0],
-    });
-  };
-
-  const handleSubcityChange = (value: string) => {
-    const firstWoreda = data[region!][value][0];
-    setSubcity(value);
-    setWoreda(firstWoreda);
-    setWoredaOptions(data[region!][value]);
-    form.setFieldsValue({ wordea: firstWoreda });
-  };
-
-  // const handleFormSubmit = (values: any) => {
-  //   handleFormData(values); // Collect and pass the form data
-  //   nextStep();
-  // };
-
-  // const handleRewardStatusChange = (value: string) => {
-  //   setShowAdditionalFields(value === "yes");
-  // };
-const handleFormSubmit = async () => {
-  try {
-    const formData = await form.validateFields(); // Validate the form fields
-    // Use axios to send a POST request to your JSON Server
-    // await axios.post("http://localhost:3001/employees", formData);
-
-    // Optionally, you can handle the response or perform other actions
-
-    // Call the parent component's handleFormData function to pass the form data
-    handleFormData(formData);
-
-    // Move to the next step
+  const onFinish = () => {
+    const values = form.getFieldsValue(true);
+    handleFormData(values);
     nextStep();
-  } catch (error) {
-    console.error("Form submission error:", error);
-    // Handle errors as needed (e.g., display an error message)
-  }
-};
+  };
+
   return (
     <>
       <Form.Item
@@ -295,67 +285,84 @@ const handleFormSubmit = async () => {
             Birthplace Information
           </span>
         }
-        name="birthplaceInfo"
       >
         {/* Sub-form for Birthplace Information */}
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item label="Region" name="region">
-              <Select
-                options={Object.keys(data).map((region) => ({
-                  label: region,
-                  value: region,
-                }))}
-                onChange={handleRegionChange}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item label="Zone/Subcity" name="subcity">
-              <Select
-                options={subcityOptions.map((subcity) => ({
-                  label: subcity,
-                  value: subcity,
-                }))}
-                onChange={handleSubcityChange}
-                value={subcity}
-              />
-            </Form.Item>
-          </Col>
-        </Row>
+        <>
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item label="Region" name={["birthplaceInfo", "region"]}>
+                <Select
+                  options={Object.keys(data).map((region) => ({
+                    label: region,
+                    value: region,
+                  }))}
+                  onChange={handleRegionChange}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item
+                label="Zone/Subcity"
+                name={["birthplaceInfo", "subcity"]}
+              >
+                <Select
+                  options={
+                    region
+                      ? Object.keys(data[region]).map((subcity) => ({
+                          label: subcity,
+                          value: subcity,
+                        }))
+                      : []
+                  }
+                  onChange={handleSubcityChange}
+                  value={subcity}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
 
-        <Row gutter={16}>
-          <Col span={8}>
-            <Form.Item label="Woreda" name="wordea">
-              <Select
-                options={woredaOptions.map((woreda) => ({
-                  label: woreda,
-                  value: woreda,
-                }))}
-                value={woreda}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="House Number" name="houseNumber">
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="Leyu Bota" name="leyuBota">
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Form.Item label="Woreda" name={["birthplaceInfo", "woreda"]}>
+                <Select
+                  options={
+                    region && subcity
+                      ? data[region][subcity].map((woreda) => ({
+                          label: woreda,
+                          value: woreda,
+                        }))
+                      : []
+                  }
+                  value={woreda}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
+                label="House Number"
+                name={["birthplaceInfo", "houseNumber"]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
+                label="Leyu Bota"
+                name={["birthplaceInfo", "leyuBota"]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+          </Row>
+        </>
       </Form.Item>
 
-     
       <Title level={4}>Mother's Information</Title>
       <Row gutter={16}>
         <Col span={8}>
           <Form.Item
             label="Mother's First Name"
-            name="motherFirstName"
+            name={["motherInformation", "firstName"]}
             rules={[
               {
                 required: true,
@@ -369,13 +376,13 @@ const handleFormSubmit = async () => {
         <Col span={8}>
           <Form.Item
             label="Mother's Middle Name"
-            name="motherMiddleName"
-            rules={[
-              {
-                required: true,
-                message: "Please enter your mother's middle name",
-              },
-            ]}
+            name={["motherInformation", "middleName"]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: "Please enter your mother's middle name",
+            //   },
+            // ]}
           >
             <Input />
           </Form.Item>
@@ -383,7 +390,7 @@ const handleFormSubmit = async () => {
         <Col span={8}>
           <Form.Item
             label="Mother's Last Name"
-            name="motherLastName"
+            name={["motherInformation", "lastName"]}
             rules={[
               {
                 required: true,
@@ -401,13 +408,13 @@ const handleFormSubmit = async () => {
           {/* Input Group for Phone Number */}
           <Form.Item
             label="Mother's Phone Number"
-            name="motherPhoneNumber"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Please enter your mother's phone number",
-            //   },
-            // ]}
+            name={["motherInformation", "phoneNumber"]}
+            rules={[
+              {
+                required: true,
+                message: "Please enter your mother's phone number",
+              },
+            ]}
           >
             <Input.Group compact>
               {/* Ethiopian country code */}
@@ -442,7 +449,7 @@ const handleFormSubmit = async () => {
         </Button>
         <Button
           type="primary"
-          onClick={handleFormSubmit}
+          onClick={onFinish}
           style={{ background: "#1890ff", borderColor: "#1890ff" }}
         >
           Next
