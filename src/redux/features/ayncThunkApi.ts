@@ -15,3 +15,15 @@ export const fetchEmployeeData = createAsyncThunk<EmployeeData[]>("employeeData/
     throw error;
   }
 });
+export const postEmployeeData = createAsyncThunk<EmployeeData, EmployeeData>("employeeData/post",
+  async (newEmployeeData) => {
+    try {
+      const response = await axios.post("http://localhost:8000/backend/employees", newEmployeeData);
+      const postedEmployeeData = response.data;
+      console.log("post emp data from thunk", postedEmployeeData);
+      return postedEmployeeData;
+    } catch (error) {
+      throw error;
+    }
+  }
+);

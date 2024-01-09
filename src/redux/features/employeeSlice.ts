@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchEmployeeData } from "./ayncThunkApi";
+import { fetchEmployeeData, postEmployeeData } from "./ayncThunkApi";
 
 export interface EmployeeData {
   _id: string;
@@ -45,18 +45,35 @@ export const employeeSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    // Your existing reducers here if needed
-  },
+    // registerEmployee: (state, action: PayloadAction<any>) => {
+    //   const { name,email } = action.payload;
+    //   return {
+    //     employeeValues: {
+    //       email:email,
+    //       username: name,
+       
+    //     },
+    //   };
+    //   },
+    },
   extraReducers(builder) {
-    builder.addCase(
-      fetchEmployeeData.fulfilled,
+    builder.addCase(fetchEmployeeData.fulfilled,
       (state, action: PayloadAction<EmployeeData[]>) => {
         const employeeData = action.payload;
         console.log("employee data builder", employeeData);
         state.employeeValues = employeeData;
       }
+      
+    )
+  .addCase(
+      postEmployeeData.fulfilled,
+      (state, action: PayloadAction<EmployeeData>) => {
+        const newEmployeeData = action.payload;
+        state.employeeValues = [...state.employeeValues, newEmployeeData];
+      }
     );
   },
 });
+// export const { registerEmployee} = employeeSlice.actions;
 
 export default employeeSlice.reducer;
