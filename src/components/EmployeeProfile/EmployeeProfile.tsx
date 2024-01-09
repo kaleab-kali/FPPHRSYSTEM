@@ -11,6 +11,7 @@ import EducationalInformation from "./Tabs/EducationalInformation";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import AppraisalInformation from "./Tabs/AppraisalInformation";
+import { useAppSelector } from "../../redux/store";
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 interface Employee {
@@ -48,16 +49,19 @@ type TabItem = {
 const Education: React.FC = () => <div>Education component</div>
 
 const EmployeeProfile: React.FC = (key:any) => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>(); 
+  const employees = useAppSelector((state) => state.employee.employeeValues);
+  const selectedEmployee = employees.find((employee) => employee._id === id);
+
   const tabItems: TabItem[] = [
-    { label: "General", key: "1", component: <GeneralInformation id={id}/> },
-    { label: "Educational", key: "2", component: <EducationalInformation id={id}/> },
-    { label: "Work experience", key: "3", component: <WorkExperience id={id}/> },
-    { label: "Leave", key: "4", component: <LeaveInformation id={id}/> },
-    { label: "Attendance", key: "5", component: <AttendanceInformation id={id}/> },
-    // { label: "Reward", key: "6", component: <RewardInfomation id={id}/> },
-    { label: "Performance", key: "7", component: <PerformanceInformation id={id}/> },
-    { label: "Apresal", key: "8", component: <AppraisalInformation id={id}/> },
+    { label: "General", key: "1", component: <GeneralInformation id={id} /> },
+    { label: "Educational", key: "2", component: <EducationalInformation id={id} /> },
+    { label: "Work experience", key: "3", component: <WorkExperience id={id} /> },
+    { label: "Leave", key: "4", component: <LeaveInformation id={id} /> },
+    { label: "Attendance", key: "5", component: <AttendanceInformation id={id} /> },
+    // { label: "Reward", key: "6", component: <RewardInfomation id={id} /> },
+    { label: "Performance", key: "7", component: <PerformanceInformation id={id} /> },
+    { label: "Apresal", key: "8", component: <AppraisalInformation id={id} /> },
 
   ];
   const { data, error, isLoading } = useQuery<Employee[], Error>(
