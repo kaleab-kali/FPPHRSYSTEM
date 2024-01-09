@@ -72,7 +72,7 @@ const ProfileHeader: React.FC = () => {
             >
               <Text strong className=" text-4xl text-blue-400">
                 +{totalEmployees}
-              </Text>
+              </Text> 
               <Text strong>Total Employees</Text>
             </Space>
           </Card>

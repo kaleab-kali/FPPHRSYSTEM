@@ -7,10 +7,10 @@ import WorkExperience from "./Tabs/WorkExperience";
 import LeaveInformation from "./Tabs/LeaveInformation";
 import AttendanceInformation from "./Tabs/AttendanceInformation";
 import PerformanceInformation from "./Tabs/PerformanceInformation";
-import RewardInfomation from "./Tabs/RewardInfomation";
 import EducationalInformation from "./Tabs/EducationalInformation";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import AppraisalInformation from "./Tabs/AppraisalInformation";
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 interface Employee {
@@ -57,11 +57,13 @@ const EmployeeProfile: React.FC = (key:any) => {
     { label: "Attendance", key: "5", component: <AttendanceInformation id={id}/> },
     // { label: "Reward", key: "6", component: <RewardInfomation id={id}/> },
     { label: "Performance", key: "7", component: <PerformanceInformation id={id}/> },
+    { label: "Apresal", key: "8", component: <AppraisalInformation id={id}/> },
+
   ];
   const { data, error, isLoading } = useQuery<Employee[], Error>(
     "employees",
     async () => {
-      const response = await fetch("http://localhost:3001/employees");
+      const response = await fetch("http://localhost:8000/employees");
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
@@ -175,8 +177,10 @@ const EmployeeProfile: React.FC = (key:any) => {
           <Tabs defaultActiveKey="1" centered>
             {
               tabItems.map((tab) => (
-                <Tabs.TabPane key={tab.key} tab={tab.label}>
-                  {tab.component}
+                <Tabs.TabPane key={tab.key}
+                 tab={<div className="text-blue-900 bg-blue-100 p-2 px-4 rounded-md hover:bg-blue-500 hover:text-blue-100 ">{tab.label}</div>}
+                  className="">
+                   {tab.component}
                 </Tabs.TabPane>
               ))
             }

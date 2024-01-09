@@ -25,6 +25,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { data2 } from "../../../data2";
 import form, { FormInstance } from "antd/lib/form";
 
+
 type Degree = { id: number };
 type Degrees = { bachelor: Degree[]; master: Degree[]; phd: Degree[] };
 type Level = "bachelor" | "master" | "phd";
