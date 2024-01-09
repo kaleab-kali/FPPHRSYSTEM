@@ -8,6 +8,8 @@ import type { FilterConfirmProps } from "antd/es/table/interface";
 import { useQuery } from "react-query";
 //import EmployeeProfile from "./EmployeeProfile/EmployeeProfile";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchEmployees, selectEmployees } from '../reducers/employeeSlice';
 
 interface DataType {
   id: string;
@@ -86,6 +88,13 @@ const Profile: React.FC = () => {
   const handleDelete = (key: string) => {
     // push(`/employee/${key}`);
   };
+  //const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const employees = useSelector(selectEmployees);
+
+  // useEffect(() => {
+  //   dispatch(fetchEmployees());
+  // }, [dispatch]);
 
 
   const { data, error, isLoading } = useQuery<DataType[], Error>(
