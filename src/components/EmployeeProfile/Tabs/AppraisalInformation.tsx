@@ -2,10 +2,16 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { DatabaseOutlined, WarningOutlined, SnippetsOutlined, TeamOutlined } from '@ant-design/icons'
 import { Avatar, Card, List, Popover, Progress, Table } from 'antd'
+import { EmployeeData } from '../../../redux/features/employeeSlice'
 
 type Props = {}
 
-const AppraisalInformation = ({ id }: { id: any }) => {
+interface GeneralInformationProps {
+    selectedEmployee?: EmployeeData; // Make selectedEmployee optional
+  }
+  
+  function AppraisalInformation({ selectedEmployee }: GeneralInformationProps) {
+// const AppraisalInformation = ({ id }: { id: any }) => {
 
     const [open, setOpen] = useState(false);
     const [open1, setOpen1] = useState(false);

@@ -58,13 +58,13 @@ const EmployeeProfile: React.FC = (key:any) => {
 
   const tabItems: TabItem[] = [
     { label: "General", key: "1", component: <GeneralInformation  selectedEmployee={selectedEmployee}  /> },
-    { label: "Educational", key: "2", component: <EducationalInformation id={id} selectedEmployee={selectedEmployee}  /> },
-    { label: "Work experience", key: "3", component: <WorkExperience id={id} selectedEmployee={selectedEmployee}  /> },
-    { label: "Leave", key: "4", component: <LeaveInformation id={id} selectedEmployee={selectedEmployee}  /> },
-    { label: "Attendance", key: "5", component: <AttendanceInformation id={id} selectedEmployee={selectedEmployee}  /> },
-    // { label: "Reward", key: "6", component: <RewardInfomation id={id} selectedEmployee={selectedEmployee}  /> },
-    { label: "Performance", key: "7", component: <PerformanceInformation id={id} selectedEmployee={selectedEmployee}  /> },
-    // { label: "Apresal", key: "8", component: <AppraisalInformation id={id} selectedEmployee={selectedEmployee}  /> },
+    { label: "Educational", key: "2", component: <EducationalInformation  selectedEmployee={selectedEmployee}  /> },
+    { label: "Work experience", key: "3", component: <WorkExperience  selectedEmployee={selectedEmployee}  /> },
+    { label: "Leave", key: "4", component: <LeaveInformation  selectedEmployee={selectedEmployee}  /> },
+    { label: "Attendance", key: "5", component: <AttendanceInformation  selectedEmployee={selectedEmployee}  /> },
+    // { label: "Reward", key: "6", component: <RewardInfomation  selectedEmployee={selectedEmployee}  /> },
+    { label: "Performance", key: "7", component: <PerformanceInformation  selectedEmployee={selectedEmployee}  /> },
+    { label: "Apresal", key: "8", component: <AppraisalInformation  selectedEmployee={selectedEmployee}  /> },
 
   ];
   // const { data, error, isLoading } = useQuery<Employee[], Error>(

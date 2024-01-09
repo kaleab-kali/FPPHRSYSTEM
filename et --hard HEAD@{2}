@@ -1,0 +1,16 @@
+[33mc297f3a[m[33m ([m[1;36mHEAD -> [m[1;32mMelaku-branch[m[33m, [m[1;31morigin/Melaku-branch[m[33m)[m HEAD@{0}: reset: moving to HEAD
+[33mc297f3a[m[33m ([m[1;36mHEAD -> [m[1;32mMelaku-branch[m[33m, [m[1;31morigin/Melaku-branch[m[33m)[m HEAD@{1}: commit (merge): Merge branch 'kaleab-branch' into Melaku-branch
+[33m3f632a4[m HEAD@{2}: checkout: moving from kaleab-branch to Melaku-branch
+[33md412c95[m[33m ([m[1;31morigin/kaleab-branch[m[33m, [m[1;32mkaleab-branch[m[33m)[m HEAD@{3}: checkout: moving from Melaku-branch to kaleab-branch
+[33m3f632a4[m HEAD@{4}: commit: pass the selected Employee
+[33mfa0c542[m HEAD@{5}: commit: add redux
+[33m3c9997b[m HEAD@{6}: commit: adding apraisal request form
+[33m29d0630[m HEAD@{7}: commit: updating the search bar
+[33m8bf5326[m HEAD@{8}: commit: changing the color of tabs
+[33m135e7bf[m HEAD@{9}: commit: edited
+[33m294e657[m HEAD@{10}: commit: adding apriasl and search bar
+[33m2c07587[m HEAD@{11}: commit: updating navbar
+[33ma8bc428[m HEAD@{12}: commit: updating sidbar and navbar
+[33m7cc5fd4[m HEAD@{13}: checkout: moving from mulualem-branch to Melaku-branch
+[33m91af748[m[33m ([m[1;32mmulualem-branch[m[33m)[m HEAD@{14}: checkout: moving from Melaku-branch to mulualem-branch
+[33m7cc5fd4[m HEAD@{15}: commit: check the data
