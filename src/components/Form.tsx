@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Steps, message } from "antd";
 import { useMutation, useQueryClient } from "react-query";
 
@@ -7,14 +7,23 @@ import Step2 from "./Step2";
 import Step3 from "./Step3";
 
 const { Step } = Steps;
+let idCounter = 1;
 
 const MyForm: React.FC = () => {
   const [form] = Form.useForm();
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [formData, setFormData] = useState<any>({});
 
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
   const handleFormData = (data: any) => {
-    setFormData((prevData: any) => ({ ...prevData, ...data }));
+    setFormData((prevData: any) => ({
+      ...prevData,
+      ...data,
+      birthday: data.birthday ? data.birthday.format("DD/MM/YYYY"): undefined, // Format the birthday
+    }));
   };
 
   const queryClient = useQueryClient();
@@ -88,6 +97,10 @@ const MyForm: React.FC = () => {
   ];
 
   const nextStep = () => {
+    const values = form.getFieldsValue(true);
+  
+  // Update the formData state variable
+  handleFormData(values);
     setCurrentStep(currentStep + 1);
   };
 
@@ -96,6 +109,19 @@ const MyForm: React.FC = () => {
   };
 
   const onFinish = async () => {
+    const values = form.getFieldsValue(true);
+  
+    // Generate a unique ID in the format of "FPC-0001"
+    const uniqueId = `FPC-${String(idCounter).padStart(4, '0')}`;
+  
+    // Increment the counter for the next ID
+    idCounter += 1;
+  
+    // Add the unique ID to the form data
+    values.id = uniqueId;
+  
+    // Pass the form values to handleFormData
+    handleFormData(values);
     try {
       await form.validateFields();
       // Use the getFieldsValue method to get only the form data
@@ -105,6 +131,8 @@ const MyForm: React.FC = () => {
     } catch (error) {
       console.error("Validation failed:", error);
     }
+    console.log("Complete Form Data:", formData);
+    message.success("Form submitted successfully!");
   };
 
   return (

@@ -155,6 +155,8 @@ const App: React.FC = () => {
               <Route path="/messages" element={<Messages />} />
               <Route path="/employee/:id" element={<EmployeeProfile />} />
               <Route path="/aprisal" element={<ApraisalForm />} />
+              <Route path="/reward" element={<Reward/>} />
+              <Route path="/appraisal" element={<ApraisalForm />} />
 
             </Routes>
           </Content>

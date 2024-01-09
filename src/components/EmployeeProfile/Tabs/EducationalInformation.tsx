@@ -9,9 +9,9 @@ import {
   Col,
   AutoComplete,
   Modal,
-  Table,
+  Card,
 } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, PlusCircleFilled } from "@ant-design/icons";
 import { FormInstance } from "antd/lib/form";
 
 const { Option } = Select;
@@ -27,6 +27,7 @@ interface EducationItem {
   instituteName: string;
   action: number;
 }
+
 const universitiesInEthiopia = [
   // Public Universities
   "Addis Ababa University (AAU)",
@@ -151,18 +152,13 @@ const EducationalInformation: React.FC<any> = () => {
     const id = degrees[level][degrees[level].length - 1].id + 1;
     setDegrees({ ...degrees, [level]: [...degrees[level], { id }] });
   };
-  useEffect(() => {
-    setDegrees({
-      bachelor: [{ id: 1 }],
-      master: [{ id: 1 }],
-      phd: [{ id: 1 }],
-    });
-  }, [educationLevel]);
+
 
   const removeDegree = (level: Level) => {
     const newDegrees = degrees[level].slice(0, -1);
     setDegrees({ ...degrees, [level]: newDegrees });
   };
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -177,47 +173,30 @@ const EducationalInformation: React.FC<any> = () => {
     setIsModalVisible(false);
   };
 
-  const columns = [
-    {
-      title: "Education Level",
-      dataIndex: "educationLevel",
-      key: "educationLevel",
-    },
-    {
-      title: "Graduation Year",
-      dataIndex: "graduationYear",
-      key: "graduationYear",
-    },
-    { title: "Field of Study", dataIndex: "fieldOfStudy", key: "fieldOfStudy" },
-    {
-      title: "Institute Name",
-      dataIndex: "instituteName",
-      key: "instituteName",
-    },
-    {
-      title: "Action",
-      dataIndex: "action",
-      key: "action",
-      render: (_: any, record: Degree) => (
+  const EducationCard: React.FC<EducationItem> = ({
+    educationLevel,
+    instituteName,
+    graduationYear,
+    fieldOfStudy,
+  }) => (
+    <Card
+      title={`${educationLevel} - ${instituteName}`}
+      extra={
         <div className="flex flex-row space-x-4">
-          <Button
-            type="link"
-            className="bg-red-700 text-white"
-            // onClick={() => removeDegree(educationLevel, record.id)}
-          >
+          <Button type="link" className="bg-red-700 text-white">
             Remove
           </Button>
-          <Button
-            type="link"
-            className="bg-blue-700 text-white"
-            // onClick={() => removeDegree(educationLevel, record.id)}
-          >
+          <Button type="link" className="bg-blue-700 text-white">
             Update
           </Button>
         </div>
-      ),
-    },
-  ];
+      }
+      style={{ marginBottom: 16, width: 600, margin: 'auto' }}
+    >
+      <p>Graduation Year: {graduationYear}</p>
+      <p>Field of Study: {fieldOfStudy}</p>
+    </Card>
+  );
   const dataSource: EducationItem[] = [
     {
       id: 1,
@@ -227,28 +206,26 @@ const EducationalInformation: React.FC<any> = () => {
       instituteName: "ASTU",
       action: 1,
     },
-    // Add more sample rows as needed
+    {
+      id: 1,
+      educationLevel: "Masters",
+      graduationYear: "2025",
+      fieldOfStudy: "Software Engineering",
+      instituteName: "AASTU",
+      action: 1,
+    },
+    {
+      id: 1,
+      educationLevel: "Phd",
+      graduationYear: "2027",
+      fieldOfStudy: "Software Engineering",
+      instituteName: "AASTU",
+      action: 1,
+    },
   ];
-  //  const dataSource = degrees[educationLevel].map((degree) => ({
-  //    ...degree,
-  //    key: degree.id,
-  //    action: "Remove",
-  //  }));
-
-  //   const onFinish = (values: any) => {
-  //     handleFormData(values); // Collect and pass the form data
-  //     nextStep();
-  //   };
 
   return (
-    <div className="felx w-full">
-      <div className="flex flex-row  ml-60">
-        <Button onClick={() => showModal()}>
-          <PlusOutlined />
-          Add
-        </Button>
-      </div>
-
+    <div className="flex flex-col w-full">
       <Modal
         title="Add Education Level"
         visible={isModalVisible}
@@ -309,51 +286,32 @@ const EducationalInformation: React.FC<any> = () => {
             )
         )}
       </Modal>
-      {/* {educationLevel && ( */}
-      {/* <Table
-          columns={columns}
-          dataSource={dataSource}
-          bordered
-          pagination={false}
-          style={{ marginTop: 16 }}
-        /> */}
+{/* {educationLevel && ( */}
+        <Space direction="vertical" size={16}>
+          {dataSource
+  .filter((data) => !educationLevel || data.educationLevel.toLowerCase() === educationLevel)
+  .map((data: EducationItem) => (
+    <EducationCard key={data.id} {...data} />
+  ))}
+        </Space>
       {/* )} */}
-      <br />
-      <br />
-      <br />
-      <div className="search-table-outter wrapper mb-11 shadow-md rounded-md  border-l-4  border-blue-500     mt-9">
-        <table
-          id="example"
-          className="display nowrap p-5"
-          style={{ width: "100%" }}
-        >
-          <tbody className="justify-around py-10">
-            <tr
-              className="text-slate-600 bg-slate-200 text-md font-bold pt-4"
-              style={{ textAlign: "start" }}
-            >
-              <td>Education Level</td>
-              <td>Graduation Year</td>
-              <td>FieldOfStudy</td>
-              <td>InstituteName</td>
-              <td>Action</td>
-            </tr>
-            {dataSource.map((data: any) => (
-              <tr
-                key={data.key}
-                className="py-10 mb-10 text-slate-500"
-                style={{ textAlign: "start", margin: 32 }}
-              >
-                <td>{data.educationLevel}</td>
-                <td>{data.graduationYear}</td>
-                <td>{data.fieldOfStudy}</td>
-                <td>{data.instituteName}</td>
-                <td>{data.action}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <div className="ml-auto mb-4">
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      width: 40,
+      height: 40,
+      borderRadius: "50%",
+      backgroundColor: "#fff",
+      cursor: "pointer",
+    }}
+    onClick={() => showModal()}
+  >
+    <PlusCircleFilled style={{ fontSize: 36, color: "#1980ff" }} />
+  </div>
+</div>
     </div>
   );
 };

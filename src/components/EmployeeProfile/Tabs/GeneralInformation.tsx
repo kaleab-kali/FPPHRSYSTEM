@@ -68,7 +68,7 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
       <h1>General Information</h1>
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <p>Title: {selectedEmployee?.houseNumber}</p>
+          <p>Title: {selectedEmployee?._id}</p>
         </Col>
         {/* <Col span={8}>
           <p>Name: {`${firstName} ${middleName} ${lastName}`}</p>
