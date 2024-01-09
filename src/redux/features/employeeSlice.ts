@@ -1,14 +1,42 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchEmployeeData, postEmployeeData } from "./ayncThunkApi";
+import { fetchEmployeeData } from "./ayncThunkApi";
 
 export interface EmployeeData {
   _id: string;
+  title: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
   name: string;
   email: string;
   requiredField: string;
   houseNumber: string;
+  birthday: string;
+  gender: string;
+  position: string;
+  department: string;
+  ethnicity: string;
+  region: string;
+  subcity: string;
+  wordea: string;
+  camp?: string;
+  salary: number;
+  educationalLevel: string;
   relationship: string;
   leyuBota?: string;
+  phone: {
+    prefix: string;
+    number: number;
+  };
+  motherInformation: {
+    motherPhoneNumber: {
+      prefix: string;
+      number: number;
+    };
+    motherFirstName: string;
+    motherMiddleName: string;
+    motherLastName: string;
+  };
   maritalStatus: {
     martialType: string;
     spouseInfo: {
@@ -45,35 +73,18 @@ export const employeeSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    // registerEmployee: (state, action: PayloadAction<any>) => {
-    //   const { name,email } = action.payload;
-    //   return {
-    //     employeeValues: {
-    //       email:email,
-    //       username: name,
-       
-    //     },
-    //   };
-    //   },
-    },
+    // Your existing reducers here if needed
+  },
   extraReducers(builder) {
-    builder.addCase(fetchEmployeeData.fulfilled,
+    builder.addCase(
+      fetchEmployeeData.fulfilled,
       (state, action: PayloadAction<EmployeeData[]>) => {
         const employeeData = action.payload;
         console.log("employee data builder", employeeData);
         state.employeeValues = employeeData;
       }
-      
-    )
-  .addCase(
-      postEmployeeData.fulfilled,
-      (state, action: PayloadAction<EmployeeData>) => {
-        const newEmployeeData = action.payload;
-        state.employeeValues = [...state.employeeValues, newEmployeeData];
-      }
     );
   },
 });
-// export const { registerEmployee} = employeeSlice.actions;
 
 export default employeeSlice.reducer;
