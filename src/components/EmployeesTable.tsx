@@ -8,6 +8,9 @@ import type { FilterConfirmProps } from "antd/es/table/interface";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import pic1 from '../assets/images/photo.jpg'
+import { EmployeeData } from "../redux/features/employeeSlice";
+import { useAppSelector } from "../redux/store";
+import { data } from "../data";
 
 interface DataType {
   id: string;
@@ -59,6 +62,7 @@ const Profile: React.FC = () => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
+  const employees = useAppSelector((state) => state.employee.employeeValues);
   const searchInput = useRef<InputRef>(null);
   function getAge(dateString: string): number {
     const today: Date = new Date();
@@ -86,23 +90,22 @@ const Profile: React.FC = () => {
   const handleDelete = (key: string) => {
     // push(`/employee/${key}`);
   };
+  // const { data, error, isLoading } = useQuery<DataType[], Error>("employees", async () => {
+  //     const response = await fetch("http://localhost:8000/employees");
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch data");
+  //     }
+  //     return response.json();
+  //   }
+  // );
 
-  const { data, error, isLoading } = useQuery<DataType[], Error>("employees", async () => {
-      const response = await fetch("http://localhost:8000/employees");
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-      return response.json();
-    }
-  );
+  // if (isLoading) {
+  //   return <p>Loading...</p>;
+  // }
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
+  // if (error) {
+  //   return <p>Error: {error.message}</p>;
+  // }
   console.warn('data')
 
 
@@ -282,14 +285,14 @@ const Profile: React.FC = () => {
       ),
     },
   ];
-console.warn("the data is ",data)
+// console.warn("the data is from ui  ",employees)
 
 const genderOptions = [
   { label: 'Male', value: 'male' },
   { label: 'Female', value: 'female' },
   { label: 'Other', value: 'other' },
 ];
-  return <> 
+  return <>
     <div>
       {/* <form>
           <div className="flex">
@@ -321,7 +324,6 @@ const genderOptions = [
               </div>
           </div>
       </form> */}
-
       <form className="flex">   
         
         <label htmlFor="cars" ></label>
@@ -361,24 +363,22 @@ const genderOptions = [
               <td>Birth Date</td>
               <td>Action</td>
          
-        
             </tr>
-            {data&&data.map((data: any) => (
-              <tr key={data.key} className='py-10 mb-10 overflow-y-auto text-slate-500' style={{ textAlign: 'start', margin: 32 }}>
+            {employees&&employees.map((data: any) => (
+              <tr key={data._id} className='py-10 mb-10 overflow-y-auto text-slate-500' style={{ textAlign: 'start', margin: 32 }}>
                 <td >
-                  {/* <img src={pic1} width={80} height={80} alt="employe phototo" /> */}
                   <Image src={pic1} width={80} height={70} />
                   </td>
-                <td>{data.title}</td>
                 <td>{data.firstName}</td>
+                <td>{data.middleName}</td>
                 <td>{data.birthday}</td>
                 <td>
                   <div className="flex justify-evenly">
                     <span className="text-green-100 text-md font-bold px-4 bg-green-500 p-1 rounded-md hover:text-white hover:bg-green-600 cursor-pointer"
-                    onClick={()=>handleView(data.id)}
+                    onClick={()=>handleView(data._id)}
                     >View</span>
                     <span className="text-red-100 text-md font-bold px-4 bg-red-500 p-1 rounded-md  hover:bg-red-600 cursor-pointer"
-                     onClick={()=>handleView(data.id)}
+                     onClick={()=>handleView(data._id)}
                     >Delete</span>
                     </div>
                   

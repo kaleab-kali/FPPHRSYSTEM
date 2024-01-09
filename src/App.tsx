@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {  TeamOutlined,  ClockCircleOutlined,CalendarOutlined,ExclamationCircleOutlined,LineChartOutlined,} from "@ant-design/icons";
 import {Layout,  Input,} from "antd";
 import "./App.css";
@@ -13,6 +13,9 @@ import Navbar from "./components/Navbar";
 import SideBar from "./components/SideBar";
 import AppraisalInformation from "./components/EmployeeProfile/Tabs/AppraisalInformation";
 import ApraisalForm from "./components/ApraisalForm";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "./redux/store";
+import { fetchEmployeeData } from "./redux/features/ayncThunkApi";
 
 
 const {  Content } = Layout;
@@ -84,7 +87,11 @@ const sidebarItems: SidebarItem[] = [
 ];
 
 const App: React.FC = () => {
-
+  const dispatch=useDispatch<AppDispatch>();
+  useEffect(()=>{
+    dispatch(fetchEmployeeData())
+    
+  },[dispatch])
 
   return (
     <Layout className="">

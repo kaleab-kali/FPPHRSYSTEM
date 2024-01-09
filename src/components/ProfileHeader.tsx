@@ -10,8 +10,8 @@ import EmployeesTable from "./EmployeesTable"; // Your employee table component
 const { Text } = Typography;
 
 const ProfileHeader: React.FC = () => {
-  const [totalEmployees, setTotalEmployees] = useState<number>(100); // Initial value, replace with actual count
-  const [activeEmployees, setActiveEmployees] = useState<number>(85); // Initial value, replace with actual count
+  const [totalEmployees, setTotalEmployees] = useState<number>(100); 
+  const [activeEmployees, setActiveEmployees] = useState<number>(85); 
 
   useEffect(() => {
     // Simulate live update of employee count (replace with actual logic)
