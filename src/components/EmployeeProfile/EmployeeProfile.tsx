@@ -14,7 +14,7 @@ import AppraisalInformation from "./Tabs/AppraisalInformation";
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 interface Employee {
-  id: number;
+  _id: string;
   title: string;
   firstName: string;
   middleName: string;
@@ -61,12 +61,13 @@ const EmployeeProfile: React.FC = (key:any) => {
 
   ];
   const { data, error, isLoading } = useQuery<Employee[], Error>(
-    "employees",
+    "employee",
     async () => {
-      const response = await fetch("http://localhost:8000/employees");
+      const response = await fetch(`http://localhost:8000/database/employee/${id}`);
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
+      console.warn( response.json());
       return response.json();
     }
   );
@@ -79,11 +80,15 @@ const EmployeeProfile: React.FC = (key:any) => {
     return <p>Error: {error.message}</p>;
   }
 
-  const filteredData = data?.filter((employee) => employee.id === Number(id))[0];
+  const filteredData = data
+    ? data.filter((employee) => employee._id === String(id))[0]
+    : null;
+
 
   if (!filteredData) {
     return <p>No data found for ID {id}</p>;
   }
+
   // if (data) {
   //   return <p> data found for ID {id}</p>;
   // }

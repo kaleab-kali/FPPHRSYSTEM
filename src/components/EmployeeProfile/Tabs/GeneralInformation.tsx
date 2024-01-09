@@ -24,8 +24,9 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { data2 } from "../../../data2";
 import form, { FormInstance } from "antd/lib/form";
-
-
+import { useDispatch, useSelector } from "react-redux";
+import {fetchEmployee} from "../../../slices/employeeSlice";
+import { ThunkDispatch } from "@reduxjs/toolkit";
 type Degree = { id: number };
 type Degrees = { bachelor: Degree[]; master: Degree[]; phd: Degree[] };
 type Level = "bachelor" | "master" | "phd";
@@ -193,6 +194,12 @@ const DegreeFields: React.FC<{ degreeName: string; index: number }> = ({
   </div>
 );
 function GeneralInformation({ id }: { id: any }) {
+ const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+  // const { data, error, loading } = useSelector((state) => state.employee);
+  // useEffect(() => {
+  //   // Fetch employee data when the component mounts
+  //   dispatch(fetchEmployee(id));
+  // }, [dispatch, id]);
   const { Title, Text } = Typography;
   const { Option } = Select;
   // State to track the visibility of the emergency contact information
@@ -249,21 +256,33 @@ function GeneralInformation({ id }: { id: any }) {
   const { data, error, isLoading } = useQuery<Employee, Error>(
     ["employee", id], // Added a key to uniquely identify the query
     async () => {
-      const response = await fetch(`http://localhost:3001/employees/${id}`);
+      const response = await fetch(`http://localhost:8000/database/employee/${id}`);
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
       return response.json();
     }
   );
+    // const { data, error, isLoading } = useQuery(["employee", id], async () => {
+    //   try {
+    //     // Dispatch the action and wait for the promise
+    //     const response = await dispatch(fetchEmployee(id));
+    //     return response.payload; // Adjust this based on the structure of your response
+    //   } catch (error) {
+    //     console.error("Error message:", error);
+    //     throw error;
+    //   }
+    // });
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+   if (isLoading) {
+     return <p>Loading...</p>;
+   }
 
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
+   if (error) {
+     // Now TypeScript knows that the 'message' property might exist
+     return <p>Error: {error.message}</p>;
+   }
+
 
   if (!data) {
     return <p>No data found for ID {id}</p>;

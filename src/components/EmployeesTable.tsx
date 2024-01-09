@@ -20,40 +20,7 @@ interface DataType {
 
 type DataIndex = keyof DataType;
 
-// const data: DataType[] = [
-//   {
-//     key: "1",
-//     firstName: "John",
-//     lastName: "Brown",
-//     age: 32,
-//     title: "John Brown",
-//     action: "New York No. 1 Lake Park",
-//   },
-//   {
-//     key: "2",
-//     firstName: "Joe",
-//     lastName: "Black",
-//     age: 42,
-//     title: "Joe Black",
-//     action: "London No. 1 Lake Park",
-//   },
-//   {
-//     key: "3",
-//     firstName: "Jim",
-//     lastName: "Green",
-//     age: 32,
-//     title: "Jim Green",
-//     action: "Sydney No. 1 Lake Park",
-//   },
-//   {
-//     key: "4",
-//     firstName: "Jim",
-//     lastName: "Red",
-//     age: 32,
-//     title: "Jim Red",
-//     action: "London No. 2 Lake Park",
-//   },
-// ];
+
 
 const Profile: React.FC = () => {
   const navigate = useNavigate();
@@ -63,6 +30,7 @@ const Profile: React.FC = () => {
  
   const handleView = (key: string) => {
     // push(`/employee/${key}`);
+    alert(key)
     navigate(`/employee/${key}`);
     // <EmployeeProfile key={key}/>
   };
@@ -71,7 +39,7 @@ const Profile: React.FC = () => {
   };
 
   const { data, error, isLoading } = useQuery<DataType[], Error>("employees", async () => {
-      const response = await fetch("http://localhost:3001/employees");
+      const response = await fetch("http://localhost:8000/database/employee");
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
@@ -358,10 +326,10 @@ const genderOptions = [
                 <td>
                   <div className="flex justify-evenly">
                     <span className="text-green-100 text-md font-bold px-4 bg-green-500 p-1 rounded-md hover:text-white hover:bg-green-600 cursor-pointer"
-                    onClick={()=>handleView(data.id)}
+                    onClick={()=>handleView(data._id)}
                     >View</span>
                     <span className="text-red-100 text-md font-bold px-4 bg-red-500 p-1 rounded-md  hover:bg-red-600 cursor-pointer"
-                     onClick={()=>handleView(data.id)}
+                     onClick={()=>handleView(data._id)}
                     >Delete</span>
                     </div>
                   
