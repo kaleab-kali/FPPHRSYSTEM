@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import { Row, Col, Divider } from "antd";
 import "./GeneralInformation.css";
+import { EmployeeData } from "../../../redux/features/employeeSlice";
 
 interface Employee {
   id: number;
@@ -29,31 +30,37 @@ interface Employee {
   };
 }
 
-function GeneralInformation({ id }: { id: any }) {
-const { data, error, isLoading } = useQuery<Employee, Error>(
-  ["employee", id], // Added a key to uniquely identify the query
-  async () => {
-    const response = await fetch(`http://localhost:8000/employees/${id}`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    return response.json();
-  }
-);
 
-if (isLoading) {
-  return <p>Loading...</p>;
+interface GeneralInformationProps {
+  selectedEmployee?: EmployeeData; // Make selectedEmployee optional
 }
 
-if (error) {
-  return <p>Error: {error.message}</p>;
-}
+function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
 
-if (!data) {
-  return <p>No data found for ID {id}</p>;
-}
+// const { data, error, isLoading } = useQuery<Employee, Error>(
+//   ["employee", selectedEmployee?._id], 
+//   async () => {
+//     const response = await fetch(`http://localhost:8000/employees/${selectedEmployee?._id}`);
+//     if (!response.ok) {
+//       throw new Error("Failed to fetch data");
+//     }
+//     return response.json();
+//   }
+// );
 
-const { birthday, gender, phone, email, emergencyContact } = data;
+// if (isLoading) {
+//   return <p>Loading...</p>;
+// }
+
+// if (error) {
+//   return <p>Error: {error.message}</p>;
+// }
+
+// if (!data) {
+//   return <p>No data found for ID {selectedEmployee?._id}</p>;
+// }
+
+// const { birthday, gender, phone, email, emergencyContact } = data;
 
 
   return (
@@ -61,20 +68,18 @@ const { birthday, gender, phone, email, emergencyContact } = data;
       <h1>General Information</h1>
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <p>Title: {data.title}</p>
+          <p>Title: {selectedEmployee?.houseNumber}</p>
         </Col>
         {/* <Col span={8}>
           <p>Name: {`${firstName} ${middleName} ${lastName}`}</p>
         </Col> */}
         <Col span={8}>
-          <p>Birthday: {birthday}</p>
-        </Col>
-        <Col span={8}>
-          <p>Gender: {gender}</p>
+          <p>Birthday: {selectedEmployee?._id}</p>
         </Col>
         {/* <Col span={8}>
-          <p>Position: {position}</p>
-        </Col> */}
+          <p>Gender: {gender}</p>
+        </Col>
+     
         <Col span={8}>
           <p>Phone: {`${phone.prefix} ${phone.number}`}</p>
         </Col>
@@ -105,7 +110,7 @@ const { birthday, gender, phone, email, emergencyContact } = data;
         </Col>
         <Col span={8}>
           <p>Leyu Bota: {emergencyContact.leyuBota}</p>
-        </Col>
+        </Col> */}
       </Row>
     </div>
   );

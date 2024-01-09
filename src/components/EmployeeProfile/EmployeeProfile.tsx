@@ -12,6 +12,7 @@ import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import AppraisalInformation from "./Tabs/AppraisalInformation";
 import { useAppSelector } from "../../redux/store";
+import { EmployeeData } from "../../redux/features/employeeSlice";
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
 interface Employee {
@@ -51,58 +52,60 @@ const Education: React.FC = () => <div>Education component</div>
 const EmployeeProfile: React.FC = (key:any) => {
   const { id } = useParams<{ id: string }>(); 
   const employees = useAppSelector((state) => state.employee.employeeValues);
-  const selectedEmployee = employees.find((employee) => employee._id === id);
-
-  const tabItems: TabItem[] = [
-    { label: "General", key: "1", component: <GeneralInformation id={id} /> },
-    { label: "Educational", key: "2", component: <EducationalInformation id={id} /> },
-    { label: "Work experience", key: "3", component: <WorkExperience id={id} /> },
-    { label: "Leave", key: "4", component: <LeaveInformation id={id} /> },
-    { label: "Attendance", key: "5", component: <AttendanceInformation id={id} /> },
-    // { label: "Reward", key: "6", component: <RewardInfomation id={id} /> },
-    { label: "Performance", key: "7", component: <PerformanceInformation id={id} /> },
-    { label: "Apresal", key: "8", component: <AppraisalInformation id={id} /> },
-
-  ];
-  const { data, error, isLoading } = useQuery<Employee[], Error>(
-    "employees",
-    async () => {
-      const response = await fetch("http://localhost:8000/employees");
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-      return response.json();
-    }
+  const selectedEmployee: EmployeeData | undefined = employees.find(
+    (employee) => employee._id === id
   );
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  const tabItems: TabItem[] = [
+    { label: "General", key: "1", component: <GeneralInformation  selectedEmployee={selectedEmployee}  /> },
+    { label: "Educational", key: "2", component: <EducationalInformation id={id} selectedEmployee={selectedEmployee}  /> },
+    { label: "Work experience", key: "3", component: <WorkExperience id={id} selectedEmployee={selectedEmployee}  /> },
+    { label: "Leave", key: "4", component: <LeaveInformation id={id} selectedEmployee={selectedEmployee}  /> },
+    { label: "Attendance", key: "5", component: <AttendanceInformation id={id} selectedEmployee={selectedEmployee}  /> },
+    // { label: "Reward", key: "6", component: <RewardInfomation id={id} selectedEmployee={selectedEmployee}  /> },
+    { label: "Performance", key: "7", component: <PerformanceInformation id={id} selectedEmployee={selectedEmployee}  /> },
+    // { label: "Apresal", key: "8", component: <AppraisalInformation id={id} selectedEmployee={selectedEmployee}  /> },
 
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
+  ];
+  // const { data, error, isLoading } = useQuery<Employee[], Error>(
+  //   "employees",
+  //   async () => {
+  //     const response = await fetch("http://localhost:8000/employees");
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch data");
+  //     }
+  //     return response.json();
+  //   }
+  // );
 
-  const filteredData = data?.filter((employee) => employee.id === Number(id))[0];
+  // if (isLoading) {
+  //   return <p>Loading...</p>;
+  // }
 
-  if (!filteredData) {
-    return <p>No data found for ID {id}</p>;
-  }
+  // if (error) {
+  //   return <p>Error: {error.message}</p>;
+  // }
+
+  // const filteredData = data?.filter((employee) => employee.id === Number(id))[0];
+
+  // if (!filteredData) {
+  //   return <p>No data found for ID {id}</p>;
+  // }
   // if (data) {
   //   return <p> data found for ID {id}</p>;
   // }
 
-  const {
-    firstName,
-    // middleName,
-    lastName,
-    birthday,
-    gender,
-    position,
-    phone,
-    email,
-    emergencyContact,
-  } = filteredData;
+  // const {
+  //   firstName,
+  //   // middleName,
+  //   lastName,
+  //   birthday,
+  //   gender,
+  //   position,
+  //   phone,
+  //   email,
+  //   emergencyContact,
+  // } = filteredData;
   return (
     <Layout style={{ backgroundColor: "white" }}>
       <Header
@@ -124,7 +127,7 @@ const EmployeeProfile: React.FC = (key:any) => {
                 icon={<img src="/logo192.png" alt="Employee" />}
               />
             </Col>
-            <Col flex="auto">
+            {/* <Col flex="auto">
               <div className="flex flex-col">
                 <Title
                   level={4}
@@ -134,14 +137,13 @@ const EmployeeProfile: React.FC = (key:any) => {
                   {firstName + " " + lastName}
                 </Title>
                 <div className="text-sm leading-4">
-                  {/* <Text className="block m-0">Business Analyst</Text> */}
                   <Text style={{ marginBottom: 0, display: "block" }}>
                     {position}
                   </Text>
                   <Text style={{ display: "block" }}>4010018</Text>
                 </div>
               </div>
-            </Col>
+            </Col> */}
           </Space>
         </Row>
       </Header>
