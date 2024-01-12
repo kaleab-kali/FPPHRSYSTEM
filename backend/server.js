@@ -13,7 +13,7 @@ app.use(cors({ origin: 'http://localhost:3000' }));
 const PORT = process.env.PORT || 5000;
 connectDb()
 
-app.use("/backend/employees", employeeRoute);
+app.use("/employees", employeeRoute);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`.cyan);
