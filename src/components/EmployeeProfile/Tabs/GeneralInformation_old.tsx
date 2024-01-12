@@ -2,7 +2,6 @@ import React from "react";
 import { useQuery } from "react-query";
 import { Row, Col, Divider } from "antd";
 import "./GeneralInformation.css";
-import { EmployeeData } from "../../../redux/features/employeeSlice";
 
 interface Employee {
   id: number;
@@ -32,7 +31,7 @@ interface Employee {
 
 
 interface GeneralInformationProps {
-  selectedEmployee?: EmployeeData; // Make selectedEmployee optional
+  selectedEmployee?: 'EmployeeData'; // Make selectedEmployee optional
 }
 
 function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
@@ -68,13 +67,13 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
       <h1>General Information</h1>
       <Row gutter={[16, 16]}>
         <Col span={24}>
-          <p>Title: {selectedEmployee?._id}</p>
+          <p>Title: {selectedEmployee}</p>
         </Col>
         {/* <Col span={8}>
           <p>Name: {`${firstName} ${middleName} ${lastName}`}</p>
         </Col> */}
         <Col span={8}>
-          <p>Birthday: {selectedEmployee?._id}</p>
+          <p>Birthday: {selectedEmployee}</p>
         </Col>
         {/* <Col span={8}>
           <p>Gender: {gender}</p>

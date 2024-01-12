@@ -11,50 +11,137 @@ import EducationalInformation from "./Tabs/EducationalInformation";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import AppraisalInformation from "./Tabs/AppraisalInformation";
-import { useAppSelector } from "../../redux/store";
-import { EmployeeData } from "../../redux/features/employeeSlice";
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
-interface Employee {
-  id: number;
+export interface EmployeeData {
+  _id: string;
   title: string;
   firstName: string;
   middleName: string;
   lastName: string;
+  name: string;
+  email: string;
+  requiredField: string;
+  houseNumber: string;
   birthday: string;
   gender: string;
   position: string;
+  department: string;
+  ethnicity: string;
+  region: string;
+  subcity: string;
+  wordea: string;
+  camp?: string;
+  salary: number;
+  educationalLevel: string;
+  relationship: string;
+  leyuBota?: string;
   phone: {
     prefix: string;
-    number: string;
+    number: number;
   };
-  email: string;
-  emergencyContact: {
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    phoneNumber: string;
-    email: string;
-    houseNumber: string;
-    relationship: string;
-    leyuBota: string;
+  motherInformation: {
+    motherPhoneNumber: {
+      prefix: string;
+      number: number;
+    };
+    motherFirstName: string;
+    motherMiddleName: string;
+    motherLastName: string;
+  };
+  maritalStatus: {
+    martialType: string;
+    spouseInfo: {
+      firstName: string;
+      middleName: string;
+      lastName: string;
+      dob: Date;
+      phoneNumber: {
+        prefix: string;
+        number: number;
+      };
+      address: {
+        currentAddress: {
+          region: string;
+          subcity: string;
+        };
+      };
+    };
+    divorcedInfo: {
+      divorceDate: Date;
+    };
   };
 }
+
 type TabItem = {
   label: string;
   key: string;
   component: React.ReactNode;
 }
 
-// const GeneralProfile: React.FC = () => <div>General component</div>
 const Education: React.FC = () => <div>Education component</div>
-
+export const getDefaultEmployeeData = (): EmployeeData => ({
+  _id: '',
+  title: '',
+  firstName: '',
+  middleName: '',
+  lastName: '',
+  name: '',
+  email: '',
+  requiredField: '',
+  houseNumber: '',
+  birthday: '',
+  gender: '',
+  position: '',
+  department: '',
+  ethnicity: '',
+  region: '',
+  subcity: '',
+  wordea: '',
+  camp: '',
+  salary: 0,
+  educationalLevel: '',
+  relationship: '',
+  leyuBota: '',
+  phone: {
+    prefix: '',
+    number: 0,
+  },
+  motherInformation: {
+    motherPhoneNumber: {
+      prefix: '',
+      number: 0,
+    },
+    motherFirstName: '',
+    motherMiddleName: '',
+    motherLastName: '',
+  },
+  maritalStatus: {
+    martialType: '',
+    spouseInfo: {
+      firstName: '',
+      middleName: '',
+      lastName: '',
+      dob: new Date(),
+      phoneNumber: {
+        prefix: '',
+        number: 0,
+      },
+      address: {
+        currentAddress: {
+          region: '',
+          subcity: '',
+        },
+      },
+    },
+    divorcedInfo: {
+      divorceDate: new Date(),
+    },
+  },
+});
 const EmployeeProfile: React.FC = (key:any) => {
   const { id } = useParams<{ id: string }>(); 
-  const employees = useAppSelector((state) => state.employee.employeeValues);
-  const selectedEmployee: EmployeeData | undefined = employees.find(
-    (employee) => employee._id === id
-  );
+  const selectedEmployee: EmployeeData | undefined = getDefaultEmployeeData()
 
   const tabItems: TabItem[] = [
     { label: "General", key: "1", component: <GeneralInformation  selectedEmployee={selectedEmployee}  /> },
