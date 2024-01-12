@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form, Steps, message } from "antd";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import Step1 from "./Step1";
 import Step2 from "./Step2";
@@ -40,27 +40,27 @@ const MyForm: React.FC = () => {
   };
   const cache = new Set();
 
-  const addEmployeeMutation = useMutation(
-    async (data: any) => {
-      const response = await fetch("http://localhost:8000/employees", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data, replacer),
-      });
+  // const addEmployeeMutation = useMutation(
+  //   async (data: any) => {
+  //     const response = await fetch("http://localhost:8000/employees", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(data, replacer),
+  //     });
 
-      if (!response.ok) {
-        throw new Error("Failed to add employee");
-      }
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("employees");
-        message.success("Form submitted successfully!");
-      },
-    }
-  );
+  //     if (!response.ok) {
+  //       throw new Error("Failed to add employee");
+  //     }
+  //   },
+  //   {
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries("employees");
+  //       message.success("Form submitted successfully!");
+  //     },
+  //   }
+  // );
 
   const steps = [
     {
@@ -127,7 +127,7 @@ const MyForm: React.FC = () => {
       // Use the getFieldsValue method to get only the form data
       // const formData = form.getFieldsValue();
       // const currentFormData = form.getFieldsValue();
-      await addEmployeeMutation.mutateAsync(formData);
+      // await addEmployeeMutation.mutateAsync(formData);
     } catch (error) {
       console.error("Validation failed:", error);
     }

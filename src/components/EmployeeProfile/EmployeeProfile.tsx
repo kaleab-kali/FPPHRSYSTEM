@@ -8,70 +8,13 @@ import LeaveInformation from "./Tabs/LeaveInformation";
 import AttendanceInformation from "./Tabs/AttendanceInformation";
 import PerformanceInformation from "./Tabs/PerformanceInformation";
 import EducationalInformation from "./Tabs/EducationalInformation";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import AppraisalInformation from "./Tabs/AppraisalInformation";
+import { useFindEmployeeById } from "../../services/queries";
+
 const { Header, Content } = Layout;
 const { Title, Text } = Typography;
-export interface EmployeeData {
-  _id: string;
-  title: string;
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  name: string;
-  email: string;
-  requiredField: string;
-  houseNumber: string;
-  birthday: string;
-  gender: string;
-  position: string;
-  department: string;
-  ethnicity: string;
-  region: string;
-  subcity: string;
-  wordea: string;
-  camp?: string;
-  salary: number;
-  educationalLevel: string;
-  relationship: string;
-  leyuBota?: string;
-  phone: {
-    prefix: string;
-    number: number;
-  };
-  motherInformation: {
-    motherPhoneNumber: {
-      prefix: string;
-      number: number;
-    };
-    motherFirstName: string;
-    motherMiddleName: string;
-    motherLastName: string;
-  };
-  maritalStatus: {
-    martialType: string;
-    spouseInfo: {
-      firstName: string;
-      middleName: string;
-      lastName: string;
-      dob: Date;
-      phoneNumber: {
-        prefix: string;
-        number: number;
-      };
-      address: {
-        currentAddress: {
-          region: string;
-          subcity: string;
-        };
-      };
-    };
-    divorcedInfo: {
-      divorceDate: Date;
-    };
-  };
-}
 
 type TabItem = {
   label: string;
@@ -80,68 +23,15 @@ type TabItem = {
 }
 
 const Education: React.FC = () => <div>Education component</div>
-export const getDefaultEmployeeData = (): EmployeeData => ({
-  _id: '',
-  title: '',
-  firstName: '',
-  middleName: '',
-  lastName: '',
-  name: '',
-  email: '',
-  requiredField: '',
-  houseNumber: '',
-  birthday: '',
-  gender: '',
-  position: '',
-  department: '',
-  ethnicity: '',
-  region: '',
-  subcity: '',
-  wordea: '',
-  camp: '',
-  salary: 0,
-  educationalLevel: '',
-  relationship: '',
-  leyuBota: '',
-  phone: {
-    prefix: '',
-    number: 0,
-  },
-  motherInformation: {
-    motherPhoneNumber: {
-      prefix: '',
-      number: 0,
-    },
-    motherFirstName: '',
-    motherMiddleName: '',
-    motherLastName: '',
-  },
-  maritalStatus: {
-    martialType: '',
-    spouseInfo: {
-      firstName: '',
-      middleName: '',
-      lastName: '',
-      dob: new Date(),
-      phoneNumber: {
-        prefix: '',
-        number: 0,
-      },
-      address: {
-        currentAddress: {
-          region: '',
-          subcity: '',
-        },
-      },
-    },
-    divorcedInfo: {
-      divorceDate: new Date(),
-    },
-  },
-});
+
 const EmployeeProfile: React.FC = (key:any) => {
   const { id } = useParams<{ id: string }>(); 
-  const selectedEmployee: EmployeeData | undefined = getDefaultEmployeeData()
+    const {
+      data: selectedEmployee,
+      error,
+      isLoading,
+    } = useFindEmployeeById(id);
+
 
   const tabItems: TabItem[] = [
     { label: "General", key: "1", component: <GeneralInformation  selectedEmployee={selectedEmployee}  /> },
@@ -165,9 +55,9 @@ const EmployeeProfile: React.FC = (key:any) => {
   //   }
   // );
 
-  // if (isLoading) {
-  //   return <p>Loading...</p>;
-  // }
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   // if (error) {
   //   return <p>Error: {error.message}</p>;
@@ -194,13 +84,13 @@ const EmployeeProfile: React.FC = (key:any) => {
   //   emergencyContact,
   // } = filteredData;
   return (
-    <Layout className="bg-gray-100">
+    <Layout style={{ backgroundColor: "white" }}>
       <Header
         style={{
+          backgroundColor: "#fff",
           padding: "20px 40px",
           marginBottom: "50px",
         }}
-        className=" bg-gray-100"
       >
         <Row
           align="middle"
