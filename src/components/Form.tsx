@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Form, Steps, message } from "antd";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+// import { useQueryClient } from "@tanstack/react-query"
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
+import { useCreateEmployee } from "../services/mutations";
+import { EmployeeData } from "../types/employeeData";
 
 const { Step } = Steps;
 let idCounter = 1;
@@ -13,10 +16,15 @@ const MyForm: React.FC = () => {
   const [form] = Form.useForm();
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [formData, setFormData] = useState<any>({});
+  const createEmployeeMutuation = useCreateEmployee();
+
 
   useEffect(() => {
     console.log(formData);
   }, [formData]);
+  const handleCreateSubmit: SubmitHandler<EmployeeData> = (data) => {
+    createEmployeeMutuation.mutate(data);
+  };
 
   const handleFormData = (data: any) => {
     setFormData((prevData: any) => ({
@@ -26,7 +34,7 @@ const MyForm: React.FC = () => {
     }));
   };
 
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
   const replacer = (key: string, value: any) => {
     // Check for circular references and replace them with a string representation
@@ -108,18 +116,19 @@ const MyForm: React.FC = () => {
     setCurrentStep(currentStep - 1);
   };
 
-  const onFinish = async () => {
+  const onFinish: SubmitHandler<EmployeeData> = async () => {
     const values = form.getFieldsValue(true);
-  
+    
+    
     // Generate a unique ID in the format of "FPC-0001"
-    const uniqueId = `FPC-${String(idCounter).padStart(4, '0')}`;
-  
+    const uniqueId = `FPC-${String(idCounter).padStart(4, "0")}`;
+    
     // Increment the counter for the next ID
     idCounter += 1;
-  
+    
     // Add the unique ID to the form data
     values.id = uniqueId;
-  
+    
     // Pass the form values to handleFormData
     handleFormData(values);
     try {
@@ -128,6 +137,7 @@ const MyForm: React.FC = () => {
       // const formData = form.getFieldsValue();
       // const currentFormData = form.getFieldsValue();
       // await addEmployeeMutation.mutateAsync(formData);
+     createEmployeeMutuation.mutate(formData);
     } catch (error) {
       console.error("Validation failed:", error);
     }

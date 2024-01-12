@@ -2,6 +2,9 @@ const  Employee =require( "../models/employeeModel.js");
 
  const createEmployee = async (req, res) => {
   try {
+    const formData = req.body;
+    // Now formData should contain the values from the form
+    console.log(formData);
     const newEmployee = new Employee({
       ...req.body
     });
@@ -40,6 +43,7 @@ const  Employee =require( "../models/employeeModel.js");
 
  const updateEmployee = async (req, res) => {
   try {
+    console.log('Updating employee')
     const employee = await Employee.findByIdAndUpdate(
       req.params.id,
       { $set: req.body },

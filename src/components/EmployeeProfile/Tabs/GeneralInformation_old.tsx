@@ -3,31 +3,6 @@ import { useQuery } from "react-query";
 import { Row, Col, Divider } from "antd";
 import "./GeneralInformation.css";
 
-interface Employee {
-  id: number;
-  title: string;
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  birthday: string;
-  gender: string;
-  position: string;
-  phone: {
-    prefix: string;
-    number: string;
-  };
-  email: string;
-  emergencyContact: {
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    phoneNumber: string;
-    email: string;
-    houseNumber: string;
-    relationship: string;
-    leyuBota: string;
-  };
-}
 
 
 interface GeneralInformationProps {

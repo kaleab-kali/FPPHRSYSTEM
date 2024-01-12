@@ -22,6 +22,7 @@ import { data2 } from "../../../data2";
 import getAge from "../../../util/ageCal";
 import form, { FormInstance } from "antd/lib/form";
 import { EmployeeData } from "../../../types/employeeData";
+import { useUpdateEmployee } from "../../../services/mutations";
 
 
 
@@ -243,19 +244,21 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
   const handleCardVisible = () => {
     setCardVisible(!cardVisible);
   };
+  const [form] = Form.useForm();
 
+const updateEmployeeMutuation = useUpdateEmployee();
 
-  const handleFormSubmit = (values: any) => {
-    // Compare form values with initial values
-    const isFormChanged = Object.keys(values).some(
-      (key) => values[key] !== data2[key]
-    );
-
-    // if (isFormChanged) {
-    //   toast.success("Data updated successfully");
-    // } else {
-    //   toast.warning("No changes made");
-    // }
+  const handleFormSubmit = async () => {
+    try {
+      const values = await form.validateFields(); // This will validate all fields and return the values
+      console.log(JSON.stringify(values))
+      // You can now use the values to update the employee
+      if (values) {
+        updateEmployeeMutuation.mutate({ ...selectedEmployee, ...values });
+      }
+    } catch (errorInfo) {
+      console.log("Validation failed:", errorInfo);
+    }
   };
   const handleRegionChange = (value: string) => {
     const firstSubcity = Object.keys(data2.value)[0];
@@ -320,7 +323,7 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
                 {getAge(selectedEmployee?.birthday)}
               </Title>
             </Col> */}
-            <Col span={6} className=" -space-y-2">
+            {/* <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Gender
               </Title>
@@ -372,7 +375,7 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
                 Salary
               </Title>
               <Title style={{ fontSize: 16 }}>{selectedEmployee?.salary}</Title>
-            </Col>
+            </Col> */}
           </Row>
           <Button
             type="primary"
@@ -391,6 +394,8 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
             <Form
               name="editGeneralInfoForm"
               initialValues={selectedEmployee}
+              form={form}
+              onFinish={handleFormSubmit}
               // onFinish={handleFormSubmit} // Uncomment and provide your form submit handler
             >
               <Row gutter={16}>
@@ -461,7 +466,7 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
                 </Col> */}
               </Row>
 
-              <Form.Item
+              {/* <Form.Item
                 label="Gender"
                 name="gender"
                 rules={[
@@ -501,7 +506,7 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
                     <Input />
                   </Form.Item>
                 </Col>
-              </Row>
+              </Row> */}
 
               {/* <Form.Item
                 label="Photo"
@@ -513,7 +518,7 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
                 <Input type="file" />
               </Form.Item> */}
 
-              <Form.Item
+              {/* <Form.Item
                 label="Ethnicity"
                 name="ethnicity"
                 rules={[
@@ -534,19 +539,14 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
                   <Option value="Gambela">Gambela</Option>
                   <Option value="Gumuz">Gumuz</Option>
                 </Select>
-              </Form.Item>
+              </Form.Item> */}
 
-              <Row gutter={16}>
+              {/* <Row gutter={16}>
                 <Col span={12}>
                   <Form.Item
                     label="Phone Number"
                     name="phoneNumber"
-                    // rules={[
-                    //   {
-                    //     required: true,
-                    //     message: "Please enter your phone number",
-                    //   },
-                    // ]}
+                   
                   >
                     <Input.Group compact>
                       <Form.Item name={["phone", "number"]} noStyle>
@@ -566,10 +566,11 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
                     <Input />
                   </Form.Item>
                 </Col>
-              </Row>
+              </Row> */}
               <Button
                 type="primary"
-                onClick={handleFormSubmit}
+                // onClick={()=>handleFormSubmit()}
+                htmlType="submit"
                 style={{ background: "#1890ff", borderColor: "#1890ff" }}
               >
                 Save
@@ -584,7 +585,7 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
             </Form>
           </Modal>
         </div>
-        <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
+        {/* <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
           <Title style={{ fontSize: 24 }}>Current Address</Title>
           <Row gutter={[16, 16]}>
             <Col span={8} className=" -space-y-2">
@@ -711,10 +712,10 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
               </Button>
             </Form>
           </Modal>
-        </div>
+        </div> */}
         {cardVisible === true && (
           <>
-            <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
+            {/* <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
               <Title style={{ fontSize: 24 }}>Birth Place Information</Title>
               <Row gutter={[16, 16]}>
                 <Col span={8} className=" -space-y-2">
@@ -838,15 +839,14 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
                   </Button>
                   <Button
                     type="default"
-                    // onClick={handleFormSubmit}
                     className="ml-3"
                   >
                     Cancel
                   </Button>
                 </Form>
               </Modal>
-            </div>
-            <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
+            </div> */}
+            {/* <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
               <Title style={{ fontSize: 24 }}>Mother's Information</Title>
               <Row gutter={[16, 16]}>
                 <Col span={8} className=" -space-y-2">
@@ -947,7 +947,6 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
 
                   <Row gutter={16}>
                     <Col span={16}>
-                      {/* Input Group for Phone Number */}
                       <Form.Item
                         label="Mother's Phone Number"
                         name="motherPhoneNumber"
@@ -965,15 +964,14 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
                   </Button>
                   <Button
                     type="default"
-                    // onClick={handleFormSubmit}
                     className="ml-3"
                   >
                     Cancel
                   </Button>
                 </Form>
               </Modal>
-            </div>
-            <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
+            </div> */}
+            {/* <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
               <Title style={{ fontSize: 24 }}>Martial Information</Title>
               <Row gutter={[16, 16]}>
                 <Col span={8} className=" -space-y-2">
@@ -1081,7 +1079,6 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
                                   "currentAddress",
                                 ]}
                               >
-                                {/* Sub-form for Spouse Address */}
                                 <Row gutter={16}>
                                   <Col span={16}>
                                     <Form.Item
@@ -1089,7 +1086,6 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
                                       name={["spouseInfo", "address", "region"]}
                                     >
                                       <Select>
-                                        {/* Options for Region */}
                                       </Select>
                                     </Form.Item>
                                   </Col>
@@ -1103,7 +1099,6 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
                                       ]}
                                     >
                                       <Select>
-                                        {/* Options for Subcity */}
                                       </Select>
                                     </Form.Item>
                                   </Col>
@@ -1142,14 +1137,13 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
                   </Button>
                   <Button
                     type="default"
-                    // onClick={handleFormSubmit}
                     className="ml-3"
                   >
                     Cancel
                   </Button>
                 </Form>
               </Modal>
-            </div>
+            </div> */}
             {/* <div className=" bg-white rounded-md p-8 space-y-5">
               <Title style={{ fontSize: 24 }}>Educational Information </Title>
               <Row gutter={[16, 16]}>

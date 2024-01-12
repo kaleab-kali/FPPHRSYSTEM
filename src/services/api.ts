@@ -20,3 +20,6 @@ export const createEmployee = async (data:EmployeeData) => {
 export const updateEmployee = async (data: EmployeeData) => {
    await axiosInstance.put(`employees/${data._id}`, data);
 };
+export const deleteEmployee = async (id: string) => {
+  await axiosInstance.delete(`employees/${id}`);
+};

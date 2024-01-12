@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import getAge from "../util/ageCal";
 import { useEmployees, useEmployeesIds } from "../services/queries";
 import { EmployeeData } from "../types/employeeData";
+import { useDeleteEmployee } from "../services/mutations";
 interface DataType {
   _id: string;
   firstName: string;
@@ -28,7 +29,7 @@ const Profile: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef<InputRef>(null);
-
+  const deleteEmployeeMutuation= useDeleteEmployee();
   const handleView = (key: string) => {
     // push(`/employee/${key}`);
     navigate(`/employee/${key}`);
@@ -36,6 +37,7 @@ const Profile: React.FC = () => {
   };
   const handleDelete = (key: string) => {
     // push(`/employee/${key}`);
+    deleteEmployeeMutuation.mutate(key);
   };
 
 const employeesIdQuery = useEmployeesIds();

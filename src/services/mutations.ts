@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { EmployeeData } from "../types/employeeData";
-import { createEmployee, updateEmployee } from "./api";
+import { createEmployee, deleteEmployee, updateEmployee } from "./api";
 
 export function useCreateEmployee(){
     const queryClient = useQueryClient()
@@ -29,7 +29,13 @@ export function useCreateEmployee(){
 export function useUpdateEmployee() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: EmployeeData) => updateEmployee(data),
+    mutationFn: (data: EmployeeData) => {
+      console.log("Data before mutation:", data);
+      return updateEmployee(data);
+    },
+    onSuccess() {
+      console.log("Successfully updated employee");
+    },
     onSettled: async (_, error, variables) => {
       console.log("settled");
       if (error) {
@@ -42,5 +48,23 @@ export function useUpdateEmployee() {
       }
     },
   });
+}
+
+export function useDeleteEmployee(){
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: string) => deleteEmployee(id),
+    onSuccess() {
+        console.log("Successfully deleted employee")
+    },
+    onSettled: async(_,error)=>{
+      if(error){
+        console.log(error)
+      }else{
+        await queryClient.invalidateQueries({ queryKey: ["employees"] });
+      }
+    }
+  })
 }
 
