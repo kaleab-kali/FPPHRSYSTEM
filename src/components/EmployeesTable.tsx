@@ -8,7 +8,68 @@ import type { FilterConfirmProps } from "antd/es/table/interface";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import pic1 from '../assets/images/photo.jpg'
-import getAge from "../util/ageCal";
+import { data } from "../data";
+import { getDefaultEmployeeData } from "./EmployeeProfile/EmployeeProfile";
+export interface EmployeeData {
+  _id: string;
+  title: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  name: string;
+  email: string;
+  requiredField: string;
+  houseNumber: string;
+  birthday: string;
+  gender: string;
+  position: string;
+  department: string;
+  ethnicity: string;
+  region: string;
+  subcity: string;
+  wordea: string;
+  camp?: string;
+  salary: number;
+  educationalLevel: string;
+  relationship: string;
+  leyuBota?: string;
+  phone: {
+    prefix: string;
+    number: number;
+  };
+  motherInformation: {
+    motherPhoneNumber: {
+      prefix: string;
+      number: number;
+    };
+    motherFirstName: string;
+    motherMiddleName: string;
+    motherLastName: string;
+  };
+  maritalStatus: {
+    martialType: string;
+    spouseInfo: {
+      firstName: string;
+      middleName: string;
+      lastName: string;
+      dob: Date;
+      phoneNumber: {
+        prefix: string;
+        number: number;
+      };
+      address: {
+        currentAddress: {
+          region: string;
+          subcity: string;
+        };
+      };
+    };
+    divorcedInfo: {
+      divorceDate: Date;
+    };
+  };
+}
+
 interface DataType {
   id: string;
   firstName: string;
@@ -26,6 +87,7 @@ const Profile: React.FC = () => {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
+  // const employees = useAppSelector((state) => state.employee.employeeValues);
   const searchInput = useRef<InputRef>(null);
  
   const handleView = (key: string) => {
@@ -37,24 +99,24 @@ const Profile: React.FC = () => {
   const handleDelete = (key: string) => {
     // push(`/employee/${key}`);
   };
+  // const { data, error, isLoading } = useQuery<DataType[], Error>("employees", async () => {
+  //     const response = await fetch("http://localhost:8000/employees");
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch data");
+  //     }
+  //     return response.json();
+  //   }
+  // );
 
-  const { data, error, isLoading } = useQuery<DataType[], Error>("employees", async () => {
-      const response = await fetch("http://localhost:8000/database/employee");
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-      return response.json();
-    }
-  );
+  // if (isLoading) {
+  //   return <p>Loading...</p>;
+  // }
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error.message}</p>;
-  }
+  // if (error) {
+  //   return <p>Error: {error.message}</p>;
+  // }
   console.warn('data')
+  const employees: EmployeeData | undefined = getDefaultEmployeeData()
 
 
   const handleSearch = (
@@ -233,14 +295,14 @@ const Profile: React.FC = () => {
       ),
     },
   ];
-console.warn("the data is ",data)
+// console.warn("the data is from ui  ",employees)
 
 const genderOptions = [
   { label: 'Male', value: 'male' },
   { label: 'Female', value: 'female' },
   { label: 'Other', value: 'other' },
 ];
-  return <> 
+  return <>
     <div>
       {/* <form>
           <div className="flex">
@@ -272,7 +334,6 @@ const genderOptions = [
               </div>
           </div>
       </form> */}
-
       <form className="flex">   
         
         <label htmlFor="cars" ></label>
@@ -312,16 +373,14 @@ const genderOptions = [
               <td>Birth Date</td>
               <td>Action</td>
          
-        
             </tr>
-            {data&&data.map((data: any) => (
-              <tr key={data.key} className='py-10 mb-10 overflow-y-auto text-slate-500' style={{ textAlign: 'start', margin: 32 }}>
+            {[1,2].map((data: any) => (
+              <tr key={data._id} className='py-10 mb-10 overflow-y-auto text-slate-500' style={{ textAlign: 'start', margin: 32 }}>
                 <td >
-                  {/* <img src={pic1} width={80} height={80} alt="employe phototo" /> */}
                   <Image src={pic1} width={80} height={70} />
                   </td>
-                <td>{data.title}</td>
                 <td>{data.firstName}</td>
+                <td>{data.middleName}</td>
                 <td>{data.birthday}</td>
                 <td>
                   <div className="flex justify-evenly">

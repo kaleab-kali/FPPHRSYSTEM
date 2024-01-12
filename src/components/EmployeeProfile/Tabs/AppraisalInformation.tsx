@@ -4,8 +4,72 @@ import { DatabaseOutlined, WarningOutlined, SnippetsOutlined, TeamOutlined } fro
 import { Avatar, Card, List, Popover, Progress, Table } from 'antd'
 
 type Props = {}
-
-const AppraisalInformation = ({ id }: { id: any }) => {
+export interface EmployeeData {
+    _id: string;
+    title: string;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    name: string;
+    email: string;
+    requiredField: string;
+    houseNumber: string;
+    birthday: string;
+    gender: string;
+    position: string;
+    department: string;
+    ethnicity: string;
+    region: string;
+    subcity: string;
+    wordea: string;
+    camp?: string;
+    salary: number;
+    educationalLevel: string;
+    relationship: string;
+    leyuBota?: string;
+    phone: {
+      prefix: string;
+      number: number;
+    };
+    motherInformation: {
+      motherPhoneNumber: {
+        prefix: string;
+        number: number;
+      };
+      motherFirstName: string;
+      motherMiddleName: string;
+      motherLastName: string;
+    };
+    maritalStatus: {
+      martialType: string;
+      spouseInfo: {
+        firstName: string;
+        middleName: string;
+        lastName: string;
+        dob: Date;
+        phoneNumber: {
+          prefix: string;
+          number: number;
+        };
+        address: {
+          currentAddress: {
+            region: string;
+            subcity: string;
+          };
+        };
+      };
+      divorcedInfo: {
+        divorceDate: Date;
+      };
+    };
+  }
+  
+interface GeneralInformationProps {
+    selectedEmployee?: EmployeeData; // Make selectedEmployee optional
+  }
+  
+  function AppraisalInformation({ selectedEmployee }: GeneralInformationProps) {
+// const AppraisalInformation = ({ id }: { id: any }) => {
 
     const [open, setOpen] = useState(false);
     const [open1, setOpen1] = useState(false);
@@ -85,7 +149,7 @@ const AppraisalInformation = ({ id }: { id: any }) => {
 
                         <span className='p-2   flex flex-row justify-between  text-slate-500 m-3  rounded-md font-sans'>
                             <div>
-                                <span className='text-lg text-slate-600 font-bold'>Current Apriasl </span>
+                                <span className='text-lg text-slate-600 font-bold'>Current Title </span>
                                 <br />
                                 <span >General</span>
                             </div>
@@ -115,9 +179,9 @@ const AppraisalInformation = ({ id }: { id: any }) => {
                      <div className="p-3">
                      <span className=' flex flex-row justify-between text-slate-500 mx-3 shadow-md p-8  rounded-md font-sans'>
                             <div>
-                                <span className='text-lg text-slate-600 font-bold'>Current status </span>
+                                <span className='text-lg text-slate-600 font-bold mb-3'>Current status </span>
                                 
-                                <span className='bg-yellow-500 text-yellow-100 p-2 px-3 mx-3' >on pending</span>
+                                <span className='bg-lightblue-500 text-blue-500 px-3 mx-3 mt' >Pending</span>
                             </div>
                             <div>
                             </div>

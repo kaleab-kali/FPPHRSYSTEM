@@ -1,9 +1,8 @@
 // Step1.tsx
-import React, { useEffect,  useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Select, Input, Radio, DatePicker, Button, Row, Col } from "antd";
 import { FormInstance } from "antd/lib/form";
 import { data } from "../data";
-import axios from "axios";
 
 const { Option } = Select;
 
@@ -17,62 +16,48 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
   const [region, setRegion] = useState<string | null>(null);
   const [subcity, setSubcity] = useState<string | null>(null);
   const [woreda, setWoreda] = useState<string | null>(null);
-  const [subcityOptions, setSubcityOptions] = useState<string[]>([]);
-  const [woredaOptions, setWoredaOptions] = useState<string[]>([]);
 
   // Reset subcity and woreda when region changes
   useEffect(() => {
-    setSubcity(null);
-    setWoreda(null);
+    if (region) {
+      const subcities = Object.keys(data[region]);
+      const firstSubcity = subcities[0];
+      setSubcity(firstSubcity);
+      form.setFieldsValue({currentAddress: { subcity: firstSubcity } });
+
+      const woredas = data[region][firstSubcity];
+      const firstWoreda = woredas[0];
+      setWoreda(firstWoreda);
+      form.setFieldsValue({
+        currentAddress: { woreda: firstWoreda  },
+      });
+    }
   }, [region]);
 
   // Reset woreda when subcity changes
   useEffect(() => {
-    setWoreda(null);
+    if (region && subcity) {
+      const woredas = data[region][subcity];
+      const firstWoreda = woredas[0];
+      setWoreda(firstWoreda);
+      form.setFieldsValue({ currentAddress: {woreda: firstWoreda} });
+    }
   }, [subcity]);
 
   const handleRegionChange = (value: string) => {
-    const firstSubcity = Object.keys(data[value])[0];
     setRegion(value);
-    setSubcity(firstSubcity);
-    setSubcityOptions(Object.keys(data[value]));
-    setWoredaOptions(data[value][firstSubcity]);
-    form.setFieldsValue({
-      subcity: firstSubcity,
-      wordea: data[value][firstSubcity][0],
-    });
   };
 
   const handleSubcityChange = (value: string) => {
-    const firstWoreda = data[region!][value][0];
     setSubcity(value);
-    setWoreda(firstWoreda);
-    setWoredaOptions(data[region!][value]);
-    form.setFieldsValue({ wordea: firstWoreda });
   };
-const handleFormSubmit = async () => {
-  try {
-    const formData = await form.validateFields(); // Validate the form fields
-    // Use axios to send a POST request to your JSON Server
-    // await axios.post("http://localhost:3001/employees", formData);
 
-    // Optionally, you can handle the response or perform other actions
-
-    // Call the parent component's handleFormData function to pass the form data
-    handleFormData(formData);
-
-    // Move to the next step
-    nextStep();
-  } catch (error) {
-    console.error("Form submission error:", error);
-    // Handle errors as needed (e.g., display an error message)
-  }
-};
   return (
     <>
       {/* first row */}
       <Row gutter={16}>
         <Col span={6}>
+          {/* <Col  xs={24} sm={12} md={8} lg={6}> */}
           <Form.Item
             label="Title"
             name="title"
@@ -86,6 +71,7 @@ const handleFormSubmit = async () => {
           </Form.Item>
         </Col>
         <Col span={9}>
+          {/* <Col  xs={24} sm={12} md={8} lg={6}> */}
           <Form.Item
             label="First Name"
             name="firstName"
@@ -162,6 +148,8 @@ const handleFormSubmit = async () => {
       <Form.Item
         label="Photo"
         name="photo"
+        valuePropName="fileList"
+        getValueFromEvent={(e) => e.fileList}
         rules={[{ required: true, message: "Please upload your photo" }]}
       >
         <Input type="file" />
@@ -181,12 +169,6 @@ const handleFormSubmit = async () => {
           <Option value="Amhara">Amhara</Option>
           <Option value="Afar">Afar</Option>
           <Option value="Oromo">Oromo</Option>
-          <Option value="Tigray">Tigray</Option>
-          <Option value="Somale">Somale</Option>
-          <Option value="Gurage">Gurage</Option>
-          <Option value="Wolyaita">Wolyaita</Option>
-          <Option value="Gambela">Gambela</Option>
-          <Option value="Gumuz">Gumuz</Option>
         </Select>
       </Form.Item>
 
@@ -195,25 +177,25 @@ const handleFormSubmit = async () => {
           <Form.Item
             label="Phone Number"
             name="phoneNumber"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Please enter your phone number",
-            //   },
-            // ]}
+            rules={[
+              {
+                required: true,
+                message: "Please enter your phone number",
+              },
+            ]}
           >
             <Input.Group compact>
               {/* Ethiopian country code */}
-              {/* <Form.Item name={["phone", "prefix"]} noStyle initialValue="+251">
+              <Form.Item name={["phone", "prefix"]} noStyle initialValue="+251">
                 <Input style={{ width: "20%" }} readOnly />
-              </Form.Item> */}
+              </Form.Item>
               {/* Phone number input */}
               <Form.Item
                 name={["phone", "number"]}
                 noStyle
-                // rules={[
-                //   { required: false, message: "Please enter your phone number" },
-                // ]}
+                rules={[
+                  { required: true, message: "Please enter your phone number" },
+                ]}
               >
                 <Input style={{ width: "80%" }} />
               </Form.Item>
@@ -237,69 +219,86 @@ const handleFormSubmit = async () => {
             Current Address
           </span>
         }
-        name="currentAddress"
+        // name="currentAddress"
       >
+        <>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Form.Item label="Region" name={["currentAddress", "region"]}>
+                <Select
+                  options={Object.keys(data).map((region) => ({
+                    label: region,
+                    value: region,
+                  }))}
+                  onChange={handleRegionChange}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
+                label="Zone/Subcity"
+                name={["currentAddress", "subcity"]}
+              >
+                <Select
+                  options={
+                    region
+                      ? Object.keys(data[region]).map((subcity) => ({
+                          label: subcity,
+                          value: subcity,
+                        }))
+                      : []
+                  }
+                  onChange={handleSubcityChange}
+                  value={subcity}
+                />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item label="Woreda" name={["currentAddress", "woreda"]}>
+                <Select
+                  options={
+                    region && subcity
+                      ? data[region][subcity].map((woreda) => ({
+                          label: woreda,
+                          value: woreda,
+                        }))
+                      : []
+                  }
+                  value={woreda}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Form.Item
+                label="House Number"
+                name={["currentAddress", "houseNumber"]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item
+                label="Leyu Bota"
+                name={["currentAddress", "leyuBota"]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={8}>
+              <Form.Item label="Camp" name={["currentAddress", "camp"]}>
+                <Input />
+              </Form.Item>
+            </Col>
+          </Row>
+        </>
         {/* Sub-form for Current Address */}
-        <Row gutter={16}>
-          <Col span={8}>
-            <Form.Item label="Region" name="region">
-              <Select
-                options={Object.keys(data).map((region) => ({
-                  label: region,
-                  value: region,
-                }))}
-                onChange={handleRegionChange}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="Zone/Subcity" name="subcity">
-              <Select
-                options={subcityOptions.map((subcity) => ({
-                  label: subcity,
-                  value: subcity,
-                }))}
-                onChange={handleSubcityChange}
-                value={subcity}
-              />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="Woreda" name="wordea">
-              <Select
-                options={woredaOptions.map((woreda) => ({
-                  label: woreda,
-                  value: woreda,
-                }))}
-                value={woreda}
-              />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={8}>
-            <Form.Item label="House Number" name="houseNumber">
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="Leyu Bota" name="leyuBota">
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="Camp" name="camp">
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={16}></Row>
       </Form.Item>
 
       <Button
         type="primary"
-        onClick={handleFormSubmit}
+        onClick={nextStep}
         style={{ background: "#1890ff", borderColor: "#1890ff" }}
       >
         Next

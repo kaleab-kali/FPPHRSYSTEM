@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+// import { useQuery } from "react-query";
 import {
   Row,
   Col,
@@ -15,22 +15,75 @@ import {
   DatePicker,
   AutoComplete,
 } from "antd";
+// import { Row, Col, Divider } from "antd";
 import "./GeneralInformation.css";
-import getAge from '../../../util/ageCal'
-import { EditOutlined, PlusOutlined } from "@ant-design/icons";
-import moment, { Moment } from "moment";
-import { ToastContainer } from "react-toastify";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { EditOutlined } from "@ant-design/icons";
 import { data2 } from "../../../data2";
+import getAge from "../../../util/ageCal";
 import form, { FormInstance } from "antd/lib/form";
-import { useDispatch, useSelector } from "react-redux";
-import {fetchEmployee} from "../../../slices/employeeSlice";
-import { ThunkDispatch } from "@reduxjs/toolkit";
+export interface EmployeeData {
+  _id: string;
+  title: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  name: string;
+  email: string;
+  requiredField: string;
+  houseNumber: string;
+  birthday: string;
+  gender: string;
+  position: string;
+  department: string;
+  ethnicity: string;
+  region: string;
+  subcity: string;
+  wordea: string;
+  camp?: string;
+  salary: number;
+  educationalLevel: string;
+  relationship: string;
+  leyuBota?: string;
+  phone: {
+    prefix: string;
+    number: number;
+  };
+  motherInformation: {
+    motherPhoneNumber: {
+      prefix: string;
+      number: number;
+    };
+    motherFirstName: string;
+    motherMiddleName: string;
+    motherLastName: string;
+  };
+  maritalStatus: {
+    martialType: string;
+    spouseInfo: {
+      firstName: string;
+      middleName: string;
+      lastName: string;
+      dob: Date;
+      phoneNumber: {
+        prefix: string;
+        number: number;
+      };
+      address: {
+        currentAddress: {
+          region: string;
+          subcity: string;
+        };
+      };
+    };
+    divorcedInfo: {
+      divorceDate: Date;
+    };
+  };
+}
+
 type Degree = { id: number };
 type Degrees = { bachelor: Degree[]; master: Degree[]; phd: Degree[] };
 type Level = "bachelor" | "master" | "phd";
-
 const universitiesInEthiopia = [
   // Public Universities
   "Addis Ababa University (AAU)",
@@ -105,118 +158,34 @@ const universitiesInEthiopia = [
   "Shoa College of Agriculture",
   "Wondo Genet Agriculture College",
 ];
-interface Employee {
-  id: number;
-  title: string;
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  birthday: string;
-  gender: string;
-  position: string;
-  department: string;
-  ethnicity: string;
-  phone: {
-    prefix: string;
-    number: string;
-  };
-  email: string;
-  emergencyContact: {
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    phoneNumber: string;
-    email: string;
-    houseNumber: string;
-    relationship: string;
-    leyuBota: string;
-  };
-  salary: number;
-  region: string;
-  subcity: string;
-  wordea: string;
-  houseNumber: string; //this must be number but for time being i leave it string
-  leyuBota: string;
-  motherFirstName: string;
-  motherMiddleName: string;
-  motherLastName: string;
-  motherPhoneNumber: string;
-  martialStatus: string;
+interface GeneralInformationProps {
+  selectedEmployee?: EmployeeData; // Make selectedEmployee optional
 }
-interface InitialValues {
-  title: string;
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  birthday: Moment;
-  gender: string;
-  position: string;
-  department: string;
-  ethnicity: string;
-  phoneNumber: string;
-  email: string;
-  [key: string]: string | Moment; // Index signature
-}
-const DegreeFields: React.FC<{ degreeName: string; index: number }> = ({
-  degreeName,
-  index,
-}) => (
-  <div>
-    <h2>
-      {degreeName} {index + 1}
-    </h2>
-    <Row gutter={16}>
-      <Col span={16}>
-        <Form.Item label="Graduation Year" name="graduationYear">
-          <Input placeholder="Enter Graduation Year" />
-        </Form.Item>
-      </Col>
-      <Col span={16}>
-        <Form.Item label="Field of Study" name="fieldOfStudy">
-          <Input placeholder="Enter Field of Study" />
-        </Form.Item>
-      </Col>
-      <Col span={16}>
-        <Form.Item label="University Name">
-          <AutoComplete
-            options={universitiesInEthiopia.map((university) => ({
-              value: university,
-            }))}
-            filterOption={(inputValue, option) =>
-              option?.value.toUpperCase().indexOf(inputValue.toUpperCase()) !==
-              -1
-            }
-            placeholder="Enter University Name"
-          />
-        </Form.Item>
-      </Col>
-    </Row>
-  </div>
-);
-function GeneralInformation({ id }: { id: any }) {
- const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-  // const { data, error, loading } = useSelector((state) => state.employee);
-  // useEffect(() => {
-  //   // Fetch employee data when the component mounts
-  //   dispatch(fetchEmployee(id));
-  // }, [dispatch, id]);
+
+function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
   const { Title, Text } = Typography;
   const { Option } = Select;
   // State to track the visibility of the emergency contact information
   const [showEmergencyContact, setShowEmergencyContact] = React.useState(false);
-  
-  // State to track the visibility of each edit modal
-  const [generalEditModalVisible, setEditGeneralModalVisible] = React.useState(false);
-  const [currentAddEditModalVisible, setEditCurrentAddModalVisible] = React.useState(false);
-  const [emergencyEditModalVisible, setEditEmergencyModalVisible] = React.useState(false);
-  const [birthDateEditModalVisible, setEditBirthDateModalVisible] = React.useState(false);
-  const [motherInfoEditModalVisible, setEditMotherInfoModalVisible] = React.useState(false);
-  const [martialInfoEditModalVisible, setEditMartialInfoModalVisible] = React.useState(false);
-  const [educationInfoEditModalVisible, setEditEducationInfoModalVisible] = React.useState(false);
 
+  // State to track the visibility of each edit modal
+  const [generalEditModalVisible, setEditGeneralModalVisible] =
+    React.useState(false);
+  const [currentAddEditModalVisible, setEditCurrentAddModalVisible] =
+    React.useState(false);
+  const [emergencyEditModalVisible, setEditEmergencyModalVisible] =
+    React.useState(false);
+  const [birthDateEditModalVisible, setEditBirthDateModalVisible] =
+    React.useState(false);
+  const [motherInfoEditModalVisible, setEditMotherInfoModalVisible] =
+    React.useState(false);
+  const [martialInfoEditModalVisible, setEditMartialInfoModalVisible] =
+    React.useState(false);
+  const [educationInfoEditModalVisible, setEditEducationInfoModalVisible] =
+    React.useState(false);
 
   const [cardVisible, setCardVisible] = React.useState(false);
-// For region 
+  // For region
   const [region, setRegion] = useState<string | null>(null);
   const [subcity, setSubcity] = useState<string | null>(null);
   const [woreda, setWoreda] = useState<string | null>(null);
@@ -228,67 +197,79 @@ function GeneralInformation({ id }: { id: any }) {
   const handleMaritalStatusChange = (value: string) => {
     setMaritalStatus(value);
   };
+  const DegreeFields: React.FC<{ degreeName: string; index: number }> = ({
+    degreeName,
+    index,
+  }) => (
+    <div>
+      <h2>
+        {degreeName} {index + 1}
+      </h2>
+      <Row gutter={16}>
+        <Col span={16}>
+          <Form.Item label="Graduation Year" name="graduationYear">
+            <Input placeholder="Enter Graduation Year" />
+          </Form.Item>
+        </Col>
+        <Col span={16}>
+          <Form.Item label="Field of Study" name="fieldOfStudy">
+            <Input placeholder="Enter Field of Study" />
+          </Form.Item>
+        </Col>
+        <Col span={16}>
+          <Form.Item label="University Name">
+            <AutoComplete
+              options={universitiesInEthiopia.map((university) => ({
+                value: university,
+              }))}
+              filterOption={(inputValue, option) =>
+                option?.value
+                  .toUpperCase()
+                  .indexOf(inputValue.toUpperCase()) !== -1
+              }
+              placeholder="Enter University Name"
+            />
+          </Form.Item>
+        </Col>
+      </Row>
+    </div>
+  );
+  const [educationLevel, setEducationLevel] = useState<Level | "">("");
+  const [degrees, setDegrees] = useState<Degrees>({
+    bachelor: [{ id: 1 }],
+    master: [{ id: 1 }],
+    phd: [{ id: 1 }],
+  });
 
-    const [educationLevel, setEducationLevel] = useState<Level | "">("");
-    const [degrees, setDegrees] = useState<Degrees>({
+  const addDegree = (level: Level) => {
+    const id = degrees[level][degrees[level].length - 1].id + 1;
+    setDegrees({ ...degrees, [level]: [...degrees[level], { id }] });
+  };
+  useEffect(() => {
+    setDegrees({
       bachelor: [{ id: 1 }],
       master: [{ id: 1 }],
       phd: [{ id: 1 }],
     });
+  }, [educationLevel]);
 
-    const addDegree = (level: Level) => {
-      const id = degrees[level][degrees[level].length - 1].id + 1;
-      setDegrees({ ...degrees, [level]: [...degrees[level], { id }] });
-    };
-    useEffect(() => {
-      setDegrees({
-        bachelor: [{ id: 1 }],
-        master: [{ id: 1 }],
-        phd: [{ id: 1 }],
-      });
-    }, [educationLevel]);
+  const removeDegree = (level: Level) => {
+    const newDegrees = degrees[level].slice(0, -1);
+    setDegrees({ ...degrees, [level]: newDegrees });
+  };
 
-    const removeDegree = (level: Level) => {
-      const newDegrees = degrees[level].slice(0, -1);
-      setDegrees({ ...degrees, [level]: newDegrees });
-    };
-
-  const { data, error, isLoading } = useQuery<Employee, Error>(
-    ["employee", id], // Added a key to uniquely identify the query
-    async () => {
-      const response = await fetch(`http://localhost:8000/database/employee/${id}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-      return response.json();
-    }
-  );
-    // const { data, error, isLoading } = useQuery(["employee", id], async () => {
-    //   try {
-    //     // Dispatch the action and wait for the promise
-    //     const response = await dispatch(fetchEmployee(id));
-    //     return response.payload; // Adjust this based on the structure of your response
-    //   } catch (error) {
-    //     console.error("Error message:", error);
-    //     throw error;
-    //   }
-    // });
-
-   if (isLoading) {
-     return <p>Loading...</p>;
-   }
-
-   if (error) {
-     // Now TypeScript knows that the 'message' property might exist
-     return <p>Error: {error.message}</p>;
-   }
+  // const { data, error, isLoading } = useQuery(["employee", id], async () => {
+  //   try {
+  //     // Dispatch the action and wait for the promise
+  //     const response = await dispatch(fetchEmployee(id));
+  //     return response.payload; // Adjust this based on the structure of your response
+  //   } catch (error) {
+  //     console.error("Error message:", error);
+  //     throw error;
+  //   }
+  // });
 
 
-  if (!data) {
-    return <p>No data found for ID {id}</p>;
-  }
-
-  const { birthday, gender, phone, email, emergencyContact } = data;
   const handleToggleEmergencyContact = () => {
     setShowEmergencyContact(!showEmergencyContact);
   };
@@ -305,153 +286,148 @@ function GeneralInformation({ id }: { id: any }) {
   };
   const handleToggleBirthDateEditModal = () => {
     setEditBirthDateModalVisible(!birthDateEditModalVisible);
-  }
+  };
   const handleToggleMotherInfoEditModal = () => {
     setEditMotherInfoModalVisible(!motherInfoEditModalVisible);
   };
   const handleToggleMartialInfoEditModal = () => {
-    setEditMartialInfoModalVisible(!martialInfoEditModalVisible)
+    setEditMartialInfoModalVisible(!martialInfoEditModalVisible);
   };
   const handleToggleEducationInfoEditModal = () => {
-    setEditEducationInfoModalVisible(!educationInfoEditModalVisible)
+    setEditEducationInfoModalVisible(!educationInfoEditModalVisible);
   };
   const handleCardVisible = () => {
     setCardVisible(!cardVisible);
   };
-  const initialValues:InitialValues = {
-    title: data.title,
-    firstName: data.firstName,
-    middleName: data.middleName,
-    lastName: data.lastName,
-    birthday: moment(data.birthday), // You may need to import 'moment' for date formatting
-    gender: data.gender,
-    position: data.position,
-    department: data.department,
-    ethnicity: data.ethnicity,
-    phoneNumber: data.phone.number,
-    email: data.email,
-    region: data.region,
-    subcity: data.subcity,
-    woreda: data.wordea,
-    houseNumber: data.houseNumber,
-    leyuBota: data.leyuBota, 
-    motherFirstName: data.motherFirstName,
-  motherMiddleName: data.motherMiddleName,
-  motherLastName: data.motherLastName,
-  motherPhoneNumber: data.motherPhoneNumber,
-  martialStatus: data.martialStatus,
-    
+
+
+  const handleFormSubmit = (values: any) => {
+    // Compare form values with initial values
+    const isFormChanged = Object.keys(values).some(
+      (key) => values[key] !== data2[key]
+    );
+
+    // if (isFormChanged) {
+    //   toast.success("Data updated successfully");
+    // } else {
+    //   toast.warning("No changes made");
+    // }
   };
-
-    const handleFormSubmit = (values: any) => {
-      // Compare form values with initial values
-      const isFormChanged = Object.keys(values).some(
-        (key) => values[key] !== initialValues[key]
-      );
-
-      if (isFormChanged) {
-        
-        toast.success("Data updated successfully");
-      } else {
-        toast.warning("No changes made");
-      }
-    };
-      const handleRegionChange = (value: string) => {
-        const firstSubcity = Object.keys(data2[value])[0];
-        setRegion(value);
-        setSubcity(firstSubcity);
-        setSubcityOptions(Object.keys(data2[value]));
-        setWoredaOptions(data2[value][firstSubcity]);
-        (form as any).setFieldsValue({
-          subcity: firstSubcity,
-          wordea: data2[value][firstSubcity][0],
-        });
-      };
-      const handleSubcityChange = (value: string) => {
-        const firstWoreda = data2[region!][value][0];
-        setSubcity(value);
-        setWoreda(firstWoreda);
-        setWoredaOptions(data2[region!][value]);
-        (form as any).setFieldsValue({ wordea: firstWoreda });
-      };
+  const handleRegionChange = (value: string) => {
+    const firstSubcity = Object.keys(data2.value)[0];
+    setRegion(value);
+    setSubcity(firstSubcity);
+    setSubcityOptions(Object.keys(data2[value]));
+    setWoredaOptions(data2[value][firstSubcity]);
+    (form as any).setFieldsValue({
+      subcity: firstSubcity,
+      wordea: data2[value][firstSubcity][0],
+    });
+  };
+  const handleSubcityChange = (value: string) => {
+    const firstWoreda = data2[region!][value][0];
+    setSubcity(value);
+    setWoreda(firstWoreda);
+    setWoredaOptions(data2[region!][value]);
+    (form as any).setFieldsValue({ wordea: firstWoreda });
+  };
   return (
     <div className="">
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <div className="gIwrapper flex flex-col space-y-10">
-        <div className=" bg-white rounded-md p-8 space-y-5">
+        <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
           <Title style={{ fontSize: 24 }}>General Information</Title>
           <Row gutter={[16, 16]}>
             <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Title
               </Title>
-              <Title style={{ fontSize: 18 }}>{data.title}</Title>
+              <Title style={{ fontSize: 16 }}>{selectedEmployee?.title}</Title>
             </Col>
             <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 First Name
               </Title>
-              <Title style={{ fontSize: 19 }}>{data.firstName}</Title>
+              <Title style={{ fontSize: 16 }}>
+                {selectedEmployee?.firstName}
+              </Title>
             </Col>
             <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Middle Name
               </Title>
-              <Title style={{ fontSize: 19 }}>{data.middleName}</Title>
+              <Title style={{ fontSize: 16 }}>
+                {selectedEmployee?.middleName}
+              </Title>
             </Col>
             <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Last Name
               </Title>
-              <Title style={{ fontSize: 19 }}>{data.lastName}</Title>
+              <Title style={{ fontSize: 16 }}>
+                {selectedEmployee?.lastName}
+              </Title>
             </Col>
-            <Col span={6} className=" -space-y-2">
+            {/* <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Age
               </Title>
-              <Title style={{ fontSize: 19 }}>{getAge(birthday)}</Title>
-            </Col>
+              <Title style={{ fontSize: 16 }}>
+                {getAge(selectedEmployee?.birthday)}
+              </Title>
+            </Col> */}
             <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Gender
               </Title>
-              <Title style={{ fontSize: 19 }}>{gender}</Title>
+              <Title style={{ fontSize: 16 }}>{selectedEmployee?.gender}</Title>
             </Col>
             <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Phone
               </Title>
-              <Title style={{ fontSize: 19 }}> {phone.number}</Title>
+              <Title style={{ fontSize: 16 }}>
+                {" "}
+                {selectedEmployee?.phone.number}
+              </Title>
             </Col>
             <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Email
               </Title>
-              <Title style={{ fontSize: 19 }}>{email}</Title>
+              <Title style={{ fontSize: 16 }}>{selectedEmployee?.email}</Title>
             </Col>
             <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Position
               </Title>
-              <Title style={{ fontSize: 19 }}> {data.position}</Title>
+              <Title style={{ fontSize: 16 }}>
+                {" "}
+                {selectedEmployee?.position}
+              </Title>
             </Col>
             <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Department
               </Title>
-              <Title style={{ fontSize: 19 }}>{data.department}</Title>
+              <Title style={{ fontSize: 16 }}>
+                {selectedEmployee?.department}
+              </Title>
             </Col>
             <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Ethnicity
               </Title>
-              <Title style={{ fontSize: 19 }}> {data.ethnicity}</Title>
+              <Title style={{ fontSize: 16 }}>
+                {" "}
+                {selectedEmployee?.ethnicity}
+              </Title>
             </Col>
             <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Salary
               </Title>
-              <Title style={{ fontSize: 19 }}>{data.salary}</Title>
+              <Title style={{ fontSize: 16 }}>{selectedEmployee?.salary}</Title>
             </Col>
           </Row>
           <Button
@@ -470,7 +446,7 @@ function GeneralInformation({ id }: { id: any }) {
           >
             <Form
               name="editGeneralInfoForm"
-              initialValues={initialValues}
+              initialValues={selectedEmployee}
               // onFinish={handleFormSubmit} // Uncomment and provide your form submit handler
             >
               <Row gutter={16}>
@@ -525,7 +501,7 @@ function GeneralInformation({ id }: { id: any }) {
                     <Input />
                   </Form.Item>
                 </Col>
-                <Col span={16}>
+                {/* <Col span={16}>
                   <Form.Item
                     label="Birthday"
                     name="birthday"
@@ -538,7 +514,7 @@ function GeneralInformation({ id }: { id: any }) {
                   >
                     <DatePicker style={{ width: "100%" }} />
                   </Form.Item>
-                </Col>
+                </Col> */}
               </Row>
 
               <Form.Item
@@ -583,7 +559,7 @@ function GeneralInformation({ id }: { id: any }) {
                 </Col>
               </Row>
 
-              <Form.Item
+              {/* <Form.Item
                 label="Photo"
                 name="photo"
                 rules={[
@@ -591,7 +567,7 @@ function GeneralInformation({ id }: { id: any }) {
                 ]}
               >
                 <Input type="file" />
-              </Form.Item>
+              </Form.Item> */}
 
               <Form.Item
                 label="Ethnicity"
@@ -664,38 +640,44 @@ function GeneralInformation({ id }: { id: any }) {
             </Form>
           </Modal>
         </div>
-        <div className=" bg-white rounded-md p-8 space-y-5">
+        <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
           <Title style={{ fontSize: 24 }}>Current Address</Title>
           <Row gutter={[16, 16]}>
             <Col span={8} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Region
               </Title>
-              <Title style={{ fontSize: 19 }}>{data.region}</Title>
+              <Title style={{ fontSize: 16 }}>{selectedEmployee?.region}</Title>
             </Col>
             <Col span={8} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Zone/Subcity
               </Title>
-              <Title style={{ fontSize: 19 }}>{data.subcity}</Title>
+              <Title style={{ fontSize: 16 }}>
+                {selectedEmployee?.subcity}
+              </Title>
             </Col>
             <Col span={8} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Woreda
               </Title>
-              <Title style={{ fontSize: 19 }}>{data.wordea}</Title>
+              <Title style={{ fontSize: 16 }}>{selectedEmployee?.wordea}</Title>
             </Col>
             <Col span={8} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 House Number
               </Title>
-              <Title style={{ fontSize: 19 }}>{data.houseNumber}</Title>
+              <Title style={{ fontSize: 16 }}>
+                {selectedEmployee?.houseNumber}
+              </Title>
             </Col>
             <Col span={8} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Leyu Bota
               </Title>
-              <Title style={{ fontSize: 19 }}>{data.leyuBota}</Title>
+              <Title style={{ fontSize: 16 }}>
+                {selectedEmployee?.leyuBota}
+              </Title>
             </Col>
           </Row>
           <Button
@@ -712,7 +694,10 @@ function GeneralInformation({ id }: { id: any }) {
             onCancel={handleToggleCurrentAddEditModal}
             footer={null}
           >
-            <Form name="editCurrentAddressForm" initialValues={initialValues}>
+            <Form
+              name="editCurrentAddressForm"
+              initialValues={selectedEmployee}
+            >
               <Row gutter={16}>
                 <Col span={10}>
                   <Form.Item label="Region" name="region">
@@ -785,38 +770,48 @@ function GeneralInformation({ id }: { id: any }) {
         </div>
         {cardVisible === true && (
           <>
-            <div className=" bg-white rounded-md p-8 space-y-5">
+            <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
               <Title style={{ fontSize: 24 }}>Birth Place Information</Title>
               <Row gutter={[16, 16]}>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Region
                   </Title>
-                  <Title style={{ fontSize: 19 }}>{data.region}</Title>
+                  <Title style={{ fontSize: 16 }}>
+                    {selectedEmployee?.region}
+                  </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Zone/Subcity
                   </Title>
-                  <Title style={{ fontSize: 19 }}>{data.subcity}</Title>
+                  <Title style={{ fontSize: 16 }}>
+                    {selectedEmployee?.subcity}
+                  </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Woreda
                   </Title>
-                  <Title style={{ fontSize: 19 }}>{data.wordea}</Title>
+                  <Title style={{ fontSize: 16 }}>
+                    {selectedEmployee?.wordea}
+                  </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     House Number
                   </Title>
-                  <Title style={{ fontSize: 19 }}>{data.houseNumber}</Title>
+                  <Title style={{ fontSize: 16 }}>
+                    {selectedEmployee?.houseNumber}
+                  </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Leyu Bota
                   </Title>
-                  <Title style={{ fontSize: 19 }}>{data.leyuBota}</Title>
+                  <Title style={{ fontSize: 16 }}>
+                    {selectedEmployee?.leyuBota}
+                  </Title>
                 </Col>
               </Row>
               <Button
@@ -833,7 +828,10 @@ function GeneralInformation({ id }: { id: any }) {
                 onCancel={handleToggleBirthDateEditModal}
                 footer={null}
               >
-                <Form name="editBirthPlaceInfo" initialValues={initialValues}>
+                <Form
+                  name="editBirthPlaceInfo"
+                  initialValues={selectedEmployee}
+                >
                   <Row gutter={16}>
                     <Col span={10}>
                       <Form.Item label="Region" name="region">
@@ -904,35 +902,42 @@ function GeneralInformation({ id }: { id: any }) {
                 </Form>
               </Modal>
             </div>
-            <div className=" bg-white rounded-md p-8 space-y-5">
+            <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
               <Title style={{ fontSize: 24 }}>Mother's Information</Title>
               <Row gutter={[16, 16]}>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     First Name
                   </Title>
-                  <Title style={{ fontSize: 19 }}>{data.motherFirstName}</Title>
+                  <Title style={{ fontSize: 16 }}>
+                    {selectedEmployee?.motherInformation.motherFirstName}
+                  </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Middle Name
                   </Title>
-                  <Title style={{ fontSize: 19 }}>
-                    {data.motherMiddleName}
+                  <Title style={{ fontSize: 16 }}>
+                    {selectedEmployee?.motherInformation.motherMiddleName}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Last Name
                   </Title>
-                  <Title style={{ fontSize: 19 }}>{data.motherLastName}</Title>
+                  <Title style={{ fontSize: 16 }}>
+                    {selectedEmployee?.motherInformation.motherLastName}
+                  </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Phone Number
                   </Title>
-                  <Title style={{ fontSize: 19 }}>
-                    {data.motherPhoneNumber}
+                  <Title style={{ fontSize: 16 }}>
+                    {
+                      selectedEmployee?.motherInformation.motherPhoneNumber
+                        .number
+                    }
                   </Title>
                 </Col>
               </Row>
@@ -950,7 +955,7 @@ function GeneralInformation({ id }: { id: any }) {
                 onCancel={handleToggleMotherInfoEditModal}
                 footer={null}
               >
-                <Form name="editMotherInfo" initialValues={initialValues}>
+                <Form name="editMotherInfo" initialValues={selectedEmployee}>
                   <Row gutter={16}>
                     <Col span={16}>
                       <Form.Item
@@ -1024,14 +1029,16 @@ function GeneralInformation({ id }: { id: any }) {
                 </Form>
               </Modal>
             </div>
-            <div className=" bg-white rounded-md p-8 space-y-5">
+            <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
               <Title style={{ fontSize: 24 }}>Martial Information</Title>
               <Row gutter={[16, 16]}>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Martial Status
                   </Title>
-                  <Title style={{ fontSize: 19 }}>{data.martialStatus}</Title>
+                  <Title style={{ fontSize: 16 }}>
+                    {selectedEmployee?.maritalStatus.martialType}
+                  </Title>
                 </Col>
               </Row>
               <Button
@@ -1048,7 +1055,7 @@ function GeneralInformation({ id }: { id: any }) {
                 onCancel={handleToggleMartialInfoEditModal}
                 footer={null}
               >
-                <Form name="editMartialInfo" initialValues={initialValues}>
+                <Form name="editMartialInfo" initialValues={selectedEmployee}>
                   <Form.Item
                     label="Marital Status"
                     name="maritalStatus"
@@ -1199,38 +1206,48 @@ function GeneralInformation({ id }: { id: any }) {
                 </Form>
               </Modal>
             </div>
-            <div className=" bg-white rounded-md p-8 space-y-5">
+            {/* <div className=" bg-white rounded-md p-8 space-y-5">
               <Title style={{ fontSize: 24 }}>Educational Information </Title>
               <Row gutter={[16, 16]}>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Region
                   </Title>
-                  <Title style={{ fontSize: 19 }}>{data.region}</Title>
+                  <Title style={{ fontSize: 16 }}>
+                    {selectedEmployee?.region}
+                  </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Zone/Subcity
                   </Title>
-                  <Title style={{ fontSize: 19 }}>{data.subcity}</Title>
+                  <Title style={{ fontSize: 16 }}>
+                    {selectedEmployee?.subcity}
+                  </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Woreda
                   </Title>
-                  <Title style={{ fontSize: 19 }}>{data.wordea}</Title>
+                  <Title style={{ fontSize: 16 }}>
+                    {selectedEmployee?.wordea}
+                  </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     House Number
                   </Title>
-                  <Title style={{ fontSize: 19 }}>{data.houseNumber}</Title>
+                  <Title style={{ fontSize: 16 }}>
+                    {selectedEmployee?.houseNumber}
+                  </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Leyu Bota
                   </Title>
-                  <Title style={{ fontSize: 19 }}>{data.salary}</Title>
+                  <Title style={{ fontSize: 16 }}>
+                    {selectedEmployee?.salary}
+                  </Title>
                 </Col>
               </Row>
               <Button
@@ -1247,7 +1264,10 @@ function GeneralInformation({ id }: { id: any }) {
                 onCancel={handleToggleEducationInfoEditModal}
                 footer={null}
               >
-                <Form name="editEducationalInfo" initialValues={initialValues}>
+                <Form
+                  name="editEducationalInfo"
+                  initialValues={selectedEmployee}
+                >
                   <Form.Item label="Select Education Level">
                     <Select onChange={(value) => setEducationLevel(value)}>
                       <Option value="10grade">10th Grade</Option>
@@ -1310,15 +1330,14 @@ function GeneralInformation({ id }: { id: any }) {
                   </Button>
                   <Button
                     type="default"
-                    // onClick={handleFormSubmit}
                     className="ml-3"
                   >
                     Cancel
                   </Button>
                 </Form>
               </Modal>
-            </div>
-            <div className=" bg-white rounded-md p-10">
+            </div> */}
+            {/* <div className=" bg-white rounded-md p-10">
               <Title style={{ fontSize: 24 }}>
                 Emergency Contact Information
               </Title>
@@ -1327,7 +1346,7 @@ function GeneralInformation({ id }: { id: any }) {
                   <Title style={{ fontSize: 14 }} type="secondary">
                     First Name
                   </Title>
-                  <Title style={{ fontSize: 19 }}>
+                  <Title style={{ fontSize: 16 }}>
                     {emergencyContact.firstName}
                   </Title>
                 </Col>
@@ -1335,7 +1354,7 @@ function GeneralInformation({ id }: { id: any }) {
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Middle Name
                   </Title>
-                  <Title style={{ fontSize: 19 }}>
+                  <Title style={{ fontSize: 16 }}>
                     {emergencyContact.middleName}
                   </Title>
                 </Col>
@@ -1343,7 +1362,7 @@ function GeneralInformation({ id }: { id: any }) {
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Last Name
                   </Title>
-                  <Title style={{ fontSize: 19 }}>
+                  <Title style={{ fontSize: 16 }}>
                     {emergencyContact.lastName}
                   </Title>
                 </Col>
@@ -1351,7 +1370,7 @@ function GeneralInformation({ id }: { id: any }) {
                   <Title style={{ fontSize: 14 }} type="secondary">
                     Phone Number
                   </Title>
-                  <Title style={{ fontSize: 19 }}>
+                  <Title style={{ fontSize: 16 }}>
                     {emergencyContact.phoneNumber}
                   </Title>
                 </Col>
@@ -1485,8 +1504,6 @@ function GeneralInformation({ id }: { id: any }) {
                       </Form.Item>
                     </Col>
                   </Row>
-
-                  {/* Sub-form for Address */}
                   <Text>Address</Text>
                   <Row gutter={16}>
                     <Col span={12}>
@@ -1552,14 +1569,13 @@ function GeneralInformation({ id }: { id: any }) {
                   </Button>
                   <Button
                     type="default"
-                    // onClick={handleFormSubmit}
                     className="ml-3"
                   >
                     Cancel
                   </Button>
                 </Form>
               </Modal>
-            </div>
+            </div> */}
           </>
         )}
       </div>

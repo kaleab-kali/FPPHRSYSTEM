@@ -1,29 +1,6 @@
-import React, { useState } from "react";
-import {
-  UserOutlined,
-  TeamOutlined,
-  ClockCircleOutlined,
-  CalendarOutlined,
-  ExclamationCircleOutlined,
-  LineChartOutlined,
-  SearchOutlined,
-  BellOutlined,
-  ScheduleOutlined,
-  MessageOutlined,
-  InfoCircleOutlined,
-  PoweroffOutlined,
-} from "@ant-design/icons";
-// import type { MenuProps } from "antd";
-import {
-  Layout,
-  Menu,
-  Badge,
-  Avatar,
-  Space,
-  Input,
-  Dropdown,
-  message,
-} from "antd";
+import React, { useEffect, useState } from "react";
+import {  TeamOutlined,  ClockCircleOutlined,CalendarOutlined,ExclamationCircleOutlined,LineChartOutlined,} from "@ant-design/icons";
+import {Layout,  Input,} from "antd";
 import "./App.css";
 import {
   Route,
@@ -40,8 +17,8 @@ import "./App.css";
 // import EmployeeProfile from "./components/EmployeeProfile/EmployeeProfile";
 
 
-const { Header, Content, Sider } = Layout;
-const { Search } = Input;
+
+const {  Content } = Layout;
 
 interface SidebarItem {
   key: string;
@@ -166,16 +143,12 @@ const sidebarItems: SidebarItem[] = [
 ];
 
 const App: React.FC = () => {
-  const [selectedKeys, setSelectedKeys] = useState<string[]>(["1"]);
-  const [openKeys, setOpenKeys] = useState<string[]>(["sub1", "sub2"]); // Initial open submenus
+  // const dispatch=useDispatch<AppDispatch>();
+  // useEffect(()=>{
+  //   dispatch(fetchEmployeeData())
+    
+  // },[dispatch])
 
-  const handleSelect = (item: any) => {
-    setSelectedKeys([item.key]);
-  };
-  const handleNotificationClick = () => {
-    // Sample message when the notification icon is clicked
-    message.info("New message: You have 5 new messages.");
-  };
   return (
     <Layout className="">
       <Header
@@ -348,6 +321,10 @@ const App: React.FC = () => {
               <Route path="/messages" element={<Messages />} />
               {/* <Route path="/" element={<PositionsListContainer />} /> */}
               <Route path="/employee/:id" element={<EmployeeProfile />} />
+              <Route path="/aprisal" element={<ApraisalForm />} />
+              <Route path="/reward" element={<Reward/>} />
+              <Route path="/appraisal" element={<ApraisalForm />} />
+
             </Routes>
           </Content>
         </Layout>
