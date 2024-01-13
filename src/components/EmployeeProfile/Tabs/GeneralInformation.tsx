@@ -1374,7 +1374,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     <Col span={16}>
                       <Form.Item
                         label="First Name"
-                        name={["emergencyContact", "firstName"]}
+                        name={["emergencyContact", "info", "firstName"]}
                         rules={[
                           {
                             required: true,
@@ -1388,7 +1388,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     <Col span={16}>
                       <Form.Item
                         label="Middle Name"
-                        name={["emergencyContact", "middleName"]}
+                        name={["emergencyContact", "info", "middleName"]}
                       >
                         <Input />
                       </Form.Item>
@@ -1396,7 +1396,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     <Col span={16}>
                       <Form.Item
                         label="Last Name"
-                        name={["emergencyContact", "lastName"]}
+                        name={["emergencyContact", "info", "lastName"]}
                         rules={[
                           {
                             required: true,
@@ -1413,7 +1413,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     <Col span={12}>
                       <Form.Item
                         label="Relationship"
-                        name={["emergencyContact", "relationship"]}
+                        name={["emergencyContact", "info", "relationship"]}
                         rules={[
                           {
                             required: true,
@@ -1432,7 +1432,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     <Col span={12}>
                       <Form.Item
                         label="Phone Number"
-                        name={["emergencyContact", "phoneNumber"]}
+                        name={["emergencyContact", "info", "phoneNumber"]}
                         rules={[
                           {
                             required: true,
@@ -1446,7 +1446,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     <Col span={16}>
                       <Form.Item
                         label="Email"
-                        name={["emergencyContact", "email"]}
+                        name={["emergencyContact", "info", "email"]}
                       >
                         <Input />
                       </Form.Item>
@@ -1455,7 +1455,10 @@ const updateEmployeeMutuation = useUpdateEmployee();
                   <Text>Address</Text>
                   <Row gutter={16}>
                     <Col span={12}>
-                      <Form.Item label="Region" name="region">
+                      <Form.Item
+                        label="Region"
+                        name={["emergencyContact", "address", "region"]}
+                      >
                         <Select
                           options={Object.keys(data2).map((region) => ({
                             label: region,
@@ -1466,7 +1469,10 @@ const updateEmployeeMutuation = useUpdateEmployee();
                       </Form.Item>
                     </Col>
                     <Col span={12}>
-                      <Form.Item label="Zone/Subcity" name="subcity">
+                      <Form.Item
+                        label="Zone/Subcity"
+                        name={["emergencyContact", "address", "subcity"]}
+                      >
                         <Select
                           options={subcityOptions.map((subcity) => ({
                             label: subcity,
@@ -1478,7 +1484,10 @@ const updateEmployeeMutuation = useUpdateEmployee();
                       </Form.Item>
                     </Col>
                     <Col span={12}>
-                      <Form.Item label="Woreda" name="wordea">
+                      <Form.Item
+                        label="Woreda"
+                        name={["emergencyContact", "address", "woreda"]}
+                      >
                         <Select
                           options={woredaOptions.map((woreda) => ({
                             label: woreda,
@@ -1494,7 +1503,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     <Col span={12}>
                       <Form.Item
                         label="Leyu Bota"
-                        name={["emergencyContact", "leyuBota"]}
+                        name={["emergencyContact", "address", "leyuBota"]}
                       >
                         <Input />
                       </Form.Item>
@@ -1502,7 +1511,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     <Col span={10}>
                       <Form.Item
                         label="House Number"
-                        name={["emergencyContact", "houseNumber"]}
+                        name={["emergencyContact", "address", "houseNumber"]}
                       >
                         <Input />
                       </Form.Item>
