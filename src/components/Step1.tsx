@@ -150,7 +150,7 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
         name="photo"
         valuePropName="fileList"
         getValueFromEvent={(e) => e.fileList}
-        rules={[{ required: true, message: "Please upload your photo" }]}
+        // rules={[{ required: true, message: "Please upload your photo" }]}
       >
         <Input type="file" />
       </Form.Item>
@@ -186,15 +186,21 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
           >
             <Input.Group compact>
               {/* Ethiopian country code */}
-              <Form.Item name={["phone", "prefix"]} noStyle initialValue="+251">
+              <Form.Item
+                name={["phoneNumber", "prefix"]}
+                initialValue="+251"
+                noStyle
+              >
                 <Input style={{ width: "20%" }} readOnly />
               </Form.Item>
               {/* Phone number input */}
               <Form.Item
-                name={["phone", "number"]}
+                name={["phoneNumber", "number"]}
                 noStyle
                 rules={[
                   { required: true, message: "Please enter your phone number" },
+                  // You can add more validation rules for the phone number format
+                  // Example: { pattern: /^[0-9]{9,11}$/, message: "Invalid phone number" }
                 ]}
               >
                 <Input style={{ width: "80%" }} />
@@ -202,6 +208,7 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
             </Input.Group>
           </Form.Item>
         </Col>
+
         <Col span={12}>
           <Form.Item
             label="Email"

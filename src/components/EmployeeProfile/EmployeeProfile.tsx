@@ -41,7 +41,7 @@ const EmployeeProfile: React.FC = (key:any) => {
     { label: "Attendance", key: "5", component: <AttendanceInformation  selectedEmployee={selectedEmployee}  /> },
     // { label: "Reward", key: "6", component: <RewardInfomation  selectedEmployee={selectedEmployee}  /> },
     { label: "Performance", key: "7", component: <PerformanceInformation  selectedEmployee={selectedEmployee}  /> },
-    { label: "Apresal", key: "8", component: <AppraisalInformation  selectedEmployee={selectedEmployee}  /> },
+    // { label: "Apresal", key: "8", component: <AppraisalInformation  selectedEmployee={selectedEmployee}  /> },
 
   ];
   // const { data, error, isLoading } = useQuery<Employee[], Error>(

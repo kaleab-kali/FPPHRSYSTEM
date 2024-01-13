@@ -315,15 +315,15 @@ const updateEmployeeMutuation = useUpdateEmployee();
                 {selectedEmployee?.lastName}
               </Title>
             </Col>
-            {/* <Col span={6} className=" -space-y-2">
+            <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Age
               </Title>
               <Title style={{ fontSize: 16 }}>
-                {getAge(selectedEmployee?.birthday)}
+                {/* {getAge(selectedEmployee?.birthday)} */}
               </Title>
-            </Col> */}
-            {/* <Col span={6} className=" -space-y-2">
+            </Col>
+            <Col span={6} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Gender
               </Title>
@@ -335,7 +335,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
               </Title>
               <Title style={{ fontSize: 16 }}>
                 {" "}
-                {selectedEmployee?.phone.number}
+                {selectedEmployee?.phoneNumber.number}
               </Title>
             </Col>
             <Col span={6} className=" -space-y-2">
@@ -375,7 +375,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                 Salary
               </Title>
               <Title style={{ fontSize: 16 }}>{selectedEmployee?.salary}</Title>
-            </Col> */}
+            </Col>
           </Row>
           <Button
             type="primary"
@@ -466,7 +466,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                 </Col> */}
               </Row>
 
-              {/* <Form.Item
+              <Form.Item
                 label="Gender"
                 name="gender"
                 rules={[
@@ -506,7 +506,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     <Input />
                   </Form.Item>
                 </Col>
-              </Row> */}
+              </Row>
 
               {/* <Form.Item
                 label="Photo"
@@ -518,7 +518,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                 <Input type="file" />
               </Form.Item> */}
 
-              {/* <Form.Item
+              <Form.Item
                 label="Ethnicity"
                 name="ethnicity"
                 rules={[
@@ -539,17 +539,13 @@ const updateEmployeeMutuation = useUpdateEmployee();
                   <Option value="Gambela">Gambela</Option>
                   <Option value="Gumuz">Gumuz</Option>
                 </Select>
-              </Form.Item> */}
+              </Form.Item>
 
-              {/* <Row gutter={16}>
+              <Row gutter={16}>
                 <Col span={12}>
-                  <Form.Item
-                    label="Phone Number"
-                    name="phoneNumber"
-                   
-                  >
+                  <Form.Item label="Phone Number" name="phoneNumber">
                     <Input.Group compact>
-                      <Form.Item name={["phone", "number"]} noStyle>
+                      <Form.Item name={["phoneNumber", "number"]} noStyle>
                         <Input style={{ width: "80%" }} />
                       </Form.Item>
                     </Input.Group>
@@ -566,7 +562,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     <Input />
                   </Form.Item>
                 </Col>
-              </Row> */}
+              </Row>
               <Button
                 type="primary"
                 // onClick={()=>handleFormSubmit()}
@@ -585,35 +581,39 @@ const updateEmployeeMutuation = useUpdateEmployee();
             </Form>
           </Modal>
         </div>
-        {/* <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
+        <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
           <Title style={{ fontSize: 24 }}>Current Address</Title>
           <Row gutter={[16, 16]}>
             <Col span={8} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Region
               </Title>
-              <Title style={{ fontSize: 16 }}>{selectedEmployee?.region}</Title>
+              <Title style={{ fontSize: 16 }}>
+                {selectedEmployee?.currentAddress.region}
+              </Title>
             </Col>
             <Col span={8} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Zone/Subcity
               </Title>
               <Title style={{ fontSize: 16 }}>
-                {selectedEmployee?.subcity}
+                {selectedEmployee?.currentAddress.subcity}
               </Title>
             </Col>
             <Col span={8} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 Woreda
               </Title>
-              <Title style={{ fontSize: 16 }}>{selectedEmployee?.wordea}</Title>
+              <Title style={{ fontSize: 16 }}>
+                {selectedEmployee?.currentAddress.woreda}
+              </Title>
             </Col>
             <Col span={8} className=" -space-y-2">
               <Title style={{ fontSize: 14 }} type="secondary">
                 House Number
               </Title>
               <Title style={{ fontSize: 16 }}>
-                {selectedEmployee?.houseNumber}
+                {selectedEmployee?.currentAddress.houseNumber}
               </Title>
             </Col>
             <Col span={8} className=" -space-y-2">
@@ -621,7 +621,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                 Leyu Bota
               </Title>
               <Title style={{ fontSize: 16 }}>
-                {selectedEmployee?.leyuBota}
+                {selectedEmployee?.currentAddress.leyuBota}
               </Title>
             </Col>
           </Row>
@@ -645,7 +645,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
             >
               <Row gutter={16}>
                 <Col span={10}>
-                  <Form.Item label="Region" name="region">
+                  <Form.Item label="Region" name={["currentAddress", "region"]}>
                     <Select
                       options={Object.keys(data2).map((region) => ({
                         label: region,
@@ -656,7 +656,10 @@ const updateEmployeeMutuation = useUpdateEmployee();
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item label="Zone/Subcity" name="subcity">
+                  <Form.Item
+                    label="Zone/Subcity"
+                    name={["currentAddress", "subcity"]}
+                  >
                     <Select
                       options={subcityOptions.map((subcity) => ({
                         label: subcity,
@@ -668,7 +671,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                   </Form.Item>
                 </Col>
                 <Col span={12}>
-                  <Form.Item label="Woreda" name="wordea">
+                  <Form.Item label="Woreda" name={["currentAddress", "woreda"]}>
                     <Select
                       options={woredaOptions.map((woreda) => ({
                         label: woreda,
@@ -679,19 +682,25 @@ const updateEmployeeMutuation = useUpdateEmployee();
                   </Form.Item>
                 </Col>
                 <Col span={10}>
-                  <Form.Item label="House Number" name="houseNumber">
+                  <Form.Item
+                    label="House Number"
+                    name={["currentAddress", "houseNumber"]}
+                  >
                     <Input />
                   </Form.Item>
                 </Col>
               </Row>
               <Row gutter={16}>
                 <Col span={10}>
-                  <Form.Item label="Leyu Bota" name="leyuBota">
+                  <Form.Item
+                    label="Leyu Bota"
+                    name={["currentAddress", "leyuBota"]}
+                  >
                     <Input />
                   </Form.Item>
                 </Col>
                 <Col span={10}>
-                  <Form.Item label="Camp" name="camp">
+                  <Form.Item label="Camp" name={["currentAddress", "camp"]}>
                     <Input />
                   </Form.Item>
                 </Col>
@@ -712,10 +721,10 @@ const updateEmployeeMutuation = useUpdateEmployee();
               </Button>
             </Form>
           </Modal>
-        </div> */}
+        </div>
         {cardVisible === true && (
           <>
-            {/* <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
+            <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
               <Title style={{ fontSize: 24 }}>Birth Place Information</Title>
               <Row gutter={[16, 16]}>
                 <Col span={8} className=" -space-y-2">
@@ -723,7 +732,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     Region
                   </Title>
                   <Title style={{ fontSize: 16 }}>
-                    {selectedEmployee?.region}
+                    {selectedEmployee?.birthplaceInfo.region}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
@@ -731,7 +740,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     Zone/Subcity
                   </Title>
                   <Title style={{ fontSize: 16 }}>
-                    {selectedEmployee?.subcity}
+                    {selectedEmployee?.birthplaceInfo.subcity}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
@@ -739,7 +748,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     Woreda
                   </Title>
                   <Title style={{ fontSize: 16 }}>
-                    {selectedEmployee?.wordea}
+                    {selectedEmployee?.birthplaceInfo.woreda}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
@@ -747,7 +756,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     House Number
                   </Title>
                   <Title style={{ fontSize: 16 }}>
-                    {selectedEmployee?.houseNumber}
+                    {selectedEmployee?.birthplaceInfo.houseNumber}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
@@ -755,7 +764,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     Leyu Bota
                   </Title>
                   <Title style={{ fontSize: 16 }}>
-                    {selectedEmployee?.leyuBota}
+                    {selectedEmployee?.birthplaceInfo.leyuBota}
                   </Title>
                 </Col>
               </Row>
@@ -779,7 +788,10 @@ const updateEmployeeMutuation = useUpdateEmployee();
                 >
                   <Row gutter={16}>
                     <Col span={10}>
-                      <Form.Item label="Region" name="region">
+                      <Form.Item
+                        label="Region"
+                        name={["birthplaceInfo", "region"]}
+                      >
                         <Select
                           options={Object.keys(data2).map((region) => ({
                             label: region,
@@ -790,7 +802,10 @@ const updateEmployeeMutuation = useUpdateEmployee();
                       </Form.Item>
                     </Col>
                     <Col span={12}>
-                      <Form.Item label="Zone/Subcity" name="subcity">
+                      <Form.Item
+                        label="Zone/Subcity"
+                        name={["birthplaceInfo", "subcity"]}
+                      >
                         <Select
                           options={subcityOptions.map((subcity) => ({
                             label: subcity,
@@ -802,7 +817,10 @@ const updateEmployeeMutuation = useUpdateEmployee();
                       </Form.Item>
                     </Col>
                     <Col span={12}>
-                      <Form.Item label="Woreda" name="wordea">
+                      <Form.Item
+                        label="Woreda"
+                        name={["birthplaceInfo", "woreda"]}
+                      >
                         <Select
                           options={woredaOptions.map((woreda) => ({
                             label: woreda,
@@ -813,19 +831,25 @@ const updateEmployeeMutuation = useUpdateEmployee();
                       </Form.Item>
                     </Col>
                     <Col span={10}>
-                      <Form.Item label="House Number" name="houseNumber">
+                      <Form.Item
+                        label="House Number"
+                        name={["birthplaceInfo", "houseNumber"]}
+                      >
                         <Input />
                       </Form.Item>
                     </Col>
                   </Row>
                   <Row gutter={16}>
                     <Col span={10}>
-                      <Form.Item label="Leyu Bota" name="leyuBota">
+                      <Form.Item
+                        label="Leyu Bota"
+                        name={["birthplaceInfo", "leyuBota"]}
+                      >
                         <Input />
                       </Form.Item>
                     </Col>
                     <Col span={10}>
-                      <Form.Item label="Camp" name="camp">
+                      <Form.Item label="Camp" name={["birthplaceInfo", "camp"]}>
                         <Input />
                       </Form.Item>
                     </Col>
@@ -837,16 +861,13 @@ const updateEmployeeMutuation = useUpdateEmployee();
                   >
                     Save
                   </Button>
-                  <Button
-                    type="default"
-                    className="ml-3"
-                  >
+                  <Button type="default" className="ml-3">
                     Cancel
                   </Button>
                 </Form>
               </Modal>
-            </div> */}
-            {/* <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
+            </div>
+            <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
               <Title style={{ fontSize: 24 }}>Mother's Information</Title>
               <Row gutter={[16, 16]}>
                 <Col span={8} className=" -space-y-2">
@@ -854,7 +875,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     First Name
                   </Title>
                   <Title style={{ fontSize: 16 }}>
-                    {selectedEmployee?.motherInformation.motherFirstName}
+                    {selectedEmployee?.motherInformation.firstName}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
@@ -862,7 +883,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     Middle Name
                   </Title>
                   <Title style={{ fontSize: 16 }}>
-                    {selectedEmployee?.motherInformation.motherMiddleName}
+                    {selectedEmployee?.motherInformation?.middleName}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
@@ -870,7 +891,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     Last Name
                   </Title>
                   <Title style={{ fontSize: 16 }}>
-                    {selectedEmployee?.motherInformation.motherLastName}
+                    {selectedEmployee?.motherInformation.lastName}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
@@ -878,10 +899,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     Phone Number
                   </Title>
                   <Title style={{ fontSize: 16 }}>
-                    {
-                      selectedEmployee?.motherInformation.motherPhoneNumber
-                        .number
-                    }
+                    {selectedEmployee?.motherInformation.phoneNumber.number}
                   </Title>
                 </Col>
               </Row>
@@ -904,7 +922,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     <Col span={16}>
                       <Form.Item
                         label="Mother's First Name"
-                        name="motherFirstName"
+                        name={["motherInformation", "firstName"]}
                         rules={[
                           {
                             required: true,
@@ -918,7 +936,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     <Col span={16}>
                       <Form.Item
                         label="Mother's Middle Name"
-                        name="motherMiddleName"
+                        name={["motherInformation", "middleName"]}
                         rules={[
                           {
                             required: true,
@@ -932,7 +950,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     <Col span={16}>
                       <Form.Item
                         label="Mother's Last Name"
-                        name="motherLastName"
+                        name={["motherInformation", "lastName"]}
                         rules={[
                           {
                             required: true,
@@ -949,7 +967,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     <Col span={16}>
                       <Form.Item
                         label="Mother's Phone Number"
-                        name="motherPhoneNumber"
+                        name={["motherInformation", "phoneNumber", "number"]}
                       >
                         <Input />
                       </Form.Item>
@@ -962,16 +980,13 @@ const updateEmployeeMutuation = useUpdateEmployee();
                   >
                     Save
                   </Button>
-                  <Button
-                    type="default"
-                    className="ml-3"
-                  >
+                  <Button type="default" className="ml-3">
                     Cancel
                   </Button>
                 </Form>
               </Modal>
-            </div> */}
-            {/* <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
+            </div>
+            <div className=" bg-white rounded-md px-8 py-2 space-y-5  shadow-md">
               <Title style={{ fontSize: 24 }}>Martial Information</Title>
               <Row gutter={[16, 16]}>
                 <Col span={8} className=" -space-y-2">
@@ -979,7 +994,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     Martial Status
                   </Title>
                   <Title style={{ fontSize: 16 }}>
-                    {selectedEmployee?.maritalStatus.martialType}
+                    {selectedEmployee?.maritalStatus}
                   </Title>
                 </Col>
               </Row>
@@ -1085,8 +1100,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                                       label="Region"
                                       name={["spouseInfo", "address", "region"]}
                                     >
-                                      <Select>
-                                      </Select>
+                                      <Select></Select>
                                     </Form.Item>
                                   </Col>
                                   <Col span={16}>
@@ -1098,8 +1112,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                                         "subcity",
                                       ]}
                                     >
-                                      <Select>
-                                      </Select>
+                                      <Select></Select>
                                     </Form.Item>
                                   </Col>
                                 </Row>
@@ -1135,15 +1148,12 @@ const updateEmployeeMutuation = useUpdateEmployee();
                   >
                     Save
                   </Button>
-                  <Button
-                    type="default"
-                    className="ml-3"
-                  >
+                  <Button type="default" className="ml-3">
                     Cancel
                   </Button>
                 </Form>
               </Modal>
-            </div> */}
+            </div>
             {/* <div className=" bg-white rounded-md p-8 space-y-5">
               <Title style={{ fontSize: 24 }}>Educational Information </Title>
               <Row gutter={[16, 16]}>
@@ -1275,7 +1285,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                 </Form>
               </Modal>
             </div> */}
-            {/* <div className=" bg-white rounded-md p-10">
+            <div className=" bg-white rounded-md p-10">
               <Title style={{ fontSize: 24 }}>
                 Emergency Contact Information
               </Title>
@@ -1285,7 +1295,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     First Name
                   </Title>
                   <Title style={{ fontSize: 16 }}>
-                    {emergencyContact.firstName}
+                    {selectedEmployee?.emergencyContact.info.firstName}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
@@ -1293,7 +1303,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     Middle Name
                   </Title>
                   <Title style={{ fontSize: 16 }}>
-                    {emergencyContact.middleName}
+                    {selectedEmployee?.emergencyContact.info.middleName}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
@@ -1301,7 +1311,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     Last Name
                   </Title>
                   <Title style={{ fontSize: 16 }}>
-                    {emergencyContact.lastName}
+                    {selectedEmployee?.emergencyContact.info.lastName}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
@@ -1309,7 +1319,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     Phone Number
                   </Title>
                   <Title style={{ fontSize: 16 }}>
-                    {emergencyContact.phoneNumber}
+                    {selectedEmployee?.emergencyContact.info.phoneNumber}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
@@ -1317,7 +1327,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     Email
                   </Title>
                   <Title style={{ fontSize: 19 }}>
-                    {emergencyContact.email}
+                    {selectedEmployee?.emergencyContact.info.email}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
@@ -1325,7 +1335,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     Relationship
                   </Title>
                   <Title style={{ fontSize: 19 }}>
-                    {emergencyContact.relationship}
+                    {selectedEmployee?.emergencyContact.info.relationship}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
@@ -1333,7 +1343,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     House Number
                   </Title>
                   <Title style={{ fontSize: 19 }}>
-                    {emergencyContact.houseNumber}
+                    {selectedEmployee?.emergencyContact.address.houseNumber}
                   </Title>
                 </Col>
                 <Col span={8} className=" -space-y-2">
@@ -1341,7 +1351,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     Leyu Bota
                   </Title>
                   <Title style={{ fontSize: 19 }}>
-                    {emergencyContact.leyuBota}
+                    {selectedEmployee?.emergencyContact.address.leyuBota}
                   </Title>
                 </Col>
               </Row>
@@ -1359,7 +1369,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
                 onCancel={handleToggleEmergencyEditModal}
                 footer={null}
               >
-                <Form name="editEmergencyInfo" initialValues={initialValues}>
+                <Form name="editEmergencyInfo" initialValues={selectedEmployee}>
                   <Row gutter={16}>
                     <Col span={16}>
                       <Form.Item
@@ -1505,15 +1515,12 @@ const updateEmployeeMutuation = useUpdateEmployee();
                   >
                     Save
                   </Button>
-                  <Button
-                    type="default"
-                    className="ml-3"
-                  >
+                  <Button type="default" className="ml-3">
                     Cancel
                   </Button>
                 </Form>
               </Modal>
-            </div> */}
+            </div>
           </>
         )}
       </div>

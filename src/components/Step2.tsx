@@ -232,7 +232,14 @@ const Step2: React.FC<Step2Props> = ({
       >
         <Input />
       </Form.Item>
-      <Form.Item label="Select Education Level">
+
+      <Form.Item
+        label="Select Education Level"
+        name="educationLevel"
+        rules={[
+          { required: true, message: "Please select the education level" },
+        ]}
+      >
         <Select onChange={(value) => setEducationLevel(value)}>
           <Option value="10grade">10th Grade</Option>
           <Option value="twelfth">12th Grade</Option>
@@ -243,7 +250,6 @@ const Step2: React.FC<Step2Props> = ({
           <Option value="phd">PhD</Option>
         </Select>
       </Form.Item>
-
       {(["bachelor", "master", "phd"] as Level[]).map((level) =>
         degrees[level].map(
           (degree, index) =>
@@ -256,7 +262,6 @@ const Step2: React.FC<Step2Props> = ({
             )
         )
       )}
-
       {(["bachelor", "master", "phd"] as Level[]).map(
         (level) =>
           educationLevel === level && (
@@ -278,7 +283,6 @@ const Step2: React.FC<Step2Props> = ({
             </>
           )
       )}
-
       <Form.Item
         label={
           <span style={{ fontWeight: "bold", fontSize: "16px" }}>
@@ -356,7 +360,6 @@ const Step2: React.FC<Step2Props> = ({
           </Row>
         </>
       </Form.Item>
-
       <Title level={4}>Mother's Information</Title>
       <Row gutter={16}>
         <Col span={8}>
@@ -377,12 +380,6 @@ const Step2: React.FC<Step2Props> = ({
           <Form.Item
             label="Mother's Middle Name"
             name={["motherInformation", "middleName"]}
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: "Please enter your mother's middle name",
-            //   },
-            // ]}
           >
             <Input />
           </Form.Item>
@@ -418,12 +415,16 @@ const Step2: React.FC<Step2Props> = ({
           >
             <Input.Group compact>
               {/* Ethiopian country code */}
-              <Form.Item name={["phone", "prefix"]} noStyle initialValue="+251">
+              <Form.Item
+                name={["motherInformation", "phoneNumber", "prefix"]}
+                noStyle
+                initialValue="+251"
+              >
                 <Input style={{ width: "20%" }} readOnly />
               </Form.Item>
               {/* Phone number input */}
               <Form.Item
-                name={["phone", "number"]}
+                name={["motherInformation", "phoneNumber", "number"]}
                 noStyle
                 rules={[
                   {
