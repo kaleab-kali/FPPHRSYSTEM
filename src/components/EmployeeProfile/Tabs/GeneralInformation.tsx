@@ -108,6 +108,43 @@ interface GeneralInformationProps {
 }
 
 function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
+  const [region, setRegion] = useState<string | null>(null);
+  const [subcity, setSubcity] = useState<string | null>(null);
+  const [woreda, setWoreda] = useState<string | null>(null);
+  // Reset subcity and woreda when region changes
+  useEffect(() => {
+    if (region) {
+      const subcities = Object.keys(data2[region]);
+      const firstSubcity = subcities[0];
+      setSubcity(firstSubcity);
+      form.setFieldsValue({ currentAddress: { subcity: firstSubcity } });
+
+      const woredas = data2[region][firstSubcity];
+      const firstWoreda = woredas[0];
+      setWoreda(firstWoreda);
+      form.setFieldsValue({
+        currentAddress: { woreda: firstWoreda },
+      });
+    }
+  }, [region]);
+
+  // Reset woreda when subcity changes
+  useEffect(() => {
+    if (region && subcity) {
+      const woredas = data2[region][subcity];
+      const firstWoreda = woredas[0];
+      setWoreda(firstWoreda);
+      form.setFieldsValue({ currentAddress: { woreda: firstWoreda } });
+    }
+  }, [subcity]);
+
+    const handleRegionChange = (value: string) => {
+      setRegion(value);
+    };
+
+    const handleSubcityChange = (value: string) => {
+      setSubcity(value);
+    };
   const { Title, Text } = Typography;
   const { Option } = Select;
   // State to track the visibility of the emergency contact information
@@ -131,9 +168,9 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
 
   const [cardVisible, setCardVisible] = React.useState(false);
   // For region
-  const [region, setRegion] = useState<string | null>(null);
-  const [subcity, setSubcity] = useState<string | null>(null);
-  const [woreda, setWoreda] = useState<string | null>(null);
+  // const [region, setRegion] = useState<string | null>(null);
+  // const [subcity, setSubcity] = useState<string | null>(null);
+  // const [woreda, setWoreda] = useState<string | null>(null);
   const [subcityOptions, setSubcityOptions] = useState<string[]>([]);
   const [woredaOptions, setWoredaOptions] = useState<string[]>([]);
 
@@ -203,7 +240,7 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
     setDegrees({ ...degrees, [level]: newDegrees });
   };
 
-  // const { data, error, isLoading } = useQuery(["employee", id], async () => {
+  // const { data,2 error, isLoading } = useQuery(["employee", id], async () => {
   //   try {
   //     // Dispatch the action and wait for the promise
   //     const response = await dispatch(fetchEmployee(id));
@@ -213,7 +250,6 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
   //     throw error;
   //   }
   // });
-
 
   const handleToggleEmergencyContact = () => {
     setShowEmergencyContact(!showEmergencyContact);
@@ -246,12 +282,12 @@ function GeneralInformation({ selectedEmployee }: GeneralInformationProps) {
   };
   const [form] = Form.useForm();
 
-const updateEmployeeMutuation = useUpdateEmployee();
+  const updateEmployeeMutuation = useUpdateEmployee();
 
   const handleFormSubmit = async () => {
     try {
       const values = await form.validateFields(); // This will validate all fields and return the values
-      console.log(JSON.stringify(values))
+      console.log(JSON.stringify(values));
       // You can now use the values to update the employee
       if (values) {
         updateEmployeeMutuation.mutate({ ...selectedEmployee, ...values });
@@ -260,24 +296,26 @@ const updateEmployeeMutuation = useUpdateEmployee();
       console.log("Validation failed:", errorInfo);
     }
   };
-  const handleRegionChange = (value: string) => {
-    const firstSubcity = Object.keys(data2.value)[0];
-    setRegion(value);
-    setSubcity(firstSubcity);
-    setSubcityOptions(Object.keys(data2[value]));
-    setWoredaOptions(data2[value][firstSubcity]);
-    (form as any).setFieldsValue({
-      subcity: firstSubcity,
-      wordea: data2[value][firstSubcity][0],
-    });
-  };
-  const handleSubcityChange = (value: string) => {
-    const firstWoreda = data2[region!][value][0];
-    setSubcity(value);
-    setWoreda(firstWoreda);
-    setWoredaOptions(data2[region!][value]);
-    (form as any).setFieldsValue({ wordea: firstWoreda });
-  };
+  // const handleRegionChange = (value: string) => {
+  //   if (data2 && data2.value) {
+  //     const firstSubcity = Object.keys(data2.value)[0];
+  //     setRegion(value);
+  //     setSubcity(firstSubcity);
+  //     setSubcityOptions(Object.keys(data2[value]));
+  //     setWoredaOptions(data2[value][firstSubcity]);
+  //     (form as any).setFieldsValue({
+  //       subcity: firstSubcity,
+  //       wordea: data2[value][firstSubcity][0],
+  //     });
+  //   }
+  // };
+  // const handleSubcityChange = (value: string) => {
+  //   const firstWoreda = data2[region!][value][0];
+  //   setSubcity(value);
+  //   setWoreda(firstWoreda);
+  //   setWoredaOptions(data2[region!][value]);
+  //   (form as any).setFieldsValue({ wordea: firstWoreda });
+  // };
   return (
     <div className="">
       {/* <ToastContainer /> */}
@@ -642,6 +680,7 @@ const updateEmployeeMutuation = useUpdateEmployee();
             <Form
               name="editCurrentAddressForm"
               initialValues={selectedEmployee}
+              form={form}
             >
               <Row gutter={16}>
                 <Col span={10}>
@@ -661,10 +700,14 @@ const updateEmployeeMutuation = useUpdateEmployee();
                     name={["currentAddress", "subcity"]}
                   >
                     <Select
-                      options={subcityOptions.map((subcity) => ({
-                        label: subcity,
-                        value: subcity,
-                      }))}
+                      options={
+                        region
+                          ? Object.keys(data2[region]).map((subcity) => ({
+                              label: subcity,
+                              value: subcity,
+                            }))
+                          : []
+                      }
                       onChange={handleSubcityChange}
                       value={subcity}
                     />
@@ -673,10 +716,14 @@ const updateEmployeeMutuation = useUpdateEmployee();
                 <Col span={12}>
                   <Form.Item label="Woreda" name={["currentAddress", "woreda"]}>
                     <Select
-                      options={woredaOptions.map((woreda) => ({
-                        label: woreda,
-                        value: woreda,
-                      }))}
+                      options={
+                        region && subcity
+                          ? data2[region][subcity].map((woreda) => ({
+                              label: woreda,
+                              value: woreda,
+                            }))
+                          : []
+                      }
                       value={woreda}
                     />
                   </Form.Item>

@@ -104,23 +104,23 @@ const EmployeeProfile: React.FC = (key:any) => {
                 icon={<img src="/logo192.png" alt="Employee" />}
               />
             </Col>
-            {/* <Col flex="auto">
+            <Col flex="auto">
               <div className="flex flex-col">
                 <Title
                   level={4}
                   className="text-l leading-6 mb-1"
                   style={{ marginBottom: 0, fontWeight: "bold" }}
                 >
-                  {firstName + " " + lastName}
+                  {selectedEmployee?.firstName + " " + selectedEmployee?.lastName}
                 </Title>
                 <div className="text-sm leading-4">
                   <Text style={{ marginBottom: 0, display: "block" }}>
-                    {position}
+                    {selectedEmployee?.position}
                   </Text>
-                  <Text style={{ display: "block" }}>4010018</Text>
+                  {/* <Text style={{ display: "block" }}>{selectedEmployee?._id}</Text> */}
                 </div>
               </div>
-            </Col> */}
+            </Col>
           </Space>
         </Row>
       </Header>
