@@ -219,6 +219,7 @@ const Step2: React.FC<Step2Props> = ({
 
   const onFinish = () => {
     const values = form.getFieldsValue(true);
+    console.log("Form Values:", values);
     handleFormData(values);
     nextStep();
   };
@@ -255,7 +256,7 @@ const Step2: React.FC<Step2Props> = ({
           (degree, index) =>
             educationLevel === level && (
               <DegreeFields
-                degreeName={level.charAt(0).toUpperCase() + level.slice(1)}
+                degreeName={level.charAt(0).toLowerCase() + level.slice(1)}
                 index={index}
                 key={degree.id}
               />

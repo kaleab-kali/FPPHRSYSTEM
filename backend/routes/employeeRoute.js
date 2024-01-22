@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const uploadMiddleware = require("../middelware/upload");
+
 const { createEmployee,
      getAllEmployees, 
      getEmployeeById, 
@@ -10,7 +12,8 @@ const { createEmployee,
 
 // const protect = require('../middleware/userMiddleware')
 // Create a registration
-router.post("/", createEmployee);
+router.post("/",uploadMiddleware.single("photo"), createEmployee);
+// app.post("/upload", uploadMiddleware.single("photo"), handleFileUpload);
 
 // Get all Employee
 router.get("/", getAllEmployees);

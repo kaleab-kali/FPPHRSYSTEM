@@ -1,5 +1,22 @@
 const mongoose = require('mongoose');
-
+// const educationSchema = new mongoose.Schema({
+//   graduationYear: { type: String },
+//   fieldOfStudy: { type: String },
+//   universityName: { type: String },
+// });
+// const education2Schema = new mongoose.Schema({
+//   bachelor: [educationSchema],
+//   master: [educationSchema],
+//   phd: [educationSchema],
+// });
+const educationSchema = new mongoose.Schema(
+  {
+    fieldOfStudy: String,
+    graduationYear: String,
+    universityName: String,
+  },
+  { _id: false }
+);
 const employeeSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
@@ -10,7 +27,7 @@ const employeeSchema = new mongoose.Schema(
     gender: { type: String, required: true },
     position: { type: String, required: true },
     department: { type: String, required: true },
-    photo: { type: String},
+    photo: { type: String },
     ethnicity: { type: String, required: true },
     phoneNumber: {
       prefix: { type: String, required: true },
@@ -28,27 +45,9 @@ const employeeSchema = new mongoose.Schema(
     salary: { type: String, required: true },
     educationLevel: { type: String, required: true },
     education: {
-      bachelor: [
-        {
-          graduationYear: { type: String, required: true },
-          fieldOfStudy: { type: String, required: true },
-          universityName: { type: String, required: true },
-        },
-      ],
-      master: [
-        {
-          graduationYear: { type: String, required: true },
-          fieldOfStudy: { type: String, required: true },
-          universityName: { type: String, required: true },
-        },
-      ],
-      phd: [
-        {
-          graduationYear: { type: String, required: true },
-          fieldOfStudy: { type: String, required: true },
-          universityName: { type: String, required: true },
-        },
-      ],
+      bachelor: [educationSchema],
+      master: [educationSchema],
+      phd: [educationSchema],
     },
     birthplaceInfo: {
       region: { type: String },
@@ -100,7 +99,6 @@ const employeeSchema = new mongoose.Schema(
     },
     divorcedInfo: {
       divorceDate: { type: Date },
-      // Add other divorced fields as needed
     },
   },
   { timestamps: true }

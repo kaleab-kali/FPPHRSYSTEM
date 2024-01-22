@@ -82,6 +82,7 @@ function GeneralInfo({ selectedEmployee }: GeneralInformationProps) {
       // You can now use the values to update the employee
       if (values) {
         updateEmployeeMutuation.mutate({ ...selectedEmployee, ...values });
+        setEditGeneralModalVisible(!generalEditModalVisible);
       }
     } catch (errorInfo) {
       console.log("Validation failed:", errorInfo);

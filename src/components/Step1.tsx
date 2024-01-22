@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Select, Input, Radio, DatePicker, Button, Row, Col } from "antd";
 import { FormInstance } from "antd/lib/form";
 import { data } from "../data";
+import moment from "moment";
 
 const { Option } = Select;
 
@@ -50,6 +51,12 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
 
   const handleSubcityChange = (value: string) => {
     setSubcity(value);
+  };
+  const handleDatePickerChange = (
+    date: moment.Moment | null,
+    dateString: string
+  ) => {
+    form.setFieldsValue({ birthday: date }); // Set the moment object directly
   };
 
   return (
@@ -105,7 +112,10 @@ const Step1: React.FC<Step1Props> = ({ form, nextStep, handleFormData }) => {
             name="birthday"
             rules={[{ required: true, message: "Please select your birthday" }]}
           >
-            <DatePicker style={{ width: "100%" }} />
+            <DatePicker
+              style={{ width: "100%" }}
+              onChange={()=>handleDatePickerChange}
+            />
           </Form.Item>
         </Col>
       </Row>

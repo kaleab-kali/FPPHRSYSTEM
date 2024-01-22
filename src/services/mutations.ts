@@ -34,6 +34,7 @@ export function useUpdateEmployee() {
       return updateEmployee(data);
     },
     onSuccess() {
+      // queryClient.invalidateQueries("employee")
       console.log("Successfully updated employee");
     },
     onSettled: async (_, error, variables) => {
